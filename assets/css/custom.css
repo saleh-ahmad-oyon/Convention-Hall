@@ -1,0 +1,284 @@
+*,
+*:after,
+*:before{
+    box-sizing: border-box;
+}
+html, body{
+    height: 100%;
+}
+.cover-image{
+    position: relative;
+    background: url("../img/wedding.jpg") top center no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    height: calc(100vh - 180px);
+}
+.cover-image-sign-up{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top:0;
+    background-image: url("../img/background-learner.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="2" /></filter></svg>#filter');
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    height: 100%;
+}
+.cover-image-page-not-found{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top:0;
+    background-image: url("../img/404-not.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+}
+.cover-image-404{
+    position: relative;
+    background-image: url("../img/404-not.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+}
+.change-pass{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top:0;
+    background-image: url("../img/CyberSecurityPadlock-640x480.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="3" /></filter></svg>#filter');
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    height: 100%;
+}
+.profile-back{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top:0;
+    background-image: url("../img/personal-data.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="5" /></filter></svg>#filter');
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    height: 100%;
+}
+
+.sjdvjhg{
+    margin:-466px 0 246px;
+    position: relative;
+}
+h1.asasas{
+    text-transform: uppercase;
+    text-align: center;
+    line-height:200px;
+    color: #fff;
+    text-shadow: 0px 2px 2px rgba(0,0,0,.7);
+    font-size: 46px;
+}
+.solid-border{
+    border: solid 1px #808080;
+    border-radius: 5px;
+}
+.border-rad{
+    border-radius: 5px;
+}
+.h-180{
+    height: 180px
+}
+.main-content{
+    position: relative
+}
+.idffi{
+    width: 100%;
+}
+.idffi img{
+    width:100%;
+    height:100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.solid-border p span{
+    color: mediumorchid;
+}
+.solid-border > h3{
+    text-transform: capitalize;
+}
+.navbar-default{
+    background-color: #232223;
+    border-color: #1F1E1F;
+}
+.navbar{
+    border-radius: 0;
+}
+.navbar-default .navbar-nav>.open>a:focus{
+    background-color: #595558;
+}
+
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>.open>a:focus{
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:active{
+    color: #f1f2f7;
+}
+.set-menu{
+    padding: 0;
+}
+.set-menu h3{
+    font-size: 20px;
+    width: 100%;
+    background: #333;
+    margin: 0;
+    padding: 20px 0;
+    color:#fff;
+}
+.set-menu p{
+    float: left;
+    width:100%;
+    padding: 8px 0;
+    font-size: 14px;
+    margin: 0;
+}
+.set-menu p:nth-of-type(odd){
+    background: rgba(30,69,97,.28);
+    color: #333;
+}
+.set-menu p:nth-of-type(even){
+    background: #e3e3e3;
+    color:#333;
+}
+.set-menu p:last-child{
+    padding: 12px 0;
+    background: rgba(30,69,97,.48);
+    color: #fff;
+}
+hr{
+    width:97%;
+    padding: 10px 0;
+}
+#wrap {
+    min-height: 100%;
+}
+main {
+    overflow:auto;
+    padding-bottom: 150px;
+}
+footer{
+    background: #333;
+    color:#fff;
+    position: relative;
+    margin-top: -150px;
+    clear:both;
+    padding: 30px 0;
+    height: 150px;
+    font-size: 12px;
+    line-height: 2
+}
+.service{
+    padding: 0;
+}
+.service h3{
+    font-size: 20px;
+    width: 100%;
+    background: #333;
+    margin: 0;
+    padding: 20px 0;
+    color:#fff;
+}
+.service p{
+    float: left;
+    width:100%;
+    padding: 12px 0;
+    font-size: 14px;
+    margin: 0;
+}
+.service p:nth-of-type(odd){
+    background: rgba(30,69,97,.28);
+}
+.service p:nth-of-type(even){
+    background: #e3e3e3;
+}
+a,
+a:hover,
+a:focus{
+    color: #fff;
+}
+.brand-img{
+    padding-top: 7px;
+}
+.padding-20{
+    padding-top: 30px;
+}
+.padding-border{
+    padding:10px;
+    background-color: rgba(245,245,245,.28);
+}
+.orders-list{
+    border: solid 1px #e6e6e6;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.selectedClass{
+    background-color: lightseagreen;
+}
+.solid-border label{
+    margin-bottom: 0;
+}
+.text-white{
+    color: #fff;
+}
+.gates input[type='radio'],
+.stages input[type='radio'],
+.set-menu input[type='radio'],
+.addiFood input[type='checkbox']{
+    display: none;
+}
+.gates input[type='radio']:checked + label,
+.stages input[type='radio']:checked + label,
+.addiFood input[type='checkbox']:checked + label{
+    background-color: #8b0000;
+    color: #ffffff;
+}
+.set-menu input[type='radio']:checked + label p:last-child{
+    background-color: #8b0000;
+}
+.zoom{
+    overflow: hidden;
+}
+.zoom img:hover {
+    -webkit-transition: all .7s ease-out;
+    transition: all .7s ease-out;
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}

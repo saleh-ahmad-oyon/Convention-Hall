@@ -1,0 +1,74 @@
+.ccbx{
+    padding: 3px 0;
+    cursor: pointer;
+    overflow: hidden;
+    display: inline-block;
+}
+.ccbx input[type="checkbox"]{
+    display: none;
+}
+
+/* ############[ Checkbox ]############ */
+.ccbx span {
+    top: 1px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin: 0 5px 0 0;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+.ccbx i {
+    left: 2px;
+    bottom: -20px;
+    position: absolute;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    width: 16px;
+    height: 16px;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background: url("images/ccbx.png") no-repeat center center;
+}
+.ccbx:hover span {
+    border-color: #25303c;
+}
+.ccbx.checked span {
+    border-color: #25303c;
+    background-color: #25303c;
+}
+.ccbx.checked i {
+    bottom: 1px;
+    opacity: 1;
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+.ccbx.disabled {
+    color: #ddd;
+}
+.ccbx.disabled span {
+    color: #ddd;
+}
+.ccbx.disabled:hover span {
+    border-color: #ddd;
+}
+.ccbx.disabled.checked span {
+    background-color: #ddd;
+    border-color: #ddd;
+}
