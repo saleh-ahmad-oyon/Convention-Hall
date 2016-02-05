@@ -124,11 +124,11 @@ $misc = Misc();
                     </nav>
                     <div class="container">
                         <div class="row" id="service">
-                            <div class="col-md-12 text-center">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <h1 class="text-center">Our Services</h1>
                                 <br/><br/>
-                                <div class="col-md-6">
-                                    <div class="col-md-12 solid-border service">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 solid-border service">
                                         <h3>Basic Charges</h3>
                                         <?php foreach($basic as $b): ?>
                                         <p><?php echo $b['serv_name']; ?>:&nbsp;&#2547;&nbsp;<?php echo $b['Serv_price']; ?></p>
@@ -136,8 +136,8 @@ $misc = Misc();
                                         <p>N. B. <?php echo $misc['misc_vat']; ?>% vat applicable</p>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-12 solid-border service">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 solid-border service">
                                         <h3>Advantages</h3>
                                         <?php foreach($advantage as $a): ?>
                                         <p><?php echo $a['adv_desc']; ?></p>
@@ -148,17 +148,17 @@ $misc = Misc();
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                                <div class="col-md-6">
-                                    <div class="col-md-12 solid-border service">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 solid-border service">
                                         <h3>Features</h3>
                                         <?php foreach($feature as $f): ?>
                                         <p><?php echo $f['f_desc']; ?></p>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-12 solid-border service">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 solid-border service">
                                         <h3>Program Schedule:</h3>
                                         <?php foreach($shift as $s): ?>
                                         <p><?php echo $s['shift_name'], " ", $s['shift_time']; ?></p>
@@ -203,11 +203,11 @@ $misc = Misc();
                         <br/>
                         <hr/>
                         <div class="row">
-                            <div class="col-md-12 text-center">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <?php
                                     $count = 0;
                                     foreach($addiFood as $f): ?>
-                                        <div class="col-md-3">
+                                        <div class="col-xs-3 col-sm-3 col-md-3">
                                             <div class="solid-border">
                                                 <div class="idffi h-180 zoom">
                                                     <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
@@ -227,11 +227,11 @@ $misc = Misc();
                         <br/>
                         <hr/>
                         <div class="row">
-                            <div class="col-md-12 text-center">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <?php
                                     $count = 0;
                                     foreach($addiFoodFull as $f): ?>
-                                        <div class="col-md-3">
+                                        <div class="col-xs-3 com-sm-3 col-md-3">
                                             <div class="solid-border">
                                                 <div class="idffi h-180 zoom">
                                                     <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
