@@ -98,7 +98,7 @@
                 </div>
             <?php else: ?>
             <div class="container">
-                <h1>Booking</h1><br/><br/><br/><br/>
+                <h1 class="text-center">Booking</h1><br/><br/><br/><br/>
                 <form action="<?php echo SERVER; ?>/controller/bookingSuccess.php" method="post" onsubmit="return confirmation();">
                     <div class="row">
                         <div class="col-md-12">
