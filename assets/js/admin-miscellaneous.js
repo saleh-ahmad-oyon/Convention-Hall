@@ -24,7 +24,11 @@ $(document).ready(function() {
                 },
                 cache: false,
                 error: function() {
-                alert("An error occoured !!");
+                    swal({
+                        title: 'Failed!',
+                        text: 'An error occured !!',
+                        type: 'error'
+                    });
                 },
                 success: function()
                 {

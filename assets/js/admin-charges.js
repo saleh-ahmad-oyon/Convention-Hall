@@ -27,6 +27,9 @@ function dltService(x){
                         ServId : id
                     },
                     cache : false,
+                    beforeSend: function(){
+                        swal.disableButtons();
+                    },
                     error: function() {
                         swal({
                             title: 'Failed!',
@@ -40,6 +43,8 @@ function dltService(x){
                             text : 'Row has been deleted.',
                             type : 'success'
                         });
+                    },
+                    complete: function(){
                         document.getElementById("myTable").deleteRow(row);
                     }
                 });

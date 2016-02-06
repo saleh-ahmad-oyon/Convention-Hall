@@ -26,6 +26,9 @@ function deleteAdvantage(x){
                         advID : AID
                     },
                     cache : false,
+                    beforeSend: function(){
+                        swal.disableButtons();
+                    },
                     error: function() {
                         swal({
                             title: 'Failed!',
@@ -39,6 +42,8 @@ function deleteAdvantage(x){
                             text : 'Row has been deleted.',
                             type : 'success'
                         });
+                    },
+                    complete: function(){
                         document.getElementById("myTable").deleteRow(row);
                     }
                 });

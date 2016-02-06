@@ -26,6 +26,9 @@ function deleteFeature(x){
                         featureID : id
                     },
                     cache : false,
+                    beforeSend: function(){
+                        swal.disableButtons();
+                    },
                     error: function() {
                         swal({
                             title: 'Failed!',
@@ -39,6 +42,8 @@ function deleteFeature(x){
                             text : 'Row has been deleted.',
                             type : 'success'
                         });
+                    },
+                    complete: function(){
                         document.getElementById("myTable").deleteRow(row);
                     }
                 });
