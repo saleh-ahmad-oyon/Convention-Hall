@@ -38,6 +38,8 @@
         <script src="<?php echo SERVER; ?>/assets/js/checkbox.js"></script>
         <script src="<?php echo SERVER; ?>/assets/js/jquery.totop.js"></script>
         <link href="<?php echo SERVER; ?>/assets/css/totop.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/chosen/bootstrap-chosen.css" />
+        <script src="<?php echo SERVER; ?>/third_party/chosen/chosen.jquery.js"></script>
         <script>
             var array = "<?php echo $booked; ?>";
             $(function() {
@@ -58,17 +60,22 @@
                     .selectmenu()
                     .selectmenu( "menuWidget" )
                     .addClass( "overflow" );*/
-                $( "#purpose" )
+                /*$( "#purpose" )
                     .selectmenu()
                     .selectmenu( "menuWidget" )
-                    .addClass( "overflow" );
+                    .addClass( "overflow" );*/
 
+            });
+
+            //chosen (Select)
+            $(function() {
+                $('.chosen-select').chosen();
             });
         </script>
         <style>
-            .overflow {
+            /*.overflow {
                 height: 107px;
-            }
+            }*/
             body { padding-top: 70px; }
         </style>
     </head>
@@ -129,7 +136,7 @@
                             <br/><br/>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select name="purpose" class="form-control" id="purpose">
+                                    <select name="purpose" data-placeholder="" class="form-control chosen-select">
                                         <option></option>
                                         <?php foreach($purpose as $p): ?>
                                             <option><?php echo $p['p_name']; ?></option>

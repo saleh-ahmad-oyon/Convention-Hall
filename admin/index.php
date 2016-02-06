@@ -90,7 +90,7 @@ if(isset($_SESSION['admin'])){
                             <div class="input-group-addon">
                                 <i class="entypo-user"></i>
                             </div>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off" />
+                            <input type="text" autofocus="autofocus" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off" />
                         </div>
                     </div>
 

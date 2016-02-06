@@ -36,9 +36,9 @@
                     <div class="cover-image-sign-up"></div>
                     <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-5">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-3 col-md-3 col-lg-3 hidden-xs"></div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
                                     <h1>Sign Up</h1>
@@ -52,10 +52,10 @@
                                     <label>Last Name</label>
                                     <input type="text" class="onlyChars form-control" name="lname" pattern="(?=.*[a-zA-Z])+([.,\s])*.{2,}" title="Only letters, space, dot and comma allowed" />
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="emailVal">
                                     <p id="email" class="text-danger"></p>
                                     <label>Email</label>
-                                    <input type="email" class="form-control" id='email1' name="email" required="required" pattern="[([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)]i" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Insert Email Correctly' : ''); if(this.checkValidity()) form.cemail.pattern = this.value;" onblur="validate('email', this.value)" />
+                                    <input type="email" class="form-control has-success has-feedback" id='email1' name="email" required="required" pattern="[([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)]i" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Insert Email Correctly' : ''); if(this.checkValidity()) form.cemail.pattern = this.value;" onblur="validate('email', this.value)" />
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Email</label>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 hidden-xs"></div>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,17 @@
             {
                 document.getElementById(field).innerHTML = xmlhttp.responseText;
                 if(xmlhttp.responseText != ''){
+
+                    //adding class .has-error
+                    var id='emailVal';
+                    var myClassName="has-error";
+                    var d;
+                    d=document.getElementById(id);
+                    d.className=d.className.replace(myClassName,"");
+                    d.className = d.className + ' ' + myClassName;
+
                     document.getElementById('email1').focus();
+
                 }
             }
             else
