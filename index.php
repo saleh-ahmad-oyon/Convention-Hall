@@ -86,18 +86,26 @@ $misc = Misc();
                     </div>
                     <div class="fixed-top-nav-top"></div>
                     <nav class="navbar navbar-default main-content" id="fixed-top-nav-sec">
-                        <div class="container container-fluid">
+                        <div class="container">
                             <div class="navbar-header">
-                                <img src="assets/img/logo/logo_with_text.png" width="50px" class="brand-img">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="<?php echo SERVER; ?>">
+                                    <img src="<?php echo SERVER; ?>/assets/img/logo/logo_with_text.png" width="50px">
+                                </a>
                             </div>
-                            <form class="navbar-form navbar-left" role="search" method="get" action="<?php echo SERVER; ?>/searchResult">
-                                <div class="form-group">
-                                    <input type="search" class="form-control" placeholder="Search" name="search">
-                                </div>
-                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </form>
-                            <div>
-                                <ul class="nav navbar-nav pull-right">
+                            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                                <form class="navbar-form navbar-left" role="search" method="get" action="<?php echo SERVER; ?>/searchResult">
+                                    <div class="form-group">
+                                        <input type="search" class="form-control" placeholder="Search" name="search">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </form>
+                                <ul class="nav navbar-nav navbar-right">
                                     <li><a href="#service">Services</a></li>
                                     <li><a href="#menu">Menu</a></li>
                                     <?php if($login): ?>

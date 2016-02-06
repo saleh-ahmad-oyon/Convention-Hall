@@ -231,9 +231,6 @@ a:hover,
 a:focus{
     color: #fff;
 }
-.brand-img{
-    padding-top: 7px;
-}
 .padding-20{
     padding-top: 30px;
 }
@@ -281,4 +278,7 @@ a:focus{
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     transform: scale(1.2);
+}
+.navbar-brand {
+    padding: 8px 15px;
 }
