@@ -31,12 +31,12 @@
                 <div class="cover-image-sign-up"></div>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-4 col-md-4 col-lg-4 hidden-xs"></div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
-                                    <h1 class="text-center">Login</h1>
+                                    <h1>Login</h1>
                                     <form action="<?php echo SERVER; ?>/controller/loginSuccess" method="post">
                                         <div class="form-group">
                                             <label>Email</label>
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 hidden-xs"></div>
                     </div>
                 </div>
             </div>

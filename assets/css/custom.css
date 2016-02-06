@@ -3,6 +3,12 @@
 *:before{
     box-sizing: border-box;
 }
+
+h1{
+    text-align: center;
+    color: #333;
+    text-shadow: 0 1px 0 white;
+}
 html, body{
     height: 100%;
 }

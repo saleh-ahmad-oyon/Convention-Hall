@@ -74,7 +74,7 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
             <?php require 'includes/nav.php'; ?>
         </header>
         <section>
-            <h1 class="text-center">My Bookings</h1>
+            <h1>My Bookings</h1>
             <br/><br/>
             <div class="container orders-list">
                 <div class="row">

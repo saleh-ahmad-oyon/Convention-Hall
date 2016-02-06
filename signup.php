@@ -41,7 +41,7 @@
                         <div class="col-md-5">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
-                                    <h1 class="text-center">Sign Up</h1>
+                                    <h1>Sign Up</h1>
                                     <br/><br/>
                                     <form action="<?php echo SERVER; ?>/controller/signUpSuccess" method="post" onsubmit="return confirmation();">
                                 <div class="form-group">
