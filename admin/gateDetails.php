@@ -105,7 +105,7 @@ if(!isset($_SESSION['admin'])){
                             <h3><?php echo $g['g_title']; ?></h3>
                             <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
                             <p>
-                                <button class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                <a href="javascript:;" onclick="showAjaxModal();" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</a>
                                 <button class="btn btn-danger"><i class="entypo-trash"></i> Delete</button>
                             </p>
                             <?php $count++; ?>
@@ -117,6 +117,43 @@ if(!isset($_SESSION['admin'])){
                     }
                 endforeach;
                 ?>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function showAjaxModal()
+            {
+                jQuery('#modal-gate').modal('show', {backdrop: 'static'});
+                jQuery.ajax({
+                    url: "data/ajax-content.txt",
+                    success: function(response)
+                    {
+                        jQuery('#modal-gate .modal-body').html(response);
+                    }
+                });
+            }
+        </script>
+
+
+        <!-- Modal-->
+        <div class="modal fade" id="modal-gate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Dynamic Content</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        Content is loading...
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-info">Save changes</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
