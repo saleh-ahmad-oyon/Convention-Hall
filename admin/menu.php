@@ -90,7 +90,7 @@
                 </ul>
             </li>
             <li>
-                <a href="<?php echo SERVER; ?>/admin/gateAdmin">
+                <a href="<?php echo SERVER; ?>/admin/gateDetails">
                     <i class="entypo-doc-text"></i>
                     <span class="title">Gate</span>
                 </a>
