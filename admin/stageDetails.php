@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Oyon
- * Date: 2/9/2016
- * Time: 1:36 PM
+ * Date: 2/10/2016
+ * Time: 3:07 AM
  */
 session_start();
 require '../controller/define.php';
@@ -11,7 +11,7 @@ require  '../controller/adminControl.php';
 if(!isset($_SESSION['admin'])){
     header('Location: '.SERVER.'/404');
 }else{
-    $gate = getGate();
+    $stage = getStage();
 }
 ?>
 <!DOCTYPE html>
@@ -77,18 +77,18 @@ if(!isset($_SESSION['admin'])){
 
         <div class="row">
             <div class="col-sm-12">
-                <h1>Welcome Gates</h1>
+                <h1>Stage Decoration</h1>
                 <br/><br/>
-                <button class="btn btn-success" data-toggle="modal" data-target="#modal-gate-add"><i class="entypo-plus"></i> Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modal-stage-add"><i class="entypo-plus"></i> Add</button>
             </div>
         </div>
 
-        <div class="modal fade" id="modal-gate-add">
+        <div class="modal fade" id="modal-stage-add">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">Add Welcome Gate</h3>
+                        <h3 class="modal-title">Add Stage Decoration</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -97,15 +97,15 @@ if(!isset($_SESSION['admin'])){
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <h4>Name:</h4>
-                                        <input type="text" id="add_name" class="form-control" />
+                                        <input type="text" id="add_stage_name" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <h4>Cost:</h4>
-                                        <input type="number" step="0.01" id="add_price" class="form-control" />
+                                        <input type="number" step="0.01" id="add_stage_price" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" id="add_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        <input type="file" accept="image/*" id="add_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -125,17 +125,17 @@ if(!isset($_SESSION['admin'])){
             <div class="col-sm-12">
                 <?php
                 $count = 0;
-                foreach($gate as $g): ?>
+                foreach($stage as $s): ?>
                     <div class="col-sm-3 text-center">
-                        <div class="solid-border gates">
+                        <div class="solid-border stages">
                             <div class="idffi h-180 zoom">
-                                <img src="<?php echo SERVER; ?>/assets/img/gate/<?php echo $g['g_image']; ?>" alt="<?php echo $g['g_title']; ?>"/>
+                                <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
                             </div>
-                            <h3><?php echo $g['g_title']; ?></h3>
-                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
+                            <h3><?php echo $s['st_title']; ?></h3>
+                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $s['st_price']; ?></span></p>
                             <p>
-                                <button onclick="showAjaxModal(<?php echo $g['g_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                <button class="btn btn-danger" onclick="deleteWelcomeGate();"><i class="entypo-trash"></i> Delete</button>
+                                <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                <button class="btn btn-danger" onclick="deleteStageDecoration();"><i class="entypo-trash"></i> Delete</button>
                             </p>
                             <?php $count++; ?>
                         </div>
@@ -149,7 +149,7 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <script type="text/javascript">
-            function deleteWelcomeGate(){
+            function deleteStageDecoration(){
                 swal({
                     title: 'Are you sure?',
                     text: 'You will not be able to recover this !',
@@ -167,7 +167,7 @@ if(!isset($_SESSION['admin'])){
                     if (isConfirm) {
                         swal(
                             'Deleted!',
-                            'Welcome Gate has been deleted.',
+                            'Stage Decoration has been deleted.',
                             'success'
                         );
                     } else {
@@ -181,12 +181,12 @@ if(!isset($_SESSION['admin'])){
             }
             function showAjaxModal(id)
             {
-                $('#modal-gate').modal('show', {backdrop: 'static'});
+                $('#modal-stage').modal('show', {backdrop: 'static'});
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        gateID : id
+                        stageID : id
                     },
                     cache : false,
                     url: "data/ajax-req-gate",
@@ -208,12 +208,12 @@ if(!isset($_SESSION['admin'])){
 
 
         <!-- Modal-->
-        <div class="modal fade" id="modal-gate">
+        <div class="modal fade" id="modal-stage">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">Edit Gate Information</h3>
+                        <h3 class="modal-title">Edit Stage Information</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -225,7 +225,7 @@ if(!isset($_SESSION['admin'])){
                                         <input type="text" id="name" class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <h4>Cost:</h4>
+                                        <h4>Price:</h4>
                                         <input type="number" step="0.01" id="price" class="form-control" />
                                     </div>
                                     <div class="form-group">

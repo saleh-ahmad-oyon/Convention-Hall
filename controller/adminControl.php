@@ -52,4 +52,8 @@ function getGate(){
     $gate = gate();
     return $gate;
 }
+function getStage(){
+    $stage = stage();
+    return $stage;
+}
 ?>

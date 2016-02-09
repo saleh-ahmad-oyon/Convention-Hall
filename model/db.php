@@ -344,6 +344,18 @@ function getStageValue($stage){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['st_price'];
 }
+function getStageInfo($stage){
+    $conn = db_conn();
+    $selectQuery = "SELECT * FROM `stage` WHERE `st_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($stage));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row;
+}
 function getPriceSetMenu($setMenu){
     $conn = db_conn();
     $selectQuery = "SELECT `sm_price` FROM `set_menu` WHERE `sm_id` = ?";

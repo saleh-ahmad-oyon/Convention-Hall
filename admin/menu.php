@@ -96,7 +96,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="<?php echo SERVER ?>/admin/stageDetails">
                     <i class="entypo-air"></i>
                     <span class="title">Stage</span>
                 </a>
