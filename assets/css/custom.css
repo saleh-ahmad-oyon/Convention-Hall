@@ -27,14 +27,11 @@ html, body{
     right: 0;
     z-index: -1;
     top:0;
-    background-image: url("../img/background-learner.jpg");
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: url("../img/background-learner.jpg") bottom no-repeat fixed;
     background-size: cover;
-    filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="2" /></filter></svg>#filter');
+    /*filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="2" /></filter></svg>#filter');
     -webkit-filter: blur(2px);
-    filter: blur(2px);
+    filter: blur(2px);*/
     height: 100%;
 }
 .cover-image-page-not-found{
