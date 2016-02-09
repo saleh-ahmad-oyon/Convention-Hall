@@ -27,8 +27,8 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
 
-    <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-    <script>$.noConflict();</script>
+
+    <script>//$.noConflict();</script>
 
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -79,7 +79,7 @@ if(!isset($_SESSION['admin'])){
             <div class="col-sm-12">
                 <h1>Welcome Gates</h1>
                 <br/><br/>
-                <button class="btn btn-success"><i class="entypo-plus"></i> Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modal-gate"><i class="entypo-plus"></i> Add</button>
             </div>
         </div>
         <br/><br/>
@@ -97,24 +97,54 @@ if(!isset($_SESSION['admin'])){
                             <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
                             <p>
                                 <button onclick="showAjaxModal(<?php echo $g['g_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                <button class="btn btn-danger"><i class="entypo-trash"></i> Delete</button>
+                                <button class="btn btn-danger" onclick="deleteWelcomeGate();"><i class="entypo-trash"></i> Delete</button>
                             </p>
                             <?php $count++; ?>
                         </div>
                     </div>
                     <?php
                     if($count%4 == 0){
-                        echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
+                        echo "</div></div><br/><div class='row'><div class='col-sm-12 text-center'> ";
                     }
                 endforeach;
                 ?>
             </div>
         </div>
         <script type="text/javascript">
+            function deleteWelcomeGate(){
+                swal({
+                    title: 'Are you sure?',
+                    text: 'You will not be able to recover this !',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel !',
+                    confirmButtonClass: 'confirm-class',
+                    cancelButtonClass: 'cancel-class',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        swal(
+                            'Deleted!',
+                            'Welcome Gate has been deleted.',
+                            'success'
+                        );
+                    } else {
+                        swal(
+                            'Cancelled',
+                            'Your data is safe :)',
+                            'error'
+                        );
+                    }
+                });
+            }
             function showAjaxModal(id)
             {
-                jQuery('#modal-gate').modal('show', {backdrop: 'static'});
-                jQuery.ajax({
+                $('#modal-gate').modal('show', {backdrop: 'static'});
+                $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -131,14 +161,17 @@ if(!isset($_SESSION['admin'])){
                     },
                     success: function(response)
                     {
-                        jQuery('#modal-gate .modal-body').html(
+                        $('#name').val(response.Name);
+                        $('#price').val(response.value);
+
+                        /*$('#modal-gate .modal-body').html(
                             response.key + '<br/>' +
-                            '<h4>Name: </h4>' +
+                            '<h4>Name:</h4>' +
                             '<input type="text" id="name" class="form-control" value="' + response.Name + '" /><br/>' +
-                                response.image + '<br/>' +
-                            '<h4>Price: </h4>' +
+                            response.image + '<br/>' +
+                            '<h4>Price:</h4>' +
                             '<input type="number" step="0.01" id="price" class="form-control" value="' + response.value + '" />'
-                        );
+                        );*/
                     }
                 });
             }
@@ -154,8 +187,26 @@ if(!isset($_SESSION['admin'])){
                         <h3 class="modal-title">Edit Gate Information</h3>
                     </div>
                     <div class="modal-body">
-                        <!--Loading Ajax Request-->
-                        Content is loading...
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <h4>Name:</h4>
+                                        <input type="text" id="name" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>Price:</h4>
+                                        <input type="number" step="0.01" id="price" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>Select an Image:</h4>
+                                        <input type="file" accept="image/*" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -171,6 +222,32 @@ if(!isset($_SESSION['admin'])){
 <!--SWAL-->
 <link href="<?php echo SERVER; ?>/assets/css/sweetalert2.css" rel="stylesheet">
 <script src="<?php echo SERVER; ?>/assets/js/sweetalert2.min.js"></script>
+
+<!--Dropify-->
+<link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/dropify/dropify.css" />
+<script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+<script src="<?php echo SERVER; ?>/third_party/dropify/dropify.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Drag and drop an image here or click',
+                'replace': 'Drag and drop or click to replace',
+                'remove':  '<i class="entypo-trash"></i>',
+                'error':   'Sorry, this file is too large'
+            }
+        });
+        var drEvent = $('.dropify').dropify();
+
+        drEvent.on('dropify.beforeClear', function(event, element){
+            return confirm("Do you really want to delete \"" + element.filename + "\" ?");
+        });
+
+        drEvent.on('dropify.afterClear', function(event, element){
+            alert('File deleted');
+        });
+    });
+</script>
 
 <!-- Bottom scripts (common) -->
 <script src="assets/js/gsap/main-gsap.js"></script>
