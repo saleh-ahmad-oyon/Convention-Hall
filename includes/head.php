@@ -1,5 +1,5 @@
 <meta  charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="This website is based on convention hall booking. People can book convention hall online." />
 <meta name="keywords" content="Lonely,L0onely,convention,convention hall,booking,food" />
 <meta name="language" content="English" />

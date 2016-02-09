@@ -17,15 +17,7 @@ if(!isset($_SESSION['admin'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Neon Admin Panel" />
-    <meta name="author" content="" />
-
     <?php require_once '../includes/head.php'; ?>
-
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
@@ -33,10 +25,9 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="assets/css/neon-core.css">
     <link rel="stylesheet" href="assets/css/neon-theme.css">
     <link rel="stylesheet" href="assets/css/neon-forms.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
     <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
 
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
     <script>$.noConflict();</script>
 
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -105,7 +96,7 @@ if(!isset($_SESSION['admin'])){
                             <h3><?php echo $g['g_title']; ?></h3>
                             <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
                             <p>
-                                <a href="javascript:;" onclick="showAjaxModal();" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</a>
+                                <button onclick="showAjaxModal(<?php echo $g['g_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
                                 <button class="btn btn-danger"><i class="entypo-trash"></i> Delete</button>
                             </p>
                             <?php $count++; ?>
@@ -120,14 +111,34 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <script type="text/javascript">
-            function showAjaxModal()
+            function showAjaxModal(id)
             {
                 jQuery('#modal-gate').modal('show', {backdrop: 'static'});
                 jQuery.ajax({
-                    url: "data/ajax-content.txt",
+                    type: 'POST',
+                    dataType: 'json',
+                    data:{
+                        gateID : id
+                    },
+                    cache : false,
+                    url: "data/ajax-req-gate",
+                    error: function() {
+                        swal({
+                            title: 'Failed!',
+                            text: 'An error occured !!',
+                            type: 'error'
+                        });
+                    },
                     success: function(response)
                     {
-                        jQuery('#modal-gate .modal-body').html(response);
+                        jQuery('#modal-gate .modal-body').html(
+                            response.key + '<br/>' +
+                            '<h4>Name: </h4>' +
+                            '<input type="text" id="name" class="form-control" value="' + response.Name + '" /><br/>' +
+                                response.image + '<br/>' +
+                            '<h4>Price: </h4>' +
+                            '<input type="number" step="0.01" id="price" class="form-control" value="' + response.value + '" />'
+                        );
                     }
                 });
             }
@@ -140,13 +151,11 @@ if(!isset($_SESSION['admin'])){
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Dynamic Content</h4>
+                        <h3 class="modal-title">Edit Gate Information</h3>
                     </div>
-
                     <div class="modal-body">
-
+                        <!--Loading Ajax Request-->
                         Content is loading...
-
                     </div>
 
                     <div class="modal-footer">
@@ -159,6 +168,10 @@ if(!isset($_SESSION['admin'])){
     </div>
 </div>
 
+<!--SWAL-->
+<link href="<?php echo SERVER; ?>/assets/css/sweetalert2.css" rel="stylesheet">
+<script src="<?php echo SERVER; ?>/assets/js/sweetalert2.min.js"></script>
+
 <!-- Bottom scripts (common) -->
 <script src="assets/js/gsap/main-gsap.js"></script>
 <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
@@ -167,7 +180,6 @@ if(!isset($_SESSION['admin'])){
 <script src="assets/js/resizeable.js"></script>
 <script src="assets/js/neon-api.js"></script>
 <script src="assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?php echo SERVER; ?>/assets/js/custom.js"></script>
 
 <!-- JavaScripts initializations and stuff -->
 <script src="assets/js/neon-custom.js"></script>

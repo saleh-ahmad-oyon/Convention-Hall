@@ -42,7 +42,6 @@
         addAdvantages($advantage);
         $resp['advKey'] = getAdvantageID($advantage);
         echo json_encode($resp);
-        //echo $resp['AdvKey'];
     }elseif(isset($_POST['advID'])){
         $Aid = $_POST['advID'];
         deleteAdvantage($Aid);

@@ -320,6 +320,18 @@ function getGateValue($gate){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['g_price'];
 }
+function getGateInfo($gate){
+    $conn = db_conn();
+    $selectQuery = "SELECT * FROM `gate` WHERE `g_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($gate));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row;
+}
 function getStageValue($stage){
     $conn = db_conn();
     $selectQuery = "SELECT `st_price` FROM `stage` WHERE `st_id` = ?";
