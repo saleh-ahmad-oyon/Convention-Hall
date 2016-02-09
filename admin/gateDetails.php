@@ -79,7 +79,45 @@ if(!isset($_SESSION['admin'])){
             <div class="col-sm-12">
                 <h1>Welcome Gates</h1>
                 <br/><br/>
-                <button class="btn btn-success" data-toggle="modal" data-target="#modal-gate"><i class="entypo-plus"></i> Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modal-gate-add"><i class="entypo-plus"></i> Add</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-gate-add">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="modal-title">Edit Gate Information</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <h4>Name:</h4>
+                                        <input type="text" id="add_name" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>Price:</h4>
+                                        <input type="number" step="0.01" id="add_price" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <h4>Select an Image:</h4>
+                                        <input type="file" accept="image/*" id="add_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-info">Save changes</button>
+                    </div>
+                </div>
             </div>
         </div>
         <br/><br/>
