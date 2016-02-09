@@ -48,4 +48,8 @@
         $row = getServices();
         return $row;
     }
+function getGate(){
+    $gate = gate();
+    return $gate;
+}
 ?>

@@ -11,7 +11,7 @@ require  '../controller/adminControl.php';
 if(!isset($_SESSION['admin'])){
     header('Location: '.SERVER.'/404');
 }else{
-
+    $gate = getGate();
 }
 ?>
 <!DOCTYPE html>
@@ -83,11 +83,44 @@ if(!isset($_SESSION['admin'])){
         </div>
 
         <hr />
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Welcome Gates</h1>
+                <br/><br/>
+                <button class="btn btn-success"><i class="entypo-plus"></i> Add</button>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="row">
+            <div class="col-sm-12">
+                <?php
+                $count = 0;
+                foreach($gate as $g): ?>
+                    <div class="col-sm-3 text-center">
+                        <div class="solid-border gates">
+                            <div class="idffi h-180 zoom">
+                                <img src="<?php echo SERVER; ?>/assets/img/gate/<?php echo $g['g_image']; ?>" alt="<?php echo $g['g_title']; ?>"/>
+                            </div>
+                            <h3><?php echo $g['g_title']; ?></h3>
+                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
+                            <p>
+                                <button class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                <button class="btn btn-danger"><i class="entypo-trash"></i> Delete</button>
+                            </p>
+                            <?php $count++; ?>
+                        </div>
+                    </div>
+                    <?php
+                    if($count%4 == 0){
+                        echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
+                    }
+                endforeach;
+                ?>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Imported styles on this page -->
-<link rel="stylesheet" href="assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
-<link rel="stylesheet" href="assets/js/rickshaw/rickshaw.min.css">
 
 <!-- Bottom scripts (common) -->
 <script src="assets/js/gsap/main-gsap.js"></script>
@@ -98,17 +131,6 @@ if(!isset($_SESSION['admin'])){
 <script src="assets/js/neon-api.js"></script>
 <script src="assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="<?php echo SERVER; ?>/assets/js/custom.js"></script>
-
-
-<!-- Imported scripts on this page -->
-<script src="assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
-<script src="assets/js/jquery.sparkline.min.js"></script>
-<script src="assets/js/rickshaw/vendor/d3.v3.js"></script>
-<script src="assets/js/rickshaw/rickshaw.min.js"></script>
-<script src="assets/js/raphael-min.js"></script>
-<script src="assets/js/morris.min.js"></script>
-<script src="assets/js/toastr.js"></script>
-
 
 <!-- JavaScripts initializations and stuff -->
 <script src="assets/js/neon-custom.js"></script>
