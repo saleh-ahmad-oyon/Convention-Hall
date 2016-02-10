@@ -115,7 +115,7 @@ if(!isset($_SESSION['admin'])){
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info">Save changes</button>
+                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -149,6 +149,12 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <script type="text/javascript">
+            function dismiss(x){
+                $(x).attr({
+                    "data-dismiss" : "modal"
+                });
+            }
+
             function deleteStageDecoration(){
                 swal({
                     title: 'Are you sure?',
@@ -240,7 +246,7 @@ if(!isset($_SESSION['admin'])){
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
                     </div>
                 </div>
             </div>

@@ -115,7 +115,7 @@ if(!isset($_SESSION['admin'])){
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info">Save changes</button>
+                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@ if(!isset($_SESSION['admin'])){
                                 <img src="<?php echo SERVER; ?>/assets/img/gate/<?php echo $g['g_image']; ?>" alt="<?php echo $g['g_title']; ?>"/>
                             </div>
                             <h3><?php echo $g['g_title']; ?></h3>
-                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
+                            <p><span>Price: &#2547; <?php echo $g['g_price']; ?></span></p>
                             <p>
                                 <button onclick="showAjaxModal(<?php echo $g['g_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
                                 <button class="btn btn-danger" onclick="deleteWelcomeGate();"><i class="entypo-trash"></i> Delete</button>
@@ -149,6 +149,12 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <script type="text/javascript">
+            function dismiss(x){
+                $(x).attr({
+                    "data-dismiss" : "modal"
+                });
+            }
+
             function deleteWelcomeGate(){
                 swal({
                     title: 'Are you sure?',
@@ -240,7 +246,7 @@ if(!isset($_SESSION['admin'])){
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
                     </div>
                 </div>
             </div>
