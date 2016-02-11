@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2016 at 10:03 AM
+-- Generation Time: Feb 11, 2016 at 08:11 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -46,6 +46,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_feature` (IN `feat` TEXT)  BEGIN
 INSERT INTO `features`(`f_desc`) VALUES (feat);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_gate` (IN `addname` TEXT, IN `addImage` TEXT, IN `addPrice` DECIMAL(10,2))  BEGIN
+INSERT INTO `gate`(`g_title`, `g_image`, `g_price`) VALUES (addname,addImage,addImage);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_schedule` (IN `newShift` TEXT, IN `newTime` TEXT)  BEGIN
@@ -190,7 +194,7 @@ INSERT INTO `advantages` (`adv_id`, `adv_desc`) VALUES
 (2, 'Internal Sound System'),
 (3, 'Car Parking Facility'),
 (4, '24 hrs trained guard service'),
-(5, '24 hrs standby generator(without AC)');
+(5, '24 hrs standby generator (without AC)');
 
 -- --------------------------------------------------------
 
@@ -298,7 +302,12 @@ INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, 
 (1, 1, '2016-01-25', 'Day 12:00 PM to 4:30 PM', 'Wedding Ceremony', '1|2|5|6|7|4', 900, 5, 9, '18|17|36', 1, '842375.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-01-23'),
 (4, 2, '2016-01-25', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '1|2|5|6|3', 500, 6, 6, '18|36', 1, '441025.00', '0.00', '7|5;9|0;8|1;35|0', 2, '2016-01-23'),
 (3, 3, '2016-01-25', 'Mid-Night 1:00 AM to 5:30 AM', 'Wedding Ceremony', '1|2|5|3', 200, 6, 2, '0', 1, '236325.00', '0.00', '7|0;9|0;8|1;35|0', 1, '2016-01-23'),
-(2, 5, '2016-01-31', 'Evening 7:00 PM to 11:30 PM', 'Office Party', '1|2|3', 250, 3, 0, '18|34|33|36', 1, '152375.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-23');
+(2, 5, '2016-01-31', 'Evening 7:00 PM to 11:30 PM', 'Office Party', '1|2|3', 250, 3, 0, '18|34|33|36', 1, '152375.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-23'),
+(5, 6, '2016-01-31', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 7, '0', 1, '173650.00', '0.00', '7|0;9|0;8|0;35|0', 1, '2016-01-26'),
+(5, 7, '2016-01-30', 'Mid-Night 1:00 AM to 5:30 AM', 'Other', '51|2|3', 300, 0, 0, '18|14|33|13', 1, '73025.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-27'),
+(4, 8, '2016-02-17', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 6, 7, '18|17|36', 1, '353050.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-06'),
+(1, 9, '2016-02-26', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '1|2|4', 600, 2, 3, '0', 1, '391575.00', '0.00', '7|5;9|0;8|1;35|0', 1, '2016-02-06'),
+(1, 10, '2016-02-26', '', 'Birthday Party', '1|2|3', 200, 0, 0, '14|13|32', 1, '106950.00', '0.00', '7|0;9|0;8|0;35|10', 0, '2016-02-06');
 
 -- --------------------------------------------------------
 
@@ -463,7 +472,7 @@ CREATE TABLE `shift` (
 INSERT INTO `shift` (`shift_id`, `shift_name`, `shift_time`) VALUES
 (1, 'Day', '12:00 PM to 4:30 PM'),
 (2, 'Evening', '7:00 PM to 11:30 PM'),
-(6, 'Mid-Night', '1:00 AM to 5:30 AM');
+(3, 'Mid-Night', '1:00 AM to 5:30 AM');
 
 -- --------------------------------------------------------
 
@@ -546,10 +555,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`u_fname`, `u_lname`, `u_email`, `u_contact`, `u_pass`, `s_id`) VALUES
-('Saleh', 'Ahmad Oyon ', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$Rhdbmjpc4LdonX3gnY6P0etNUwXsn.krqPISrgFC.0tScmL63L8Cm', 1),
+('Mr.', 'Ahmad ', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$Rhdbmjpc4LdonX3gnY6P0etNUwXsn.krqPISrgFC.0tScmL63L8Cm', 1),
 ('Saleh', 'Oyon', 'nissongo_10@live.com', '+880-1520103065', '$2y$10$Yp8X1OHQeNFxdcI3P5Kw3.P5l..OEe13zF7hP1pXd1tX26ZfR6Qb.', 2),
 ('Abdullah', 'AS Sayeed', 'sayeed@yahoo.com', '+880-1520103064', '$2y$10$rOFCah2Bihg.Oj/Zxhl91uXB2beCIgW7PyA4He7NZ8AhysgIy2rQC', 3),
-('Saleh', 'Ahmad  ', 'nissongo_10@yahoo.com', '+880-1626785569', '$2y$10$3MWNX7t8OSDl3E6JCOzFB.l/bz65Dqo.zi8E2l.WZTMSm1o487THS', 4);
+('Saleh', 'Ahmad  ', 'nissongo_10@yahoo.com', '+880-1626785569', '$2y$10$3MWNX7t8OSDl3E6JCOzFB.l/bz65Dqo.zi8E2l.WZTMSm1o487THS', 4),
+('Md.', 'Rashedul Abedin ', 'salehoyon@hotmail.com', '+880-01685749621', '$2y$10$NVJANMCrpweyiaxSEklcQOZ2OwSkvgjOFQ56Cunm6VQSTHXc83FH2', 5);
 
 -- --------------------------------------------------------
 
@@ -728,7 +738,8 @@ ALTER TABLE `status`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`s_id`),
-  ADD UNIQUE KEY `u_email` (`u_email`);
+  ADD UNIQUE KEY `u_email` (`u_email`),
+  ADD UNIQUE KEY `u_email_2` (`u_email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -748,12 +759,12 @@ ALTER TABLE `adminlogin`
 -- AUTO_INCREMENT for table `advantages`
 --
 ALTER TABLE `advantages`
-  MODIFY `adv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `adv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `features`
 --
 ALTER TABLE `features`
-  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `gate`
 --
@@ -763,7 +774,7 @@ ALTER TABLE `gate`
 -- AUTO_INCREMENT for table `hall_booking`
 --
 ALTER TABLE `hall_booking`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `misc`
 --
@@ -778,7 +789,7 @@ ALTER TABLE `puposes`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `serv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `serv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `set_menu`
 --
@@ -788,7 +799,7 @@ ALTER TABLE `set_menu`
 -- AUTO_INCREMENT for table `shift`
 --
 ALTER TABLE `shift`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `stage`
 --
@@ -803,7 +814,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
