@@ -6,8 +6,9 @@
  * Time: 3:52 PM
  */
 require '../../model/db.php';
-$resp = array();
+
 if(isset($_POST['gateID'])){
+    $resp = array();
     $gateID = $_POST['gateID'];
     $row = getGateInfo($gateID);
     $resp['key'] = $row['g_id'];
@@ -16,6 +17,7 @@ if(isset($_POST['gateID'])){
     $resp['value'] = $row['g_price'];
     echo json_encode($resp);
 }elseif(isset($_POST['stageID'])){
+    $resp = array();
     $stageID = $_POST['stageID'];
     $row = getStageInfo($stageID);
     $resp['key'] = $row['st_id'];
@@ -44,12 +46,12 @@ if(isset($_POST['gateID'])){
         }
     }else{
         $image = "Demo.png";
-
     }
-    //insertNewGate($name, $cost, $image);
+    insertNewGate($name, $cost, $image);
 
     $row = gate();
-    $resp['value'] = $fn;
+    $resp = $row;
+
     echo json_encode($resp);
 }
 

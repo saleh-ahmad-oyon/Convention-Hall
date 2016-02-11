@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2016 at 08:11 PM
+-- Generation Time: Feb 11, 2016 at 09:26 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -49,7 +49,7 @@ INSERT INTO `features`(`f_desc`) VALUES (feat);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_gate` (IN `addname` TEXT, IN `addImage` TEXT, IN `addPrice` DECIMAL(10,2))  BEGIN
-INSERT INTO `gate`(`g_title`, `g_image`, `g_price`) VALUES (addname,addImage,addImage);
+INSERT INTO `gate`(`g_title`, `g_image`, `g_price`) VALUES (addname,addImage,addPrice);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_schedule` (IN `newShift` TEXT, IN `newTime` TEXT)  BEGIN
@@ -255,7 +255,8 @@ INSERT INTO `gate` (`g_id`, `g_title`, `g_image`, `g_price`) VALUES
 (5, 'Gate 5', 'gate5.jpg', '30000.00'),
 (6, 'Gate 6', 'gate6.jpeg', '8000.00'),
 (7, 'Gate 7', 'gate7.jpg', '5000.00'),
-(8, 'Gate 8', 'gate8.jpg', '15000.00');
+(8, 'Gate 8', 'gate8.jpg', '15000.00'),
+(9, 'Gate 9', '173092000009.jpg', '60000.00');
 
 -- --------------------------------------------------------
 
@@ -769,7 +770,7 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `gate`
 --
 ALTER TABLE `gate`
-  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `hall_booking`
 --
