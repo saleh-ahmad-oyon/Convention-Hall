@@ -213,7 +213,7 @@ if(!isset($_SESSION['admin'])){
                                     '</div>';
                                 $('#gate-content').html(ht);
                                 swal({
-                                    title: 'Siccessful!',
+                                    title: 'Successful!',
                                     text: 'A welcome gate has been added !!',
                                     type: 'success'
                                 });
