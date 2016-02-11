@@ -27,7 +27,7 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
 
-
+    <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
     <script>//$.noConflict();</script>
 
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -95,18 +95,19 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <h4>Name:</h4>
-                                        <input type="text" id="add_name" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Cost:</h4>
-                                        <input type="number" step="0.01" id="add_price" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" id="add_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
-                                    </div>
+                                    <form id="newGate" action="" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <h4>Name:</h4>
+                                            <input type="text" required="required" name="add_name" id="add_name" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Cost:</h4>
+                                            <input type="number" required="required" step="0.01" name="add_price" id="add_price" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Select an Image:</h4>
+                                            <input type="file" accept="image/*" name="add_image" id="add_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        </div>
                                 </div>
                                 <div class="col-sm-2"></div>
                             </div>
@@ -114,8 +115,9 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
+                        <button type="button" id="add_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -149,10 +151,90 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <script type="text/javascript">
-            function dismiss(x){
-                $(x).attr({
-                    "data-dismiss" : "modal"
+            $(document).ready(function(){
+                $('form#newGate').submit(function(e){
+                    e.preventDefault();
+                    var name = $('#add_name').val();
+                    var cost = $('#add_price').val();
+                    var image = $('#add_image').val();
+                    if(name == '' || cost == ''){
+                        swal({
+                            title: 'Error!',
+                            text: 'Every Field must be filled !!',
+                            type: 'error'
+                        });
+                    }else{
+                        $.ajax({
+                            type: 'POST',
+                            url: "data/ajax-req-gate",
+                            dataType: 'json',
+                            data: new FormData(this),
+                            contentType: false,
+                            cache : false,
+                            processData: false,
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+                            success : function(response){
+                                $('#add_close').click();
+                                swal({
+                                    title: 'Success!',
+                                    text: response.value,
+                                    type: 'success'
+                                });
+                            }
+                        });
+                    }
                 });
+            });
+
+            function dismiss(x){
+                var name = $('#add_name').val();
+                var cost = $('#add_price').val();
+                var image = $('#add_image').val();
+                if(name == '' || cost == ''){
+                    swal({
+                        title: 'Error!',
+                        text: 'Name or Cost is empty !!',
+                        type: 'error'
+                    });
+                }else{
+                    $.ajax({
+                        type: 'POST',
+                        url: "data/ajax-req-gate",
+                        dataType: 'json',
+                        data:{
+                            addName : name,
+                            addCost : cost,
+                            addimage : image
+                        },
+                        //contentType: false,
+                        cache : false,
+                        //processData: false,
+                        error: function() {
+                            swal({
+                                title: 'Failed!',
+                                text: 'An error occured !!',
+                                type: 'error'
+                            });
+                        },
+                        success : function(response){
+                            /*$(x).attr({
+                                "data-dismiss" : "modal"
+                            });
+                            $(x).click();*/
+                            swal({
+                                title: 'Success!',
+                                text: response.value,
+                                type: 'success'
+                            });
+                        }
+                    });
+                }
             }
 
             function deleteWelcomeGate(){
@@ -185,9 +267,10 @@ if(!isset($_SESSION['admin'])){
                     }
                 });
             }
-            function showAjaxModal(id)
-            {
-                $('#modal-gate').modal('show', {backdrop: 'static'});
+            function showAjaxModal(id) {
+                $('#modal-gate').modal('show', {
+                    backdrop: 'static'
+                });
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
@@ -260,7 +343,7 @@ if(!isset($_SESSION['admin'])){
 
 <!--Dropify-->
 <link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/dropify/dropify.css" />
-<script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+
 <script src="<?php echo SERVER; ?>/third_party/dropify/dropify.js"></script>
 <script>
     $(document).ready(function(){

@@ -742,6 +742,17 @@ function addFeature($desc){
     }
     $conn = null;
 }
+function insertNewGate($name, $cost, $image){
+    $conn = db_conn();
+    $selectQuery = "call insert_gate(:name, :image, :cost)";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function addAdvantages($advantage){
     $conn = db_conn();
     $selectQuery = "call insert_advantage(?)";

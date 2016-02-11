@@ -23,6 +23,34 @@ if(isset($_POST['gateID'])){
     $resp['image'] = $row['st_image'];
     $resp['value'] = $row['st_price'];
     echo json_encode($resp);
+}elseif(isset($_POST['add_name'])){
+    $name = $_POST['add_name'];
+    $cost = $_POST['add_price'];
+
+    $target_dir = '../../assets/img/gate/';
+    $fn = $_FILES["add_image"]["name"];
+
+    $target_file = $target_dir . basename($fn);
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+    if(!empty($fn)) {
+        $file = $_FILES['add_image'];
+        $check = getimagesize($_FILES["add_image"]["tmp_name"]);
+        if ($check !== false) {
+            $file_path = $target_dir . $file['name'];
+            move_uploaded_file($file['tmp_name'], $file_path);
+
+            $image = $file['name'];
+        }
+    }else{
+        $image = "Demo.png";
+
+    }
+    //insertNewGate($name, $cost, $image);
+
+    $row = gate();
+    $resp['value'] = $fn;
+    echo json_encode($resp);
 }
 
 
