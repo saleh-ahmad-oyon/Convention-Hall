@@ -188,11 +188,6 @@ if(!isset($_SESSION['admin'])){
                                 var count =0;
 
                                 for(i=0; i < response.length; ++i){
-                                    /*out += response[i].g_id + '</br>' +
-                                        response[i].g_title + '<br/>' +
-                                        response[i].g_image + '<br/>' +
-                                        response[i].g_price*/
-
                                     out += '<div class="col-sm-3 text-center">' +
                                                 '<div class="solid-border gates">' +
                                                     '<div class="idffi h-180 zoom">' +
@@ -217,6 +212,11 @@ if(!isset($_SESSION['admin'])){
                                     '</div>' +
                                     '</div>';
                                 $('#gate-content').html(ht);
+                                swal({
+                                    title: 'Siccessful!',
+                                    text: 'A welcome gate has been added !!',
+                                    type: 'success'
+                                });
                                 $('#add_close').click();
 
                             }
