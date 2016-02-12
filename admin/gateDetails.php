@@ -115,7 +115,7 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="add_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="add_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
                         <button type="submit" class="btn btn-info">Save changes</button>
                         </form>
                     </div>
@@ -154,12 +154,17 @@ if(!isset($_SESSION['admin'])){
         </div>
 
         <script type="text/javascript">
+            function dissmissAddModal(){
+                $('#add_name').val('');
+                $('#add_price').val('');
+                $('#modal-gate-add').modal('hide');
+            }
+
             $(document).ready(function(){
                 $('form#newGate').submit(function(e){
                     e.preventDefault();
                     var name = $('#add_name').val();
                     var cost = $('#add_price').val();
-                    var image = $('#add_image').val();
                     if(name == '' || cost == ''){
                         swal({
                             title: 'Error!',
@@ -222,6 +227,72 @@ if(!isset($_SESSION['admin'])){
                         });
                     }
                 });
+                $('form#editGate').submit(function(e){
+                    e.preventDefault();
+                    var name = $('#edit_name').val();
+                    var cost = $('#edit_price').val();
+                    if(name == '' || cost == ''){
+                        swal({
+                            title: 'Error!',
+                            text: 'Every Field must be filled !!',
+                            type: 'error'
+                        });
+                    }else {
+                        $.ajax({
+                            type: 'POST',
+                            url: "data/ajax-req-gate",
+                            dataType: 'json',
+                            data: new FormData(this),
+                            contentType: false,
+                            cache : false,
+                            processData: false,
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+                            success : function(response){
+                                var i;
+                                var out ='';
+                                var count =0;
+
+                                for(i=0; i < response.length; ++i){
+                                    out += '<div class="col-sm-3 text-center">' +
+                                        '<div class="solid-border gates">' +
+                                        '<div class="idffi h-180 zoom">' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/gate/' + response[i].g_image + '" alt="' + response[i].g_title + '"/>' +
+                                        '</div>' +
+                                        '<h3>'+response[i].g_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].g_price + '</span></p>' +
+                                        '<p>' +
+                                        '<button onclick="showAjaxModal(' + response[i].g_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate(' + response[i].g_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                    count++;
+                                    if(count%4 ==0){
+                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                    }
+                                }
+                                var ht = '<div class="row">' +
+                                    '<div class="col-sm-12">' +
+                                    out +
+                                    '</div>' +
+                                    '</div>';
+                                $('#gate-content').html(ht);
+                                swal({
+                                    title: 'Successful!',
+                                    text: 'Welcome gate has been modified !!',
+                                    type: 'success'
+                                });
+                                $('#edit_close').click();
+                            }
+                        });
+                    }
+                });
             });
 
             function deleteWelcomeGate(key){
@@ -243,6 +314,7 @@ if(!isset($_SESSION['admin'])){
                         $.ajax({
                             type: 'POST',
                             url: 'data/ajax-req-gate',
+                            dataType: 'json',
                             data:{
                                 gateKey : key
                             },
@@ -259,22 +331,21 @@ if(!isset($_SESSION['admin'])){
                             },
 
                             success : function(response){
-                                var arr = JSON.parse(response);
                                 var i;
                                 var out ='';
                                 var count =0;
 
-                                for(i=0; i < arr.length; ++i){
+                                for(i=0; i < response.length; ++i){
                                     out += '<div class="col-sm-3 text-center">' +
                                         '<div class="solid-border gates">' +
                                         '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/gate/' + arr[i].g_image + '" alt="' + arr[i].g_title + '"/>' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/gate/' + response[i].g_image + '" alt="' + response[i].g_title + '"/>' +
                                         '</div>' +
-                                        '<h3>'+arr[i].g_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + arr[i].g_price + '</span></p>' +
+                                        '<h3>'+response[i].g_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].g_price + '</span></p>' +
                                         '<p>' +
-                                        '<button onclick="showAjaxModal(' + arr[i].g_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate(' + arr[i].g_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '<button onclick="showAjaxModal(' + response[i].g_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate(' + response[i].g_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                         '</p>' +
                                         '</div>' +
                                         '</div>';
@@ -326,8 +397,9 @@ if(!isset($_SESSION['admin'])){
                     },
                     success: function(response)
                     {
-                        $('#name').val(response.Name);
-                        $('#price').val(response.value);
+                        $('#edit_name').val(response.Name);
+                        $('#edit_price').val(response.value);
+                        $('#edit_key').val(response.key);
                     }
                 });
             }
@@ -347,17 +419,19 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
+                                    <form id="editGate" action="" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <h4>Name:</h4>
-                                        <input type="text" id="name" class="form-control" />
+                                        <input type="text" required="required" name="edit_name" id="edit_name" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <h4>Cost:</h4>
-                                        <input type="number" step="0.01" id="price" class="form-control" />
+                                        <input type="number" required="required" step="0.01" name="edit_price" id="edit_price" class="form-control" />
                                     </div>
+                                        <input type="hidden" id="edit_key" name="edit_key"/>
                                     <div class="form-group">
                                         <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        <input type="file" accept="image/*" name="edit_image" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -366,8 +440,9 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
+                        <button type="button" id="edit_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>

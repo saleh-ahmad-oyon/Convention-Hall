@@ -403,6 +403,17 @@ function changeStatus($order, $paid, $o){
     }
     $conn = null;
 }
+function updateGate($name, $cost, $image, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `gate` SET `g_title`= :title,`g_image`= :image,`g_price`= :price WHERE `g_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function deleteOrder($order){
     $conn = db_conn();
     $selectQuery = "DELETE FROM `hall_booking` WHERE `order_id` = ?";
