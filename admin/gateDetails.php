@@ -138,7 +138,7 @@ if(!isset($_SESSION['admin'])){
                                 <p><span>Price: &#2547; <?php echo $g['g_price']; ?></span></p>
                                 <p>
                                     <button onclick="showAjaxModal(<?php echo $g['g_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteWelcomeGate();"><i class="entypo-trash"></i> Delete</button>
+                                    <button class="btn btn-danger" onclick="deleteWelcomeGate(<?php echo $g['g_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
                                 </p>
                                 <?php $count++; ?>
                             </div>
@@ -197,7 +197,7 @@ if(!isset($_SESSION['admin'])){
                                                     '<p><span>Price: &#2547; ' + response[i].g_price + '</span></p>' +
                                                     '<p>' +
                                                         '<button onclick="showAjaxModal(' + response[i].g_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate();"><i class="entypo-trash"></i> Delete</button>' +
+                                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate(' + response[i].g_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                                     '</p>' +
                                                 '</div>' +
                                             '</div>';
@@ -218,14 +218,13 @@ if(!isset($_SESSION['admin'])){
                                     type: 'success'
                                 });
                                 $('#add_close').click();
-
                             }
                         });
                     }
                 });
             });
 
-            function deleteWelcomeGate(){
+            function deleteWelcomeGate(key){
                 swal({
                     title: 'Are you sure?',
                     text: 'You will not be able to recover this !',
@@ -241,11 +240,62 @@ if(!isset($_SESSION['admin'])){
                     closeOnCancel: false
                 }, function(isConfirm) {
                     if (isConfirm) {
-                        swal(
-                            'Deleted!',
-                            'Welcome Gate has been deleted.',
-                            'success'
-                        );
+                        $.ajax({
+                            type: 'POST',
+                            url: 'data/ajax-req-gate',
+                            data:{
+                                gateKey : key
+                            },
+                            cache : false,
+                            beforeSend: function(){
+                                swal.disableButtons();
+                            },
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+
+                            success : function(response){
+                                var arr = JSON.parse(response);
+                                var i;
+                                var out ='';
+                                var count =0;
+
+                                for(i=0; i < arr.length; ++i){
+                                    out += '<div class="col-sm-3 text-center">' +
+                                        '<div class="solid-border gates">' +
+                                        '<div class="idffi h-180 zoom">' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/gate/' + arr[i].g_image + '" alt="' + arr[i].g_title + '"/>' +
+                                        '</div>' +
+                                        '<h3>'+arr[i].g_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + arr[i].g_price + '</span></p>' +
+                                        '<p>' +
+                                        '<button onclick="showAjaxModal(' + arr[i].g_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteWelcomeGate(' + arr[i].g_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                    count++;
+                                    if(count%4 ==0){
+                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                    }
+                                }
+                                var ht = '<div class="row">' +
+                                    '<div class="col-sm-12">' +
+                                    out +
+                                    '</div>' +
+                                    '</div>';
+                                $('#gate-content').html(ht);
+                                swal(
+                                    'Deleted!',
+                                    'Welcome Gate has been deleted.',
+                                    'success'
+                                );
+                            }
+                        });
                     } else {
                         swal(
                             'Cancelled',

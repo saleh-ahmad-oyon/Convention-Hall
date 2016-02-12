@@ -414,6 +414,17 @@ function deleteOrder($order){
     }
     $conn = null;
 }
+function deleteGate($gateID){
+    $conn = db_conn();
+    $selectQuery = "DELETE FROM `gate` WHERE `g_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($gateID));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function deleteSchedule($id){
     $conn = db_conn();
     $selectQuery = "DELETE FROM `shift` WHERE `shift_id` = ?";
