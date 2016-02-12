@@ -414,6 +414,17 @@ function updateGate($name, $cost, $image, $id){
     }
     $conn = null;
 }
+function updateStage($name, $cost, $image, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `stage` SET `st_title`=:title,`st_image`=:image,`st_price`=:price WHERE `st_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function deleteOrder($order){
     $conn = db_conn();
     $selectQuery = "DELETE FROM `hall_booking` WHERE `order_id` = ?";
@@ -431,6 +442,17 @@ function deleteGate($gateID){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($gateID));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function deleteStage($id){
+    $conn = db_conn();
+    $selectQuery = "DELETE FROM `stage` WHERE `st_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($id));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }
@@ -770,6 +792,17 @@ function insertNewGate($name, $cost, $image){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function insertNewStage($stageName, $stageCost, $image){
+    $conn = db_conn();
+    $selectQuery = "call insert_stage(:name, :image, :cost)";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':name' => $stageName, ':image' =>$image, ':cost' => $stageCost));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }

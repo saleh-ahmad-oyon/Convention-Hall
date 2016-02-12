@@ -61,7 +61,7 @@ if(isset($_POST['gateID'])){           //Get Gate Information
     $row = gate();
     $resp = $row;
     echo json_encode($resp);
-}elseif(isset($_POST['edit_name'])){
+}elseif(isset($_POST['edit_name'])){   // edit Gate Information
     $name = $_POST['edit_name'];
     $cost = $_POST['edit_price'];
     $id = $_POST['edit_key'];
@@ -88,6 +88,73 @@ if(isset($_POST['gateID'])){           //Get Gate Information
     //call function to modify Welcome gate
     updateGate($name, $cost, $image, $id);
     $row = gate();
+    $resp = $row;
+    echo json_encode($resp);
+}elseif(isset($_POST['add_stage_name'])){    //adding new stage decoration
+    $stageName = $_POST['add_stage_name'];
+    $stageCost = $_POST['add_stage_price'];
+
+    $target_dir = '../../assets/img/stage/';
+    $fn = $_FILES["add_stage_image"]["name"];
+
+    $target_file = $target_dir . basename($fn);
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+    if(!empty($fn)) {
+        $file = $_FILES['add_stage_image'];
+        $check = getimagesize($_FILES["add_stage_image"]["tmp_name"]);
+        if ($check !== false) {
+            $file_path = $target_dir . $file['name'];
+            move_uploaded_file($file['tmp_name'], $file_path);
+
+            $image = $file['name'];
+        }
+    }else{
+        $image = "Demo.png";
+    }
+    insertNewStage($stageName, $stageCost, $image);
+
+    //return updated Stage informations
+    $row = stage();
+    $resp = $row;
+    echo json_encode($resp);
+}elseif(isset($_POST['edit_stage_name'])){  // Edit stage Info
+    $name = $_POST['edit_stage_name'];
+    $cost = $_POST['edit_stage_price'];
+    $id = $_POST['edit_stage_key'];
+
+    $target_dir = '../../assets/img/stage/';
+    $fn = $_FILES["edit_stage_image"]["name"];
+
+    $target_file = $target_dir . basename($fn);
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+    if(!empty($fn)) {
+        $file = $_FILES['edit_stage_image'];
+        $check = getimagesize($_FILES["edit_stage_image"]["tmp_name"]);
+        if ($check !== false) {
+            $file_path = $target_dir . $file['name'];
+            move_uploaded_file($file['tmp_name'], $file_path);
+
+            $image = $file['name'];
+        }
+    }else{
+        $image = "Demo.png";
+    }
+
+    //call function to modify Stage Decoration
+    updateStage($name, $cost, $image, $id);
+
+    //return updated Stage informations
+    $row = stage();
+    $resp = $row;
+    echo json_encode($resp);
+}elseif(isset($_POST['stageKey'])){   // delete stage info
+    $id = $_POST['stageKey'];
+    deleteStage($id);
+
+    //return updated Stage informations
+    $row = stage();
     $resp = $row;
     echo json_encode($resp);
 }

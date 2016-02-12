@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Oyon
- * Date: 2/10/2016
- * Time: 3:07 AM
+ * Date: 2/9/2016
+ * Time: 1:36 PM
  */
 session_start();
 require '../controller/define.php';
@@ -27,7 +27,7 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
 
-
+    <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
     <script>//$.noConflict();</script>
 
     <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -95,18 +95,19 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <h4>Name:</h4>
-                                        <input type="text" id="add_stage_name" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Cost:</h4>
-                                        <input type="number" step="0.01" id="add_stage_price" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" id="add_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
-                                    </div>
+                                    <form id="newStage" action="" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <h4>Name:</h4>
+                                            <input type="text" required="required" name="add_stage_name" id="add_stage_name" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Cost:</h4>
+                                            <input type="number" required="required" step="0.01" name="add_stage_price" id="add_stage_price" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Select an Image:</h4>
+                                            <input type="file" accept="image/*" name="add_stage_image" id="add_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        </div>
                                 </div>
                                 <div class="col-sm-2"></div>
                             </div>
@@ -114,48 +115,187 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
+                        <button type="button" id="add_stage_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
+                        <button type="submit" class="btn btn-info">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <br/><br/>
-        <div class="row">
-            <div class="col-sm-12">
-                <?php
-                $count = 0;
-                foreach($stage as $s): ?>
-                    <div class="col-sm-3 text-center">
-                        <div class="solid-border stages">
-                            <div class="idffi h-180 zoom">
-                                <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
-                            </div>
-                            <h3><?php echo $s['st_title']; ?></h3>
-                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $s['st_price']; ?></span></p>
-                            <p>
-                                <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                <button class="btn btn-danger" onclick="deleteStageDecoration();"><i class="entypo-trash"></i> Delete</button>
-                            </p>
-                            <?php $count++; ?>
-                        </div>
-                    </div>
+        <div id="stage-content">
+            <div class="row">
+                <div class="col-sm-12">
                     <?php
-                    if($count%4 == 0){
-                        echo "</div></div><br/><div class='row'><div class='col-sm-12 text-center'> ";
-                    }
-                endforeach;
-                ?>
+                    $count = 0;
+                    foreach($stage as $s): ?>
+                        <div class="col-sm-3 text-center">
+                            <div class="solid-border stages">
+                                <div class="idffi h-180 zoom">
+                                    <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
+                                </div>
+                                <h3><?php echo $s['st_title']; ?></h3>
+                                <p><span>Price: &#2547; <?php echo $s['st_price']; ?></span></p>
+                                <p>
+                                    <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteStageDecoration(<?php echo $s['st_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
+                                </p>
+                                <?php $count++; ?>
+                            </div>
+                        </div>
+                        <?php
+                        if($count%4 == 0){
+                            echo "</div></div><br/><div class='row'><div class='col-sm-12 text-center'>";
+                        }
+                    endforeach;
+                    ?>
+                </div>
             </div>
         </div>
+
         <script type="text/javascript">
-            function dismiss(x){
-                $(x).attr({
-                    "data-dismiss" : "modal"
-                });
+            function dissmissAddModal(){
+                $('#add_stage_name').val('');
+                $('#add_stage_price').val('');
+                $('#modal-stage-add').modal('hide');
             }
 
-            function deleteStageDecoration(){
+            $(document).ready(function(){
+                $('form#newStage').submit(function(e){
+                    e.preventDefault();
+                    var name = $('#add_stage_name').val();
+                    var cost = $('#add_stage_price').val();
+                    if(name == '' || cost == ''){
+                        swal({
+                            title: 'Error!',
+                            text: 'Every Field must be filled !!',
+                            type: 'error'
+                        });
+                    }else{
+                        $.ajax({
+                            type: 'POST',
+                            url: "data/ajax-req-gate",
+                            dataType: 'json',
+                            data: new FormData(this),
+                            contentType: false,
+                            cache : false,
+                            processData: false,
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+                            success : function(response){
+                                var i;
+                                var out ='';
+                                var count =0;
+
+                                for(i=0; i < response.length; ++i){
+                                    out += '<div class="col-sm-3 text-center">' +
+                                        '<div class="solid-border stages">' +
+                                        '<div class="idffi h-180 zoom">' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '</div>' +
+                                        '<h3>'+response[i].st_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<p>' +
+                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                    count++;
+                                    if(count%4 ==0){
+                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                    }
+                                }
+                                var ht = '<div class="row">' +
+                                    '<div class="col-sm-12">' +
+                                    out +
+                                    '</div>' +
+                                    '</div>';
+                                $('#stage-content').html(ht);
+                                swal({
+                                    title: 'Successful!',
+                                    text: 'A Stage Decoration has been added !!',
+                                    type: 'success'
+                                });
+                                $('#add_stage_close').click();
+                            }
+                        });
+                    }
+                });
+                $('form#editStage').submit(function(e){
+                    e.preventDefault();
+                    var stageName = $('#edit_stage_name').val();
+                    var stageCost = $('#edit_stage_price').val();
+                    if(stageName == '' || stageCost == ''){
+                        swal({
+                            title: 'Error!',
+                            text: 'Every Field must be filled !!',
+                            type: 'error'
+                        });
+                    }else {
+                        $.ajax({
+                            type: 'POST',
+                            url: "data/ajax-req-gate",
+                            dataType: 'json',
+                            data: new FormData(this),
+                            contentType: false,
+                            cache : false,
+                            processData: false,
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+                            success : function(response){
+                                var i;
+                                var out ='';
+                                var count =0;
+
+                                for(i=0; i < response.length; ++i){
+                                    out += '<div class="col-sm-3 text-center">' +
+                                        '<div class="solid-border stages">' +
+                                        '<div class="idffi h-180 zoom">' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '</div>' +
+                                        '<h3>'+response[i].st_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<p>' +
+                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                    count++;
+                                    if(count%4 ==0){
+                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                    }
+                                }
+                                var ht = '<div class="row">' +
+                                    '<div class="col-sm-12">' +
+                                    out +
+                                    '</div>' +
+                                    '</div>';
+                                $('#stage-content').html(ht);
+                                swal({
+                                    title: 'Successful!',
+                                    text: 'Welcome gate has been modified !!',
+                                    type: 'success'
+                                });
+                                $('#edit_stage_close').click();
+                            }
+                        });
+                    }
+                });
+            });
+
+            function deleteStageDecoration(key){
                 swal({
                     title: 'Are you sure?',
                     text: 'You will not be able to recover this !',
@@ -171,11 +311,62 @@ if(!isset($_SESSION['admin'])){
                     closeOnCancel: false
                 }, function(isConfirm) {
                     if (isConfirm) {
-                        swal(
-                            'Deleted!',
-                            'Stage Decoration has been deleted.',
-                            'success'
-                        );
+                        $.ajax({
+                            type: 'POST',
+                            url: 'data/ajax-req-gate',
+                            dataType: 'json',
+                            data:{
+                                stageKey : key
+                            },
+                            cache : false,
+                            beforeSend: function(){
+                                swal.disableButtons();
+                            },
+                            error: function() {
+                                swal({
+                                    title: 'Failed!',
+                                    text: 'An error occured !!',
+                                    type: 'error'
+                                });
+                            },
+
+                            success : function(response){
+                                var i;
+                                var out ='';
+                                var count =0;
+
+                                for(i=0; i < response.length; ++i){
+                                    out += '<div class="col-sm-3 text-center">' +
+                                        '<div class="solid-border stages">' +
+                                        '<div class="idffi h-180 zoom">' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '</div>' +
+                                        '<h3>'+response[i].st_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<p>' +
+                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                    count++;
+                                    if(count%4 ==0){
+                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                    }
+                                }
+                                var ht = '<div class="row">' +
+                                    '<div class="col-sm-12">' +
+                                    out +
+                                    '</div>' +
+                                    '</div>';
+                                $('#stage-content').html(ht);
+                                swal(
+                                    'Deleted!',
+                                    'Stage Decoration has been deleted.',
+                                    'success'
+                                );
+                            }
+                        });
                     } else {
                         swal(
                             'Cancelled',
@@ -185,9 +376,10 @@ if(!isset($_SESSION['admin'])){
                     }
                 });
             }
-            function showAjaxModal(id)
-            {
-                $('#modal-stage').modal('show', {backdrop: 'static'});
+            function showAjaxModal(id) {
+                $('#modal-stage').modal('show', {
+                    backdrop: 'static'
+                });
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
@@ -205,13 +397,13 @@ if(!isset($_SESSION['admin'])){
                     },
                     success: function(response)
                     {
-                        $('#name').val(response.Name);
-                        $('#price').val(response.value);
+                        $('#edit_stage_name').val(response.Name);
+                        $('#edit_stage_price').val(response.value);
+                        $('#edit_stage_key').val(response.key);
                     }
                 });
             }
         </script>
-
 
         <!-- Modal-->
         <div class="modal fade" id="modal-stage">
@@ -226,18 +418,20 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <h4>Name:</h4>
-                                        <input type="text" id="name" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Price:</h4>
-                                        <input type="number" step="0.01" id="price" class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
-                                    </div>
+                                    <form id="editStage" action="" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <h4>Name:</h4>
+                                            <input type="text" required="required" value="" name="edit_stage_name" id="edit_stage_name" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Cost:</h4>
+                                            <input type="number" required="required" value="" step="0.01" name="edit_stage_price" id="edit_stage_price" class="form-control" />
+                                        </div>
+                                        <input type="hidden" id="edit_stage_key" name="edit_stage_key"/>
+                                        <div class="form-group">
+                                            <h4>Select an Image:</h4>
+                                            <input type="file" accept="image/*" value="" name="edit_stage_image" id="edit_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        </div>
                                 </div>
                                 <div class="col-sm-2"></div>
                             </div>
@@ -245,8 +439,9 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-info" onclick="dismiss(this);">Save changes</button>
+                        <button type="button" id="edit_stage_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info">Save changes</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -260,7 +455,7 @@ if(!isset($_SESSION['admin'])){
 
 <!--Dropify-->
 <link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/dropify/dropify.css" />
-<script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+
 <script src="<?php echo SERVER; ?>/third_party/dropify/dropify.js"></script>
 <script>
     $(document).ready(function(){

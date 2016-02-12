@@ -405,7 +405,6 @@ if(!isset($_SESSION['admin'])){
             }
         </script>
 
-
         <!-- Modal-->
         <div class="modal fade" id="modal-gate">
             <div class="modal-dialog">
@@ -422,16 +421,16 @@ if(!isset($_SESSION['admin'])){
                                     <form id="editGate" action="" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <h4>Name:</h4>
-                                        <input type="text" required="required" name="edit_name" id="edit_name" class="form-control" />
+                                        <input type="text" required="required" value="" name="edit_name" id="edit_name" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <h4>Cost:</h4>
-                                        <input type="number" required="required" step="0.01" name="edit_price" id="edit_price" class="form-control" />
+                                        <input type="number" required="required" value="" step="0.01" name="edit_price" id="edit_price" class="form-control" />
                                     </div>
                                         <input type="hidden" id="edit_key" name="edit_key"/>
                                     <div class="form-group">
                                         <h4>Select an Image:</h4>
-                                        <input type="file" accept="image/*" name="edit_image" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                        <input type="file" accept="image/*" value="" name="edit_image" id="image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
