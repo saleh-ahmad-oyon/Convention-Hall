@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2016 at 09:26 PM
+-- Generation Time: Feb 12, 2016 at 09:31 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -58,6 +58,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_service` (IN `serv` TEXT, IN `price` DECIMAL(10,2))  BEGIN
 INSERT INTO `services`(`serv_name`, `Serv_price`) VALUES (serv, price);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_stage` (IN `title` TEXT, IN `image` TEXT, IN `cost` DECIMAL(10,2))  BEGIN
+INSERT INTO `stage`(`st_title`, `st_image`, `st_price`) VALUES (title,image,cost);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `new_user` (IN `fname` TEXT, IN `lname` TEXT, IN `email` VARCHAR(255), IN `contact` TEXT, IN `pass` TEXT)  BEGIN
@@ -253,10 +257,10 @@ INSERT INTO `gate` (`g_id`, `g_title`, `g_image`, `g_price`) VALUES
 (3, 'Gate 3', 'gate3.jpg', '5000.00'),
 (4, 'Gate 4', 'gate4.jpg', '20000.00'),
 (5, 'Gate 5', 'gate5.jpg', '30000.00'),
-(6, 'Gate 6', 'gate6.jpeg', '8000.00'),
-(7, 'Gate 7', 'gate7.jpg', '5000.00'),
-(8, 'Gate 8', 'gate8.jpg', '15000.00'),
-(9, 'Gate 9', '173092000009.jpg', '60000.00');
+(6, 'Gate 6', 'gate6.jpeg', '10000.00'),
+(7, 'Gate 7', 'gate7.jpg', '15000.00'),
+(34, 'Gate 9', '173092000009.jpg', '65000.00'),
+(30, 'Gate 8', 'gate8.jpg', '10000.00');
 
 -- --------------------------------------------------------
 
@@ -770,7 +774,7 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `gate`
 --
 ALTER TABLE `gate`
-  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `hall_booking`
 --
@@ -805,7 +809,7 @@ ALTER TABLE `shift`
 -- AUTO_INCREMENT for table `stage`
 --
 ALTER TABLE `stage`
-  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `status`
 --

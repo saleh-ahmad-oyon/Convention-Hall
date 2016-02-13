@@ -29,11 +29,10 @@ html, body{
     top:0;
     background: url("../img/background-learner.jpg") bottom no-repeat fixed;
     background-size: cover;
-    /*filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feGaussianBlur stdDeviation="2" /></filter></svg>#filter');
-    -webkit-filter: blur(2px);
-    filter: blur(2px);*/
+    //filter: blur(2px);
     height: 100%;
 }
+
 .cover-image-page-not-found{
     position: fixed;
     top: 0;
