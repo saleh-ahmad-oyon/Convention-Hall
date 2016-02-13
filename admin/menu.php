@@ -108,17 +108,17 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="#">
+                        <a href="<?php echo SERVER ?>/admin/setMenu">
                             <span class="title">Set Menu</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="<?php echo SERVER ?>/admin/additionalFoodItems">
                             <span class="title">Additional Items</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="<?php echo SERVER ?>/admin/specialItems">
                             <span class="title">Special Items</span>
                         </a>
                     </li>
