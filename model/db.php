@@ -332,6 +332,18 @@ function getGateInfo($gate){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
+function getAddiFoodInfo($id){
+    $conn = db_conn();
+    $selectQuery = "SELECT * FROM `additional_menu` WHERE `am_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row;
+}
 function getStageValue($stage){
     $conn = db_conn();
     $selectQuery = "SELECT `st_price` FROM `stage` WHERE `st_id` = ?";
@@ -414,6 +426,17 @@ function updateGate($name, $cost, $image, $id){
     }
     $conn = null;
 }
+function updateAdditionalFood($name, $cost, $keys, $image, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `additional_menu` SET `am_title`=:title,`am_image`=:image,`am_price`=:price,`keywords`=:keywords WHERE `am_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function updateStage($name, $cost, $image, $id){
     $conn = db_conn();
     $selectQuery = "UPDATE `stage` SET `st_title`=:title,`st_image`=:image,`st_price`=:price WHERE `st_id` = :id";
@@ -442,6 +465,17 @@ function deleteGate($gateID){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($gateID));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function deleteAddiFood($id){
+    $conn = db_conn();
+    $selectQuery = "DELETE FROM `additional_menu` WHERE `am_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($id));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }
@@ -792,6 +826,17 @@ function insertNewGate($name, $cost, $image){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function insertNewFood($name, $cost, $image, $keys){
+    $conn = db_conn();
+    $selectQuery = "call insert_addi_food(:name, :image, :cost, :keys)";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost, ':keys' => $keys));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }

@@ -88,25 +88,29 @@ if(!isset($_SESSION['admin'])){
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">Add Stage Decoration</h3>
+                        <h3 class="modal-title">Add Additional Food Items</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <form id="newStage" action="" method="post" enctype="multipart/form-data">
+                                    <form id="newAddiFood" action="" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <h4>Name:</h4>
-                                            <input type="text" required="required" name="add_stage_name" id="add_stage_name" class="form-control" />
+                                            <input type="text" required="required" name="add_addi_food_name" id="add_addi_food_name" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <h4>Cost:</h4>
-                                            <input type="number" required="required" step="0.01" name="add_stage_price" id="add_stage_price" class="form-control" />
+                                            <input type="number" required="required" step="0.01" name="add_addi_food_price" id="add_addi_food_price" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Enter Keywords:</h4>
+                                            <textarea class="form-control" required="required" name="add_addi_food_keys" id="add_addi_food_keys" ></textarea>
                                         </div>
                                         <div class="form-group">
                                             <h4>Select an Image:</h4>
-                                            <input type="file" accept="image/*" name="add_stage_image" id="add_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                            <input type="file" accept="image/*" name="add_addi_food_image" id="add_addi_food_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
                                         </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -115,7 +119,7 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="add_stage_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
+                        <button type="button" id="add_addi_food_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
                         <button type="submit" class="btn btn-info">Save changes</button>
                         </form>
                     </div>
@@ -123,7 +127,7 @@ if(!isset($_SESSION['admin'])){
             </div>
         </div>
         <br/><br/>
-        <div id="stage-content">
+        <div id="addifood-content">
             <div class="row">
                 <div class="col-sm-12">
                     <?php
@@ -155,17 +159,19 @@ if(!isset($_SESSION['admin'])){
 
         <script type="text/javascript">
             function dissmissAddModal(){
-                $('#add_stage_name').val('');
-                $('#add_stage_price').val('');
-                $('#modal-stage-add').modal('hide');
+                $('#add_addi_food_name').val('');
+                $('#add_addi_food_price').val('');
+                $('#add_addi_food_keys').val('');
+                $('#modal-addifood-add').modal('hide');
             }
 
             $(document).ready(function(){
-                $('form#newStage').submit(function(e){
+                $('form#newAddiFood').submit(function(e){
                     e.preventDefault();
-                    var name = $('#add_stage_name').val();
-                    var cost = $('#add_stage_price').val();
-                    if(name == '' || cost == ''){
+                    var name = $('#add_addi_food_name').val();
+                    var cost = $('#add_addi_food_price').val();
+                    var keys = $('#add_addi_food_keys').val();
+                    if(name == '' || cost == '' || keys == ''){
                         swal({
                             title: 'Error!',
                             text: 'Every Field must be filled !!',
@@ -174,7 +180,7 @@ if(!isset($_SESSION['admin'])){
                     }else{
                         $.ajax({
                             type: 'POST',
-                            url: "data/ajax-req-gate",
+                            url: "data/ajax-req-food",
                             dataType: 'json',
                             data: new FormData(this),
                             contentType: false,
@@ -194,15 +200,15 @@ if(!isset($_SESSION['admin'])){
 
                                 for(i=0; i < response.length; ++i){
                                     out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
+                                        '<div class="solid-border addiFood">' +
                                         '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/food/' + response[i].am_image + '" alt="' + response[i].am_title + '"/>' +
                                         '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<h3>'+response[i].am_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].am_price + '</span></p>' +
                                         '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '<button onclick="showAjaxModal(' + response[i].am_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteAdditionalFood(' + response[i].am_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                         '</p>' +
                                         '</div>' +
                                         '</div>';
@@ -216,22 +222,23 @@ if(!isset($_SESSION['admin'])){
                                     out +
                                     '</div>' +
                                     '</div>';
-                                $('#stage-content').html(ht);
+                                $('#addifood-content').html(ht);
                                 swal({
                                     title: 'Successful!',
-                                    text: 'A Stage Decoration has been added !!',
+                                    text: 'An additional food has been added !!',
                                     type: 'success'
                                 });
-                                $('#add_stage_close').click();
+                                $('#add_addi_food_close').click();
                             }
                         });
                     }
                 });
-                $('form#editStage').submit(function(e){
+                $('form#editAddiFood').submit(function(e){
                     e.preventDefault();
-                    var stageName = $('#edit_stage_name').val();
-                    var stageCost = $('#edit_stage_price').val();
-                    if(stageName == '' || stageCost == ''){
+                    var Name = $('#edit_addi_food_name').val();
+                    var Cost = $('#edit_addi_food_price').val();
+                    var Keywords = $('#edit_addi_food_keywords').val();
+                    if(Name == '' || Cost == '' || Keywords == ''){
                         swal({
                             title: 'Error!',
                             text: 'Every Field must be filled !!',
@@ -240,7 +247,7 @@ if(!isset($_SESSION['admin'])){
                     }else {
                         $.ajax({
                             type: 'POST',
-                            url: "data/ajax-req-gate",
+                            url: "data/ajax-req-food",
                             dataType: 'json',
                             data: new FormData(this),
                             contentType: false,
@@ -260,15 +267,15 @@ if(!isset($_SESSION['admin'])){
 
                                 for(i=0; i < response.length; ++i){
                                     out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
+                                        '<div class="solid-border addiFood">' +
                                         '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/food/' + response[i].am_image + '" alt="' + response[i].am_title + '"/>' +
                                         '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<h3>'+response[i].am_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].am_price + '</span></p>' +
                                         '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '<button onclick="showAjaxModal(' + response[i].am_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteAdditionalFood(' + response[i].am_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                         '</p>' +
                                         '</div>' +
                                         '</div>';
@@ -282,20 +289,20 @@ if(!isset($_SESSION['admin'])){
                                     out +
                                     '</div>' +
                                     '</div>';
-                                $('#stage-content').html(ht);
+                                $('#addifood-content').html(ht);
                                 swal({
                                     title: 'Successful!',
-                                    text: 'Welcome gate has been modified !!',
+                                    text: 'Additional Food item has been modified !!',
                                     type: 'success'
                                 });
-                                $('#edit_stage_close').click();
+                                $('#edit_addi_food_close').click();
                             }
                         });
                     }
                 });
             });
 
-            function deleteStageDecoration(key){
+            function deleteAdditionalFood(key){
                 swal({
                     title: 'Are you sure?',
                     text: 'You will not be able to recover this !',
@@ -313,10 +320,10 @@ if(!isset($_SESSION['admin'])){
                     if (isConfirm) {
                         $.ajax({
                             type: 'POST',
-                            url: 'data/ajax-req-gate',
+                            url: 'data/ajax-req-food',
                             dataType: 'json',
                             data:{
-                                stageKey : key
+                                addiFoodKey : key
                             },
                             cache : false,
                             beforeSend: function(){
@@ -337,15 +344,15 @@ if(!isset($_SESSION['admin'])){
 
                                 for(i=0; i < response.length; ++i){
                                     out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
+                                        '<div class="solid-border addiFood">' +
                                         '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
+                                        '<img src="<?php echo SERVER; ?>/assets/img/food/' + response[i].am_image + '" alt="' + response[i].am_title + '"/>' +
                                         '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+                                        '<h3>'+response[i].am_title+'</h3>' +
+                                        '<p><span>Price: &#2547; ' + response[i].am_price + '</span></p>' +
                                         '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '<button onclick="showAjaxModal(' + response[i].am_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteAdditionalFood(' + response[i].am_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                         '</p>' +
                                         '</div>' +
                                         '</div>';
@@ -359,10 +366,10 @@ if(!isset($_SESSION['admin'])){
                                     out +
                                     '</div>' +
                                     '</div>';
-                                $('#stage-content').html(ht);
+                                $('#addifood-content').html(ht);
                                 swal(
                                     'Deleted!',
-                                    'Stage Decoration has been deleted.',
+                                    'Additional Food has been deleted.',
                                     'success'
                                 );
                             }
@@ -377,17 +384,17 @@ if(!isset($_SESSION['admin'])){
                 });
             }
             function showAjaxModal(id) {
-                $('#modal-stage').modal('show', {
+                $('#modal-addi-food').modal('show', {
                     backdrop: 'static'
                 });
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        stageID : id
+                        addiFoodID : id
                     },
                     cache : false,
-                    url: "data/ajax-req-gate",
+                    url: "data/ajax-req-food",
                     error: function() {
                         swal({
                             title: 'Failed!',
@@ -397,16 +404,17 @@ if(!isset($_SESSION['admin'])){
                     },
                     success: function(response)
                     {
-                        $('#edit_stage_name').val(response.Name);
-                        $('#edit_stage_price').val(response.value);
-                        $('#edit_stage_key').val(response.key);
+                        $('#edit_addi_food_name').val(response.am_title);
+                        $('#edit_addi_food_price').val(response.am_price);
+                        $('#edit_addi_food_keywords').val(response.keywords);
+                        $('#edit_addi_food_key').val(response.am_id);
                     }
                 });
             }
         </script>
 
         <!-- Modal-->
-        <div class="modal fade" id="modal-stage">
+        <div class="modal fade" id="modal-addi-food">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -418,19 +426,23 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <form id="editStage" action="" method="post" enctype="multipart/form-data">
+                                    <form id="editAddiFood" action="" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <h4>Name:</h4>
-                                            <input type="text" required="required" value="" name="edit_stage_name" id="edit_stage_name" class="form-control" />
+                                            <input type="text" required="required" value="" name="edit_addi_food_name" id="edit_addi_food_name" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <h4>Cost:</h4>
-                                            <input type="number" required="required" value="" step="0.01" name="edit_stage_price" id="edit_stage_price" class="form-control" />
+                                            <input type="number" required="required" value="" step="0.01" name="edit_addi_food_price" id="edit_addi_food_price" class="form-control" />
                                         </div>
-                                        <input type="hidden" id="edit_stage_key" name="edit_stage_key"/>
+                                        <div class="form-group">
+                                            <h4>Keywords:</h4>
+                                            <textarea required="required" class="form-control" name="edit_addi_food_keywords" id="edit_addi_food_keywords"></textarea>
+                                        </div>
+                                        <input type="hidden" id="edit_addi_food_key" name="edit_addi_food_key"/>
                                         <div class="form-group">
                                             <h4>Select an Image:</h4>
-                                            <input type="file" accept="image/*" value="" name="edit_stage_image" id="edit_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                            <input type="file" accept="image/*" value="" name="edit_addi_food_image" id="edit_addi_food_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
                                         </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -439,7 +451,7 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="edit_stage_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="edit_addi_food_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-info">Save changes</button>
                         </form>
                     </div>
