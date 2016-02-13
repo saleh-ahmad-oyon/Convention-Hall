@@ -11,7 +11,7 @@ require  '../controller/adminControl.php';
 if(!isset($_SESSION['admin'])){
     header('Location: '.SERVER.'/404');
 }else{
-    $stage = getStage();
+    $addiFood = getAllAdditionalFood();
 }
 ?>
 <!DOCTYPE html>
@@ -77,13 +77,13 @@ if(!isset($_SESSION['admin'])){
 
         <div class="row">
             <div class="col-sm-12">
-                <h1>Stage Decoration</h1>
+                <h1>Additional Food Items</h1>
                 <br/><br/>
-                <button class="btn btn-success" data-toggle="modal" data-target="#modal-stage-add"><i class="entypo-plus"></i> Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modal-addifood-add"><i class="entypo-plus"></i> Add</button>
             </div>
         </div>
 
-        <div class="modal fade" id="modal-stage-add">
+        <div class="modal fade" id="modal-addifood-add">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -128,17 +128,17 @@ if(!isset($_SESSION['admin'])){
                 <div class="col-sm-12">
                     <?php
                     $count = 0;
-                    foreach($stage as $s): ?>
+                    foreach($addiFood as $f): ?>
                         <div class="col-sm-3 text-center">
-                            <div class="solid-border stages">
+                            <div class="solid-border addiFood">
                                 <div class="idffi h-180 zoom">
-                                    <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
+                                    <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
                                 </div>
-                                <h3><?php echo $s['st_title']; ?></h3>
-                                <p><span>Price: &#2547; <?php echo $s['st_price']; ?></span></p>
+                                <h3><?php echo $f['am_title']; ?></h3>
+                                <p><span>Price: &#2547; <?php echo $f['am_price']; ?></span></p>
                                 <p>
-                                    <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteStageDecoration(<?php echo $s['st_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
+                                    <button onclick="showAjaxModal(<?php echo $f['am_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteAdditionalFood(<?php echo $f['am_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
                                 </p>
                                 <?php $count++; ?>
                             </div>

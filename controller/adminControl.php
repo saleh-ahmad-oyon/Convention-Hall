@@ -56,4 +56,8 @@ function getStage(){
     $stage = stage();
     return $stage;
 }
+function getAllAdditionalFood(){
+    $addiFood = addiFood();
+    return $addiFood;
+}
 ?>
