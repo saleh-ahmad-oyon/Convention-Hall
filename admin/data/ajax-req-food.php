@@ -37,14 +37,22 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
     }
     insertNewFood($name, $cost, $image, $keys);
 
+    if(isset($_POST['special'])){
+        $row = addiFoodFull();
+    }else{
+        $row = addiFood();
+    }
 
-    $row = addiFood();
     $resp = $row;
     echo json_encode($resp);
 }elseif(isset($_POST['addiFoodKey'])){   // delete aditional food
     $id = $_POST['addiFoodKey'];
     deleteAddiFood($id);
-    $row = addiFood();
+    if(isset($_POST['special'])){
+        $row = addiFoodFull();
+    }else{
+        $row = addiFood();
+    }
     $resp = $row;
     echo json_encode($resp);
 }elseif(isset($_POST['addiFoodID'])){     //Get all additional food data
@@ -81,7 +89,11 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
     updateAdditionalFood($name, $cost, $keys, $image, $id);
 
     //return updated data
-    $row = addiFood();
+    if(isset($_POST['special'])){
+        $row = addiFoodFull();
+    }else{
+        $row = addiFood();
+    }
     $resp = $row;
     echo json_encode($resp);
 }

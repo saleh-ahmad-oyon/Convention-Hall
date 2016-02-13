@@ -419,7 +419,7 @@ if(!isset($_SESSION['admin'])){
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">Edit Stage Information</h3>
+                        <h3 class="modal-title">Edit Additiona Food Items</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">

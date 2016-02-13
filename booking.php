@@ -327,7 +327,7 @@
                                                 <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
                                             </div>
                                             <h3><?php echo $f['am_title']; ?></h3>
-                                                <div class="col-xs-7"><p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $f['am_price']; ?></span></p></div>
+                                                <div class="col-xs-7"><p><span>Price: &#2547; <?php echo $f['am_price']; ?></span></p></div>
                                                 <div class="col-xs-5">
                                                     <input type="number" name="amount[]" min="0" class="form-control" value="0">
                                                 </div>

@@ -60,4 +60,8 @@ function getAllAdditionalFood(){
     $addiFood = addiFood();
     return $addiFood;
 }
+function getAllFullFood(){
+    $addiFoodFull = addiFoodFull();
+    return $addiFoodFull;
+}
 ?>
