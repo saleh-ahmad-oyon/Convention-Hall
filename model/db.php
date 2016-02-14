@@ -111,6 +111,17 @@ function personalInfo($user){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
+function getAllPersonalInfo(){
+    $conn = db_conn();
+    $selectQuery = "SELECT `u_fname`, `u_lname`, `u_email`, `u_contact` FROM `user`";
+    try{
+        $stmt = $conn->query($selectQuery);
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $row;
+}
 function updatePass($newPass, $email){
     $conn = db_conn();
     $selectQuery = "UPDATE `user` SET `u_pass`= ? WHERE `u_email` = ?";
@@ -718,6 +729,28 @@ function getTotalBookings(){
 function getPending(){
     $conn = db_conn();
     $selectQuery = 'SELECT * FROM pending_bookings';
+    try{
+        $stmt = $conn->query($selectQuery);
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $row;
+}
+function getApprove(){
+    $conn = db_conn();
+    $selectQuery = 'SELECT * FROM approve_bookings';
+    try{
+        $stmt = $conn->query($selectQuery);
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $row;
+}
+function getCompleteBookingInfo(){
+    $conn = db_conn();
+    $selectQuery = 'SELECT * FROM complete_booking';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){

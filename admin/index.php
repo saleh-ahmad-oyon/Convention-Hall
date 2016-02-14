@@ -154,12 +154,14 @@ if(isset($_SESSION['admin'])){
 				</div>
 			</div>
 			<div class="col-sm-3 col-xs-6">
-				<div class="tile-stats tile-green">
-					<div class="icon"><i class="entypo-attention"></i></div>
-					<div class="num" data-start="0" data-end="<?php echo $pendingBookings; ?>" data-postfix="" data-duration="500" data-delay="600">0</div>
-					<h3>Pending Bookings</h3>
-					<p>so far by our website</p>
-				</div>
+                <a href="<?php echo SERVER; ?>/admin/pendingBookings">
+                    <div class="tile-stats tile-green">
+                        <div class="icon"><i class="entypo-attention"></i></div>
+                        <div class="num" data-start="0" data-end="<?php echo $pendingBookings; ?>" data-postfix="" data-duration="500" data-delay="600">0</div>
+                        <h3>Pending Bookings</h3>
+                        <p>so far by our website</p>
+                    </div>
+                </a>
 			</div>
             <div class="col-sm-3 col-xs-6"></div>
 		</div>
@@ -167,23 +169,27 @@ if(isset($_SESSION['admin'])){
         <div class="row">
             <div class="col-sm-3 col-xs-6"></div>
             <div class="col-sm-3 col-xs-6">
-                <div class="tile-stats tile-aqua">
-                    <div class="icon"><i class="entypo-check"></i></div>
-                    <div class="num" data-start="0" data-end="<?php echo $approve; ?>" data-postfix="" data-duration="500" data-delay="1200">0</div>
+                <a href="<?php echo SERVER; ?>/admin/approvedBookings">
+                    <div class="tile-stats tile-aqua">
+                        <div class="icon"><i class="entypo-check"></i></div>
+                        <div class="num" data-start="0" data-end="<?php echo $approve; ?>" data-postfix="" data-duration="500" data-delay="1200">0</div>
 
-                    <h3>Approved Bookings</h3>
-                    <p>so far by our website</p>
-                </div>
+                        <h3>Approved Bookings</h3>
+                        <p>so far by our website</p>
+                    </div>
+                </a>
             </div>
 
             <div class="col-sm-3 col-xs-6">
-                <div class="tile-stats tile-blue">
-                    <div class="icon"><i class="entypo-box"></i></div>
-                    <div class="num" data-start="0" data-end="<?php echo $totalBookings; ?>" data-postfix="" data-duration="500" data-delay="1800">0</div>
+                <a href="<?php echo SERVER; ?>/admin/allBookings">
+                    <div class="tile-stats tile-blue">
+                        <div class="icon"><i class="entypo-box"></i></div>
+                        <div class="num" data-start="0" data-end="<?php echo $totalBookings; ?>" data-postfix="" data-duration="500" data-delay="1800">0</div>
 
-                    <h3>Total Bookings</h3>
-                    <p>so far by our website</p>
-                </div>
+                        <h3>Total Bookings</h3>
+                        <p>so far by our website</p>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-3 col-xs-6"></div>
         </div>

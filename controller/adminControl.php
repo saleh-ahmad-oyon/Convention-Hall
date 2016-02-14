@@ -20,6 +20,14 @@
         $pending = getPending();
         return $pending;
     }
+    function approveInfo(){
+        $approve = getApprove();
+        return $approve;
+    }
+    function completeBookingInfo(){
+        $approve = getCompleteBookingInfo();
+        return $approve;
+    }
     function bookingInfo(){
         $booking = allBookingInfo();
         return $booking;
@@ -63,5 +71,9 @@ function getAllAdditionalFood(){
 function getAllFullFood(){
     $addiFoodFull = addiFoodFull();
     return $addiFoodFull;
+}
+function getPersonalInfo(){
+    $proInfo = getAllPersonalInfo();
+    return $proInfo;
 }
 ?>

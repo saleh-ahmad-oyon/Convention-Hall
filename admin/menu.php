@@ -39,15 +39,41 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo SERVER; ?>/admin/pendingBookings">
-                    <i class="entypo-attention"></i>
-                    <span class="title">Pending Bookings</span>
+                <a href="#">
+                    <i class="entypo-clipboard"></i>
+                    <span class="title">Bookings</span>
                 </a>
+                <ul>
+                    <li>
+                        <a href="<?php echo SERVER; ?>/admin/pendingBookings">
+                            <i class="entypo-attention"></i>
+                            <span class="title">Pending Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo SERVER; ?>/admin/approvedBookings">
+                            <i class="entypo-check"></i>
+                            <span class="title">Approved Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo SERVER; ?>/admin/completedBookings">
+                            <i class="entypo-print"></i>
+                            <span class="title">Completed Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo SERVER; ?>/admin/allBookings">
+                            <i class="entypo-box"></i>
+                            <span class="title">All Bookings</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="<?php echo SERVER; ?>/admin/allBookings">
-                    <i class="entypo-box"></i>
-                    <span class="title">All Bookings</span>
+                <a href="<?php echo SERVER; ?>/admin/registeredUsers">
+                    <i class="entypo-users"></i>
+                    <span class="title">Registered Users</span>
                 </a>
             </li>
             <li>
