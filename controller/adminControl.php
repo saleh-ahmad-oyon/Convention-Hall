@@ -76,4 +76,8 @@ function getPersonalInfo(){
     $proInfo = getAllPersonalInfo();
     return $proInfo;
 }
+function getSetMenu(){
+    $setMenu = setMenu();
+    return $setMenu;
+}
 ?>

@@ -11,7 +11,7 @@ require  '../controller/adminControl.php';
 if(!isset($_SESSION['admin'])){
     header('Location: '.SERVER.'/404');
 }else{
-    $stage = getStage();
+    $setMenu = getSetMenu();
 }
 ?>
 <!DOCTYPE html>
@@ -41,6 +41,14 @@ if(!isset($_SESSION['admin'])){
     <style>
         a, a:hover, a:focus{
             color: #373e4a;
+        }
+        .set-menu p:nth-last-child(2){
+            padding: 12px 0;
+            background: rgba(30,69,97,.48);
+            color: #fff;
+        }
+        .set-menu p:last-child{
+            background: #333;
         }
     </style>
 </head>
@@ -77,7 +85,7 @@ if(!isset($_SESSION['admin'])){
 
         <div class="row">
             <div class="col-sm-12">
-                <h1>Stage Decoration</h1>
+                <h1>Set Menu</h1>
                 <br/><br/>
                 <button class="btn btn-success" data-toggle="modal" data-target="#modal-stage-add"><i class="entypo-plus"></i> Add</button>
             </div>
@@ -128,14 +136,15 @@ if(!isset($_SESSION['admin'])){
                 <div class="col-sm-12">
                     <?php
                     $count = 0;
-                    foreach($stage as $s): ?>
-                        <div class="col-sm-3 text-center">
-                            <div class="solid-border stages">
-                                <div class="idffi h-180 zoom">
-                                    <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
-                                </div>
-                                <h3><?php echo $s['st_title']; ?></h3>
-                                <p><span>Price: &#2547; <?php echo $s['st_price']; ?></span></p>
+                    foreach($setMenu as $sm): ?>
+                        <div class="col-xs-4 text-center">
+                            <div class="col-xs-12 set-menu">
+                                <h3><?php echo $sm['sm_title']; ?></h3>
+                                <?php $menuDesc = explode('|', $sm['sm_description']);
+                                foreach($menuDesc as $md):?>
+                                    <p><?php echo $md; ?></p>
+                                <?php endforeach; ?>
+                                <p>Price: &#2547; <?php echo $sm['sm_price']; ?></p>
                                 <p>
                                     <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
                                     <button class="btn btn-danger" onclick="deleteStageDecoration(<?php echo $s['st_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
