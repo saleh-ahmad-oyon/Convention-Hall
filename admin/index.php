@@ -144,14 +144,15 @@ if(isset($_SESSION['admin'])){
 		<div class="row">
             <div class="col-sm-3 col-xs-6"></div>
 			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-red">
-					<div class="icon"><i class="entypo-users"></i></div>
-					<div class="num" data-start="0" data-end="<?php echo $totalUser; ?>" data-postfix="" data-duration="500" data-delay="0">0</div>
-		
-					<h3>Registered users</h3>
-					<p>so far in our website.</p>
-				</div>
+		        <a href="<?php echo SERVER; ?>/admin/registeredUsers.php">
+                    <div class="tile-stats tile-red">
+                        <div class="icon"><i class="entypo-users"></i></div>
+                        <div class="num" data-start="0" data-end="<?php echo $totalUser; ?>" data-postfix="" data-duration="500" data-delay="0">0</div>
+
+                        <h3>Registered users</h3>
+                        <p>so far in our website.</p>
+                    </div>
+                </a>
 			</div>
 			<div class="col-sm-3 col-xs-6">
                 <a href="<?php echo SERVER; ?>/admin/pendingBookings">
