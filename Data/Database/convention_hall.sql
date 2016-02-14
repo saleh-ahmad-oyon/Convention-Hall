@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2016 at 09:31 PM
+-- Generation Time: Feb 14, 2016 at 12:25 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -38,6 +38,11 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `give_booking` (IN `usr` INT, IN `dat` DATE, IN `shift` TEXT, IN `purpose` TEXT, IN `service` TEXT, IN `guest` INT, IN `gate` INT, IN `stage` INT, IN `food` TEXT, IN `totalCost` DECIMAL(10,2), IN `fullamount` TEXT, IN `setMenu` INT, IN `today` DATE)  BEGIN
 INSERT INTO `hall_booking`(`user_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `guest_number`, `welcome_gate`, `stage`, `food`, `total_cost`, `fullFood`, `set_menu`, `date_of_booking`) VALUES (usr,dat,shift,purpose,service,guest,gate,stage,food, totalCost, fullamount, setMenu, today);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_addi_food` (IN `foodTitle` TEXT, IN `foodImage` TEXT, IN `foodPrice` DECIMAL(10,2), IN `foodKeywords` TEXT)  BEGIN
+INSERT INTO `additional_menu`(`am_title`, `am_image`, `am_price`, `keywords`) 
+VALUES (foodTitle,foodImage,foodPrice,foodKeywords);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_advantage` (IN `newAdv` TEXT)  BEGIN
@@ -217,6 +222,34 @@ CREATE TABLE `all_booking_info` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `approve_bookings`
+--
+CREATE TABLE `approve_bookings` (
+`order_id` int(11)
+,`order_date` date
+,`order_purpose` text
+,`total_cost` decimal(10,2)
+,`paid_cost` decimal(10,2)
+,`date_of_booking` date
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `complete_booking`
+--
+CREATE TABLE `complete_booking` (
+`order_id` int(11)
+,`order_date` date
+,`order_purpose` text
+,`total_cost` decimal(10,2)
+,`paid_cost` decimal(10,2)
+,`date_of_booking` date
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `features`
 --
 
@@ -305,14 +338,14 @@ CREATE TABLE `hall_booking` (
 
 INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `guest_number`, `welcome_gate`, `stage`, `food`, `order_status`, `total_cost`, `paid_cost`, `fullFood`, `set_menu`, `date_of_booking`) VALUES
 (1, 1, '2016-01-25', 'Day 12:00 PM to 4:30 PM', 'Wedding Ceremony', '1|2|5|6|7|4', 900, 5, 9, '18|17|36', 1, '842375.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-01-23'),
-(4, 2, '2016-01-25', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '1|2|5|6|3', 500, 6, 6, '18|36', 1, '441025.00', '0.00', '7|5;9|0;8|1;35|0', 2, '2016-01-23'),
+(4, 2, '2016-01-25', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '1|2|5|6|3', 500, 6, 6, '18|36', 3, '441025.00', '441025.00', '7|5;9|0;8|1;35|0', 2, '2016-01-23'),
 (3, 3, '2016-01-25', 'Mid-Night 1:00 AM to 5:30 AM', 'Wedding Ceremony', '1|2|5|3', 200, 6, 2, '0', 1, '236325.00', '0.00', '7|0;9|0;8|1;35|0', 1, '2016-01-23'),
 (2, 5, '2016-01-31', 'Evening 7:00 PM to 11:30 PM', 'Office Party', '1|2|3', 250, 3, 0, '18|34|33|36', 1, '152375.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-23'),
-(5, 6, '2016-01-31', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 7, '0', 1, '173650.00', '0.00', '7|0;9|0;8|0;35|0', 1, '2016-01-26'),
+(5, 6, '2016-01-31', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 7, '0', 2, '173650.00', '25000.00', '7|0;9|0;8|0;35|0', 1, '2016-01-26'),
 (5, 7, '2016-01-30', 'Mid-Night 1:00 AM to 5:30 AM', 'Other', '51|2|3', 300, 0, 0, '18|14|33|13', 1, '73025.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-27'),
 (4, 8, '2016-02-17', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 6, 7, '18|17|36', 1, '353050.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-06'),
 (1, 9, '2016-02-26', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '1|2|4', 600, 2, 3, '0', 1, '391575.00', '0.00', '7|5;9|0;8|1;35|0', 1, '2016-02-06'),
-(1, 10, '2016-02-26', '', 'Birthday Party', '1|2|3', 200, 0, 0, '14|13|32', 1, '106950.00', '0.00', '7|0;9|0;8|0;35|10', 0, '2016-02-06');
+(1, 10, '2016-02-26', 'Mid-Night 1:00 AM to 5:30 AM', 'Other', '51|2|3', 200, 0, 0, '14|33|13', 1, '46000.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-02-14');
 
 -- --------------------------------------------------------
 
@@ -596,6 +629,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Structure for view `approve_bookings`
+--
+DROP TABLE IF EXISTS `approve_bookings`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `approve_bookings`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 2) order by `hall_booking`.`order_id` desc ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `complete_booking`
+--
+DROP TABLE IF EXISTS `complete_booking`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `complete_booking`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 3) order by `hall_booking`.`order_id` desc ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `gate_view`
 --
 DROP TABLE IF EXISTS `gate_view`;
@@ -754,7 +805,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `additional_menu`
 --
 ALTER TABLE `additional_menu`
-  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=37;
+  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `adminlogin`
 --
