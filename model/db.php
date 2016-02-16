@@ -503,6 +503,17 @@ function deleteStage($id){
     }
     $conn = null;
 }
+function deleteSetMenu($id){
+    $conn = db_conn();
+    $selectQuery = "DELETE FROM `set_menu` WHERE `sm_id` = ?";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function deleteSchedule($id){
     $conn = db_conn();
     $selectQuery = "DELETE FROM `shift` WHERE `shift_id` = ?";
@@ -859,6 +870,17 @@ function insertNewGate($name, $cost, $image){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function insertNewSetItems($title, $items, $cost){
+    $conn = db_conn();
+    $selectQuery = "call insert_setmenu(:title, :items, :cost)";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $title, ':items' =>$items, ':cost' => $cost));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }

@@ -25,6 +25,7 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="assets/css/neon-core.css">
     <link rel="stylesheet" href="assets/css/neon-theme.css">
     <link rel="stylesheet" href="assets/css/neon-forms.css">
+    <link rel="stylesheet" href="<?php echo SERVER ?>/assets/css/todos.css" />
     <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
 
     <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
@@ -87,11 +88,11 @@ if(!isset($_SESSION['admin'])){
             <div class="col-sm-12">
                 <h1>Set Menu</h1>
                 <br/><br/>
-                <button class="btn btn-success" data-toggle="modal" data-target="#modal-stage-add"><i class="entypo-plus"></i> Add</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#modal-setmenu-add"><i class="entypo-plus"></i> Add</button>
             </div>
         </div>
 
-        <div class="modal fade" id="modal-stage-add">
+        <div class="modal fade" id="modal-setmenu-add">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,18 +104,19 @@ if(!isset($_SESSION['admin'])){
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <form id="newStage" action="" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <h4>Name:</h4>
-                                            <input type="text" required="required" name="add_stage_name" id="add_stage_name" class="form-control" />
+                                            <h4>Title:</h4>
+                                            <input type="text" id="add_setmenu_name" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>Items (add one by one pressing Enter):</h4>
+                                                <input type="text" name="new-todo" id="new-todo" class="form-control" />
+                                            <ul id="todo-list">
+                                            </ul>
                                         </div>
                                         <div class="form-group">
                                             <h4>Cost:</h4>
-                                            <input type="number" required="required" step="0.01" name="add_stage_price" id="add_stage_price" class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <h4>Select an Image:</h4>
-                                            <input type="file" accept="image/*" name="add_stage_image" id="add_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
+                                            <input type="number" step="0.01" id="add_setmenu_price" class="form-control" />
                                         </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -123,15 +125,14 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="add_stage_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
-                        <button type="submit" class="btn btn-info">Save changes</button>
-                        </form>
+                        <button type="button" id="add_setmenu_close" class="btn btn-default" onclick="dissmissAddModal();">Cancel</button>
+                        <button type="submit" class="btn btn-info" onclick="addNewSetMenu()">Add</button>
                     </div>
                 </div>
             </div>
         </div>
         <br/><br/>
-        <div id="stage-content">
+        <div id="setmenu-content">
             <div class="row">
                 <div class="col-sm-12">
                     <?php
@@ -146,14 +147,14 @@ if(!isset($_SESSION['admin'])){
                                 <?php endforeach; ?>
                                 <p>Price: &#2547; <?php echo $sm['sm_price']; ?></p>
                                 <p>
-                                    <button onclick="showAjaxModal(<?php echo $s['st_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteStageDecoration(<?php echo $s['st_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
+                                    <button onclick="showAjaxModal(<?php echo $sm['sm_id']; ?>);" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteSetMenu(<?php echo $sm['sm_id']; ?>);"><i class="entypo-trash"></i> Delete</button>
                                 </p>
                                 <?php $count++; ?>
                             </div>
                         </div>
                         <?php
-                        if($count%4 == 0){
+                        if($count%3 == 0){
                             echo "</div></div><br/><div class='row'><div class='col-sm-12 text-center'>";
                         }
                     endforeach;
@@ -164,78 +165,14 @@ if(!isset($_SESSION['admin'])){
 
         <script type="text/javascript">
             function dissmissAddModal(){
-                $('#add_stage_name').val('');
-                $('#add_stage_price').val('');
-                $('#modal-stage-add').modal('hide');
+                $('#add_setmenu_name').val('');
+                $('#new-todo').val('');
+                $('#todo-list').html('');
+                $('#add_setmenu_price').val('');
+                $('#modal-setmenu-add').modal('hide');
             }
 
-            $(document).ready(function(){
-                $('form#newStage').submit(function(e){
-                    e.preventDefault();
-                    var name = $('#add_stage_name').val();
-                    var cost = $('#add_stage_price').val();
-                    if(name == '' || cost == ''){
-                        swal({
-                            title: 'Error!',
-                            text: 'Every Field must be filled !!',
-                            type: 'error'
-                        });
-                    }else{
-                        $.ajax({
-                            type: 'POST',
-                            url: "data/ajax-req-gate",
-                            dataType: 'json',
-                            data: new FormData(this),
-                            contentType: false,
-                            cache : false,
-                            processData: false,
-                            error: function() {
-                                swal({
-                                    title: 'Failed!',
-                                    text: 'An error occured !!',
-                                    type: 'error'
-                                });
-                            },
-                            success : function(response){
-                                var i;
-                                var out ='';
-                                var count =0;
-
-                                for(i=0; i < response.length; ++i){
-                                    out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
-                                        '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
-                                        '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
-                                        '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
-                                        '</p>' +
-                                        '</div>' +
-                                        '</div>';
-                                    count++;
-                                    if(count%4 ==0){
-                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
-                                    }
-                                }
-                                var ht = '<div class="row">' +
-                                    '<div class="col-sm-12">' +
-                                    out +
-                                    '</div>' +
-                                    '</div>';
-                                $('#stage-content').html(ht);
-                                swal({
-                                    title: 'Successful!',
-                                    text: 'A Stage Decoration has been added !!',
-                                    type: 'success'
-                                });
-                                $('#add_stage_close').click();
-                            }
-                        });
-                    }
-                });
+            /*$(document).ready(function(){
                 $('form#editStage').submit(function(e){
                     e.preventDefault();
                     var stageName = $('#edit_stage_name').val();
@@ -302,9 +239,89 @@ if(!isset($_SESSION['admin'])){
                         });
                     }
                 });
-            });
+            });*/
 
-            function deleteStageDecoration(key){
+            function addNewSetMenu()
+            {
+                var name = $('#add_setmenu_name').val();
+                var cost = $('#add_setmenu_price').val();
+
+                var dataList = $("#todo-list li label").map(function() {
+                    return $(this).html();
+                }).get();
+
+                var menuItems = dataList.join('|');
+
+                if(name == '' || cost == '' || menuItems== ''){
+                    swal({
+                        title: 'Error!',
+                        text: 'Every Field must be filled !!',
+                        type: 'error'
+                    });
+                }else{
+                    $.ajax({
+                        type: 'POST',
+                        url: "data/ajax-req-food",
+                        dataType: 'json',
+                        data: {
+                            newSetMenuTitle : name,
+                            newSetMenuItems : menuItems,
+                            newSetMenuCost  : cost
+                        },
+                        cache : false,
+                        error: function() {
+                            swal({
+                                title: 'Failed!',
+                                text: 'An error occured !!',
+                                type: 'error'
+                            });
+                        },
+                        success : function(response){
+                             var i;
+                             var out ='';
+                             var count =0;
+                            var item = '';
+                            var j;
+
+                             for(i=0; i < response.length; ++i){
+
+                             out += '<div class="col-xs-4 text-center">' +
+                             '<div class="col-xs-12 set-menu">' +
+                             '<h3>'+response[i].sm_title+'</h3>';
+                                 item = response[i].sm_description.split("|");
+                                 for(j=0; j<item.length; ++j){
+                                     out +='<p>' + item[j] + '</p>';
+                                 }
+                             out += '<p>Price: &#2547; ' + response[i].sm_price + '</p>' +
+                             '<p>' +
+                             '<button onclick="showAjaxModal(' + response[i].sm_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                             '<button class="btn btn-danger" onclick="deleteSetMenu(' + response[i].sm_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                             '</p>' +
+                             '</div>' +
+                             '</div>';
+                             count++;
+                             if(count%3 ==0){
+                             out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                             }
+                             }
+                             var ht = '<div class="row">' +
+                             '<div class="col-sm-12">' +
+                             out +
+                             '</div>' +
+                             '</div>';
+                             $('#setmenu-content').html(ht);
+                             swal({
+                                 title: 'Successful!',
+                                 text: 'A Set Menu has been added !!',
+                                 type: 'success'
+                             });
+                             $('#add_setmenu_close').click();
+                        }
+                    });
+                }
+            }
+
+            function deleteSetMenu(key){
                 swal({
                     title: 'Are you sure?',
                     text: 'You will not be able to recover this !',
@@ -322,10 +339,10 @@ if(!isset($_SESSION['admin'])){
                     if (isConfirm) {
                         $.ajax({
                             type: 'POST',
-                            url: 'data/ajax-req-gate',
+                            url: 'data/ajax-req-food',
                             dataType: 'json',
                             data:{
-                                stageKey : key
+                                steMenuKey : key
                             },
                             cache : false,
                             beforeSend: function(){
@@ -343,23 +360,27 @@ if(!isset($_SESSION['admin'])){
                                 var i;
                                 var out ='';
                                 var count =0;
+                                var item = '';
+                                var j;
 
                                 for(i=0; i < response.length; ++i){
-                                    out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
-                                        '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
-                                        '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
+
+                                    out += '<div class="col-xs-4 text-center">' +
+                                        '<div class="col-xs-12 set-menu">' +
+                                        '<h3>'+response[i].sm_title+'</h3>';
+                                    item = response[i].sm_description.split("|");
+                                    for(j=0; j<item.length; ++j){
+                                        out +='<p>' + item[j] + '</p>';
+                                    }
+                                    out += '<p>Price: &#2547; ' + response[i].sm_price + '</p>' +
                                         '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                        '<button onclick="showAjaxModal(' + response[i].sm_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                        '<button class="btn btn-danger" onclick="deleteSetMenu(' + response[i].sm_id + ');"><i class="entypo-trash"></i> Delete</button>' +
                                         '</p>' +
                                         '</div>' +
                                         '</div>';
                                     count++;
-                                    if(count%4 ==0){
+                                    if(count%3 ==0){
                                         out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
                                     }
                                 }
@@ -368,10 +389,10 @@ if(!isset($_SESSION['admin'])){
                                     out +
                                     '</div>' +
                                     '</div>';
-                                $('#stage-content').html(ht);
+                                $('#setmenu-content').html(ht);
                                 swal(
                                     'Deleted!',
-                                    'Stage Decoration has been deleted.',
+                                    'Set Menu has been deleted.',
                                     'success'
                                 );
                             }
@@ -462,6 +483,7 @@ if(!isset($_SESSION['admin'])){
 <link href="<?php echo SERVER; ?>/assets/css/sweetalert2.css" rel="stylesheet">
 <script src="<?php echo SERVER; ?>/assets/js/sweetalert2.min.js"></script>
 
+<script src="<?php echo SERVER ?>/assets/js/todos.js"></script>
 <!--Dropify-->
 <link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/dropify/dropify.css" />
 

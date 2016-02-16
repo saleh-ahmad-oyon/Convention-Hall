@@ -96,5 +96,21 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
     }
     $resp = $row;
     echo json_encode($resp);
+}elseif(isset($_POST['newSetMenuTitle'])){
+    $title = $_POST['newSetMenuTitle'];
+    $items = $_POST['newSetMenuItems'];
+    $cost = $_POST['newSetMenuCost'];
+
+    insertNewSetItems($title, $items, $cost);
+    $row = setMenu();
+    $resp = $row;
+    echo json_encode($resp);
+}elseif(isset($_POST['steMenuKey'])){
+    $key = $_POST['steMenuKey'];
+
+    deleteSetMenu($key);
+    $row = setMenu();
+    $resp = $row;
+    echo json_encode($resp);
 }
 ?>
