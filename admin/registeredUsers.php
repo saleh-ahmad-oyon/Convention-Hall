@@ -90,6 +90,7 @@ if(!isset($_SESSION['admin'])){
                 <th>Name</th>
                 <th>Email</th>
                 <th>Contact No.</th>
+                <th>Time & Date of Reg.</th>
             </tr>
             </thead>
             <tbody>
@@ -99,6 +100,11 @@ if(!isset($_SESSION['admin'])){
                     <td><?php echo htmlentities(stripslashes($p['u_fname'])), " ", htmlentities(stripslashes($p['u_lname'])); ?></td>
                     <td><?php echo htmlentities(stripslashes($p['u_email'])); ?></td>
                     <td><?php echo htmlentities(stripslashes($p['u_contact'])); ?></td>
+                    <td><?php
+                        $date = htmlentities(stripslashes($p['time_of_registration']));
+                        echo date('h:i:s A, d/m/Y', strtotime($date));
+                        ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -108,6 +114,7 @@ if(!isset($_SESSION['admin'])){
                 <th>Name</th>
                 <th>Email</th>
                 <th>Contact No.</th>
+                <th>Time & Date of Reg.</th>
             </tr>
             </tfoot>
         </table>

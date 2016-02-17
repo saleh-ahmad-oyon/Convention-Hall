@@ -113,7 +113,7 @@ function personalInfo($user){
 }
 function getAllPersonalInfo(){
     $conn = db_conn();
-    $selectQuery = "SELECT `u_fname`, `u_lname`, `u_email`, `u_contact` FROM `user`";
+    $selectQuery = "SELECT * FROM view_all_user";
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -355,6 +355,18 @@ function getAddiFoodInfo($id){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
+function setMenuInfo($key){
+    $conn = db_conn();
+    $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `Set_Menu` WHERE `sm_id` = ?';
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array($key));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row;
+}
 function getStageValue($stage){
     $conn = db_conn();
     $selectQuery = "SELECT `st_price` FROM `stage` WHERE `st_id` = ?";
@@ -443,6 +455,17 @@ function updateAdditionalFood($name, $cost, $keys, $image, $id){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function updateSetMenu($title, $items, $cost, $key){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `set_menu` SET `sm_title`=:title,`sm_description`=:items,`sm_price`=:price WHERE `sm_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $title, ':items' => $items, ':price' => $cost, ':id' => $key));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }

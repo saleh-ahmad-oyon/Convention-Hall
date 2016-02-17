@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2016 at 12:25 PM
+-- Generation Time: Feb 17, 2016 at 08:15 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -63,6 +63,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_service` (IN `serv` TEXT, IN `price` DECIMAL(10,2))  BEGIN
 INSERT INTO `services`(`serv_name`, `Serv_price`) VALUES (serv, price);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_setmenu` (IN `title` TEXT, IN `description` TEXT, IN `cost` DECIMAL(10,2))  BEGIN
+INSERT INTO `set_menu`(`sm_title`, `sm_description`, `sm_price`) VALUES (title, description, cost);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_stage` (IN `title` TEXT, IN `image` TEXT, IN `cost` DECIMAL(10,2))  BEGIN
@@ -337,15 +341,9 @@ CREATE TABLE `hall_booking` (
 --
 
 INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `guest_number`, `welcome_gate`, `stage`, `food`, `order_status`, `total_cost`, `paid_cost`, `fullFood`, `set_menu`, `date_of_booking`) VALUES
-(1, 1, '2016-01-25', 'Day 12:00 PM to 4:30 PM', 'Wedding Ceremony', '1|2|5|6|7|4', 900, 5, 9, '18|17|36', 1, '842375.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-01-23'),
-(4, 2, '2016-01-25', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '1|2|5|6|3', 500, 6, 6, '18|36', 3, '441025.00', '441025.00', '7|5;9|0;8|1;35|0', 2, '2016-01-23'),
-(3, 3, '2016-01-25', 'Mid-Night 1:00 AM to 5:30 AM', 'Wedding Ceremony', '1|2|5|3', 200, 6, 2, '0', 1, '236325.00', '0.00', '7|0;9|0;8|1;35|0', 1, '2016-01-23'),
-(2, 5, '2016-01-31', 'Evening 7:00 PM to 11:30 PM', 'Office Party', '1|2|3', 250, 3, 0, '18|34|33|36', 1, '152375.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-23'),
-(5, 6, '2016-01-31', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 7, '0', 2, '173650.00', '25000.00', '7|0;9|0;8|0;35|0', 1, '2016-01-26'),
-(5, 7, '2016-01-30', 'Mid-Night 1:00 AM to 5:30 AM', 'Other', '51|2|3', 300, 0, 0, '18|14|33|13', 1, '73025.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-01-27'),
-(4, 8, '2016-02-17', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 6, 7, '18|17|36', 1, '353050.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-06'),
-(1, 9, '2016-02-26', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '1|2|4', 600, 2, 3, '0', 1, '391575.00', '0.00', '7|5;9|0;8|1;35|0', 1, '2016-02-06'),
-(1, 10, '2016-02-26', 'Mid-Night 1:00 AM to 5:30 AM', 'Other', '51|2|3', 200, 0, 0, '14|33|13', 1, '46000.00', '0.00', '7|0;9|0;8|0;35|0', 0, '2016-02-14');
+(1, 13, '2016-02-27', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '61|2|3', 300, 0, 7, '18|26', 2, '94875.00', '25000.00', '7|0;9|0;8|0;35|0', 0, '2016-02-17'),
+(3, 12, '2016-02-29', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 0, '0', 3, '164910.00', '164910.00', '7|1;9|0;8|0;35|0', 1, '2016-02-17'),
+(3, 11, '2016-02-29', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 2, 3, '18|17|36', 1, '378350.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-17');
 
 -- --------------------------------------------------------
 
@@ -585,19 +583,31 @@ CREATE TABLE `user` (
   `u_email` varchar(255) NOT NULL,
   `u_contact` text NOT NULL,
   `u_pass` text NOT NULL,
-  `s_id` int(11) NOT NULL
+  `s_id` int(11) NOT NULL,
+  `time_of_registration` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`u_fname`, `u_lname`, `u_email`, `u_contact`, `u_pass`, `s_id`) VALUES
-('Mr.', 'Ahmad ', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$Rhdbmjpc4LdonX3gnY6P0etNUwXsn.krqPISrgFC.0tScmL63L8Cm', 1),
-('Saleh', 'Oyon', 'nissongo_10@live.com', '+880-1520103065', '$2y$10$Yp8X1OHQeNFxdcI3P5Kw3.P5l..OEe13zF7hP1pXd1tX26ZfR6Qb.', 2),
-('Abdullah', 'AS Sayeed', 'sayeed@yahoo.com', '+880-1520103064', '$2y$10$rOFCah2Bihg.Oj/Zxhl91uXB2beCIgW7PyA4He7NZ8AhysgIy2rQC', 3),
-('Saleh', 'Ahmad  ', 'nissongo_10@yahoo.com', '+880-1626785569', '$2y$10$3MWNX7t8OSDl3E6JCOzFB.l/bz65Dqo.zi8E2l.WZTMSm1o487THS', 4),
-('Md.', 'Rashedul Abedin ', 'salehoyon@hotmail.com', '+880-01685749621', '$2y$10$NVJANMCrpweyiaxSEklcQOZ2OwSkvgjOFQ56Cunm6VQSTHXc83FH2', 5);
+INSERT INTO `user` (`u_fname`, `u_lname`, `u_email`, `u_contact`, `u_pass`, `s_id`, `time_of_registration`) VALUES
+('Saleh', 'Oyon', 'salehoyon@hotmail.com', '+880-1520103065', '$2y$10$02uWh7z4FOADl4eusus1aOFgucFFp7/zb1751lBoXx1Bpx1ASbcTC', 1, '2016-02-17 18:59:40'),
+('Sakib', 'Hasan', 'sakibhasan60@yahoo.com', '+880-1199080237', '$2y$10$U.hWpcMChAZRnSglDukDROvmZFm3yXZbYd5ehPI64jEZI.LtkwlpK', 2, '2016-02-17 18:59:45'),
+('Saleh', 'Ahmad', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$/H/wb3pjIscHSTxiLG51G.PcqohYJ4W2iInxwEScH3l7ZKSP72zv2', 3, '2016-02-17 18:59:48');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_all_user`
+--
+CREATE TABLE `view_all_user` (
+`u_fname` text
+,`u_lname` text
+,`u_email` varchar(255)
+,`u_contact` text
+,`time_of_registration` timestamp
+);
 
 -- --------------------------------------------------------
 
@@ -707,6 +717,15 @@ DROP TABLE IF EXISTS `stage_view`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `stage_view`  AS  select `stage`.`st_id` AS `st_id`,`stage`.`st_title` AS `st_title`,`stage`.`st_image` AS `st_image`,`stage`.`st_price` AS `st_price` from `stage` order by `stage`.`st_title` ;
 
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_all_user`
+--
+DROP TABLE IF EXISTS `view_all_user`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_all_user`  AS  select `user`.`u_fname` AS `u_fname`,`user`.`u_lname` AS `u_lname`,`user`.`u_email` AS `u_email`,`user`.`u_contact` AS `u_contact`,`user`.`time_of_registration` AS `time_of_registration` from `user` ;
+
 --
 -- Indexes for dumped tables
 --
@@ -805,7 +824,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `additional_menu`
 --
 ALTER TABLE `additional_menu`
-  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=47;
+  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT for table `adminlogin`
 --
@@ -825,12 +844,12 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `gate`
 --
 ALTER TABLE `gate`
-  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `hall_booking`
 --
 ALTER TABLE `hall_booking`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `misc`
 --
@@ -850,7 +869,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `set_menu`
 --
 ALTER TABLE `set_menu`
-  MODIFY `sm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `shift`
 --
@@ -860,7 +879,7 @@ ALTER TABLE `shift`
 -- AUTO_INCREMENT for table `stage`
 --
 ALTER TABLE `stage`
-  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -870,7 +889,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -96,7 +96,7 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
     }
     $resp = $row;
     echo json_encode($resp);
-}elseif(isset($_POST['newSetMenuTitle'])){
+}elseif(isset($_POST['newSetMenuTitle'])){   // add set menu
     $title = $_POST['newSetMenuTitle'];
     $items = $_POST['newSetMenuItems'];
     $cost = $_POST['newSetMenuCost'];
@@ -105,10 +105,28 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
     $row = setMenu();
     $resp = $row;
     echo json_encode($resp);
-}elseif(isset($_POST['steMenuKey'])){
-    $key = $_POST['steMenuKey'];
+}elseif(isset($_POST['setMenuKey'])){   //delete set menu
+    $key = $_POST['setMenuKey'];
 
     deleteSetMenu($key);
+    $row = setMenu();
+    $resp = $row;
+    echo json_encode($resp);
+}elseif(isset($_POST['setItemsID'])){  //get all set menu info
+    $key = $_POST['setItemsID'];
+    $row = setMenuInfo($key);
+    $resp['key'] = $row['sm_id'];
+    $resp['Name'] = $row['sm_title'];
+    $resp['items'] = $row['sm_description'];
+    $resp['value'] = $row['sm_price'];
+    echo json_encode($resp);
+}elseif(isset($_POST['setMenuEditedName'])){  //update setmenu info
+    $title = $_POST['setMenuEditedName'];
+    $cost = $_POST['setMenuEditedCost'];
+    $key = $_POST['setMenuEditedKey'];
+    $items = $_POST['setMenuItems'];
+
+    updateSetMenu($title, $items, $cost, $key);
     $row = setMenu();
     $resp = $row;
     echo json_encode($resp);

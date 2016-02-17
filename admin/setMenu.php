@@ -172,75 +172,6 @@ if(!isset($_SESSION['admin'])){
                 $('#modal-setmenu-add').modal('hide');
             }
 
-            /*$(document).ready(function(){
-                $('form#editStage').submit(function(e){
-                    e.preventDefault();
-                    var stageName = $('#edit_stage_name').val();
-                    var stageCost = $('#edit_stage_price').val();
-                    if(stageName == '' || stageCost == ''){
-                        swal({
-                            title: 'Error!',
-                            text: 'Every Field must be filled !!',
-                            type: 'error'
-                        });
-                    }else {
-                        $.ajax({
-                            type: 'POST',
-                            url: "data/ajax-req-gate",
-                            dataType: 'json',
-                            data: new FormData(this),
-                            contentType: false,
-                            cache : false,
-                            processData: false,
-                            error: function() {
-                                swal({
-                                    title: 'Failed!',
-                                    text: 'An error occured !!',
-                                    type: 'error'
-                                });
-                            },
-                            success : function(response){
-                                var i;
-                                var out ='';
-                                var count =0;
-
-                                for(i=0; i < response.length; ++i){
-                                    out += '<div class="col-sm-3 text-center">' +
-                                        '<div class="solid-border stages">' +
-                                        '<div class="idffi h-180 zoom">' +
-                                        '<img src="<?php echo SERVER; ?>/assets/img/stage/' + response[i].st_image + '" alt="' + response[i].st_title + '"/>' +
-                                        '</div>' +
-                                        '<h3>'+response[i].st_title+'</h3>' +
-                                        '<p><span>Price: &#2547; ' + response[i].st_price + '</span></p>' +
-                                        '<p>' +
-                                        '<button onclick="showAjaxModal(' + response[i].st_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
-                                        '<button class="btn btn-danger" onclick="deleteStageDecoration(' + response[i].st_id + ');"><i class="entypo-trash"></i> Delete</button>' +
-                                        '</p>' +
-                                        '</div>' +
-                                        '</div>';
-                                    count++;
-                                    if(count%4 ==0){
-                                        out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
-                                    }
-                                }
-                                var ht = '<div class="row">' +
-                                    '<div class="col-sm-12">' +
-                                    out +
-                                    '</div>' +
-                                    '</div>';
-                                $('#stage-content').html(ht);
-                                swal({
-                                    title: 'Successful!',
-                                    text: 'Welcome gate has been modified !!',
-                                    type: 'success'
-                                });
-                                $('#edit_stage_close').click();
-                            }
-                        });
-                    }
-                });
-            });*/
-
             function addNewSetMenu()
             {
                 var name = $('#add_setmenu_name').val();
@@ -342,7 +273,7 @@ if(!isset($_SESSION['admin'])){
                             url: 'data/ajax-req-food',
                             dataType: 'json',
                             data:{
-                                steMenuKey : key
+                                setMenuKey : key
                             },
                             cache : false,
                             beforeSend: function(){
@@ -407,17 +338,17 @@ if(!isset($_SESSION['admin'])){
                 });
             }
             function showAjaxModal(id) {
-                $('#modal-stage').modal('show', {
+                $('#modal-edit-setmenu').modal('show', {
                     backdrop: 'static'
                 });
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        stageID : id
+                        setItemsID : id
                     },
                     cache : false,
-                    url: "data/ajax-req-gate",
+                    url: "data/ajax-req-food",
                     error: function() {
                         swal({
                             title: 'Failed!',
@@ -427,41 +358,147 @@ if(!isset($_SESSION['admin'])){
                     },
                     success: function(response)
                     {
-                        $('#edit_stage_name').val(response.Name);
-                        $('#edit_stage_price').val(response.value);
-                        $('#edit_stage_key').val(response.key);
+                        var j ;
+                        var out = '';
+                        menu = response.items.split("|");
+                        for(j=0; j<menu.length; ++j){
+                            out += '<div class="items">' +
+                                '<input type="text" class="form-control" value="' +menu[j]+ '" style="width: 86%;display: inline" />' +
+                                '<button class="btn btn-danger pull-right" onclick="deleteItems(this);" style="width: 13%"><i class="entypo-trash"></i></button><br/><br/>' +
+                                    '</div>';
+                        }
+                        $('#edit_set_menu_name').val(response.Name);
+                        $('#edit_set_menu_price').val(response.value);
+                        $('#edit_set_menu_key').val(response.key);
+                        $('#foodItems').html(out);
                     }
                 });
+            }
+            function deleteItems(x) {
+                $currentListItem = $(x).closest('.items');
+                $currentListItem.html('');
+                $currentListItem.remove();
+            }
+            function additems(){
+                var items = $('#foodItems').html();
+                items += '<div class="items">' +
+                    '<input type="text" class="form-control" style="width: 86%;display: inline" />' +
+                    '<button class="btn btn-danger pull-right" onclick="deleteItems(this);" style="width: 13%"><i class="entypo-trash"></i></button><br/><br/>' +
+                    '</div>';
+                $('#foodItems').html(items);
+            }
+            
+            function updateSetMenu() {
+                 var name = $('#edit_set_menu_name').val();
+                 var cost = $('#edit_set_menu_price').val();
+                var key = $('#edit_set_menu_key').val();
+
+                var dataList = $("#foodItems input").map(function() {
+                    if($(this).val() != '')
+                        return $(this).val();
+                }).get();
+
+                var editedItems =  dataList.join('|');
+                console.log(editedItems);
+
+                 if(name == '' || cost == '' || key == '' || editedItems == ''){
+                 swal({
+                     title: 'Error!',
+                     text: 'Every Field must be filled !!',
+                     type: 'error'
+                 });
+                 }else {
+                     $.ajax({
+                         type: 'POST',
+                         url: "data/ajax-req-food",
+                         dataType: 'json',
+                         data: {
+                             setMenuEditedName : name,
+                             setMenuEditedCost : cost,
+                             setMenuEditedKey : key,
+                             setMenuItems : editedItems
+
+                         },
+                         cache : false,
+                         error: function() {
+                             swal({
+                                 title: 'Failed!',
+                                 text: 'An error occured !!',
+                                 type: 'error'
+                             });
+                         },
+                         success : function(response){
+                             var i;
+                             var out ='';
+                             var count =0;
+                             var item = '';
+                             var j;
+
+                             for(i=0; i < response.length; ++i){
+
+                                 out += '<div class="col-xs-4 text-center">' +
+                                     '<div class="col-xs-12 set-menu">' +
+                                     '<h3>'+response[i].sm_title+'</h3>';
+                                 item = response[i].sm_description.split("|");
+                                 for(j=0; j<item.length; ++j){
+                                     out +='<p>' + item[j] + '</p>';
+                                 }
+                                 out += '<p>Price: &#2547; ' + response[i].sm_price + '</p>' +
+                                     '<p>' +
+                                     '<button onclick="showAjaxModal(' + response[i].sm_id + ');" class="btn btn-orange"><i class="entypo-pencil"></i> Edit</button> ' +
+                                     '<button class="btn btn-danger" onclick="deleteSetMenu(' + response[i].sm_id + ');"><i class="entypo-trash"></i> Delete</button>' +
+                                     '</p>' +
+                                     '</div>' +
+                                     '</div>';
+                                 count++;
+                                 if(count%3 ==0){
+                                     out += '</div></div><br/><div class="row"><div class="col-sm-12 text-center">';
+                                 }
+                             }
+                             var ht = '<div class="row">' +
+                                 '<div class="col-sm-12">' +
+                                 out +
+                                 '</div>' +
+                                 '</div>';
+                             $('#setmenu-content').html(ht);
+                             swal({
+                                 title: 'Successful!',
+                                 text: 'Welcome gate has been modified !!',
+                                 type: 'success'
+                             });
+                             $('#edit_set_menu_close').click();
+                         }
+                     });
+                 }
             }
         </script>
 
         <!-- Modal-->
-        <div class="modal fade" id="modal-stage">
+        <div class="modal fade" id="modal-edit-setmenu">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="modal-title">Edit Stage Information</h3>
+                        <h3 class="modal-title">Edit Set Menu Information</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">
-                                    <form id="editStage" action="" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <h4>Name:</h4>
-                                            <input type="text" required="required" value="" name="edit_stage_name" id="edit_stage_name" class="form-control" />
+                                    <div class="form-group">
+                                        <h4>Name:</h4>
+                                        <input type="text" required="required" value="" name="edit_set_menu_name" id="edit_set_menu_name" class="form-control" />
+                                    </div>
+                                    <h4>Menu Items:</h4>
+                                    <button onclick="additems()" class="btn btn-success">Add</button><br/><br/>
+                                    <div id="foodItems" style="width: 100%">
                                         </div>
-                                        <div class="form-group">
-                                            <h4>Cost:</h4>
-                                            <input type="number" required="required" value="" step="0.01" name="edit_stage_price" id="edit_stage_price" class="form-control" />
-                                        </div>
-                                        <input type="hidden" id="edit_stage_key" name="edit_stage_key"/>
-                                        <div class="form-group">
-                                            <h4>Select an Image:</h4>
-                                            <input type="file" accept="image/*" value="" name="edit_stage_image" id="edit_stage_image" class="dropify" data-default-file="<?php echo DEFAULT__IMAGE ?>/Demo.png" />
-                                        </div>
+                                    <div class="form-group">
+                                        <h4>Cost:</h4>
+                                        <input type="number" required="required" value="" step="0.01" name="edit_set_menu_price" id="edit_set_menu_price" class="form-control" />
+                                    </div>
+                                    <input type="hidden" id="edit_set_menu_key" name="edit_set_menu_key"/>
                                 </div>
                                 <div class="col-sm-2"></div>
                             </div>
@@ -469,9 +506,8 @@ if(!isset($_SESSION['admin'])){
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="edit_stage_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-info">Save changes</button>
-                        </form>
+                        <button type="button" id="edit_set_menu_close" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-info" onclick="updateSetMenu();">Save changes</button>
                     </div>
                 </div>
             </div>
