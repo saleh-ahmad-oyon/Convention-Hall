@@ -80,13 +80,13 @@ if(isset($_POST['add_addi_food_name'])){    // add additional food
             move_uploaded_file($file['tmp_name'], $file_path);
 
             $image = $file['name'];
+
+            //call function to modify Additional Food
+            updateAdditionalFood($name, $cost, $keys, $image, $id);
         }
     }else{
-        $image = "Demo.png";
+        updateAdditionalFoodWithoutImage($name, $cost, $keys, $id);
     }
-
-    //call function to modify Additional Food
-    updateAdditionalFood($name, $cost, $keys, $image, $id);
 
     //return updated data
     if(isset($_POST['special'])){

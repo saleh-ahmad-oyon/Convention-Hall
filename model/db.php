@@ -449,12 +449,34 @@ function updateGate($name, $cost, $image, $id){
     }
     $conn = null;
 }
+function updateGateWithoutImage($name, $cost, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `gate` SET `g_title`= :title, `g_price`= :price WHERE `g_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':price' => $cost, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
 function updateAdditionalFood($name, $cost, $keys, $image, $id){
     $conn = db_conn();
     $selectQuery = "UPDATE `additional_menu` SET `am_title`=:title,`am_image`=:image,`am_price`=:price,`keywords`=:keywords WHERE `am_id` = :id";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function updateAdditionalFoodWithoutImage($name, $cost, $keys, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `additional_menu` SET `am_title`=:title,`am_price`=:price,`keywords`=:keywords WHERE `am_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }
@@ -477,6 +499,17 @@ function updateStage($name, $cost, $image, $id){
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':id' => $id));
+    }catch(PDOException $e){
+        handle_sql_errors($selectQuery, $e->getMessage());
+    }
+    $conn = null;
+}
+function updateStageWithoutImage($name, $cost, $id){
+    $conn = db_conn();
+    $selectQuery = "UPDATE `stage` SET `st_title`=:title,`st_price`=:price WHERE `st_id` = :id";
+    try{
+        $stmt = $conn->prepare($selectQuery);
+        $stmt->execute(array(':title' => $name, ':price' => $cost, ':id' => $id));
     }catch(PDOException $e){
         handle_sql_errors($selectQuery, $e->getMessage());
     }

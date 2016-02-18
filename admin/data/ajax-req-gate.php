@@ -80,13 +80,14 @@ if(isset($_POST['gateID'])){           //Get Gate Information
             move_uploaded_file($file['tmp_name'], $file_path);
 
             $image = $file['name'];
+
+            //call function to modify Welcome gate
+            updateGate($name, $cost, $image, $id);
         }
     }else{
-        $image = "Demo.png";
+        updateGateWithoutImage($name, $cost, $id);
     }
 
-    //call function to modify Welcome gate
-    updateGate($name, $cost, $image, $id);
     $row = gate();
     $resp = $row;
     echo json_encode($resp);
@@ -137,13 +138,12 @@ if(isset($_POST['gateID'])){           //Get Gate Information
             move_uploaded_file($file['tmp_name'], $file_path);
 
             $image = $file['name'];
+            //call function to modify Stage Decoration
+            updateStage($name, $cost, $image, $id);
         }
     }else{
-        $image = "Demo.png";
+        updateStageWithoutImage($name, $cost, $id);
     }
-
-    //call function to modify Stage Decoration
-    updateStage($name, $cost, $image, $id);
 
     //return updated Stage informations
     $row = stage();
