@@ -91,7 +91,7 @@ if(!isset($_SESSION['admin'])){
                 <th data-hide="phone">Date of Program</th>
                 <th data-hide="phone,tablet">Purpose</th>
                 <th class="text-center">Total Payment</th>
-                <th></th>
+                <th class="text-center">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -118,7 +118,7 @@ if(!isset($_SESSION['admin'])){
                 <th>Date of Program</th>
                 <th>Purpose</th>
                 <th class="text-center">Total Payment</th>
-                <th></th>
+                <th class="text-center">Action</th>
             </tr>
             </tfoot>
         </table>

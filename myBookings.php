@@ -59,7 +59,7 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
                     arr[i].totalCost +
                     "</td><td class='text-right'>&#2547;&nbsp;" +
                     (arr[i].totalCost - arr[i].paidCost) +
-                    "</td><td class='text-center'><a class='btn btn-info' href='<?php echo SERVER;?>/detailsBooking?order="
+                    "</td><td class='text-center'><a title='Details' class='btn btn-info' href='<?php echo SERVER;?>/detailsBooking?order="
                     + arr[i].keyID +
                     "' target='_blank'><span class='glyphicon glyphicon-info-sign'></span></a></td></tr>";
             }
@@ -87,7 +87,7 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
                             <th>Purpose</th>
                             <th class="text-center">Total Payment</th>
                             <th class="text-center">Pending Payment</th>
-                            <th></th>
+                            <th>Action</th>
                             </thead>
                             <tbody id="myTab">
                             </tbody>

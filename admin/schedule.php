@@ -86,7 +86,7 @@ if(!isset($_SESSION['admin'])){
                                 <tr>
                                     <th>Shift</th>
                                     <th>Time</th>
-                                    <th></th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

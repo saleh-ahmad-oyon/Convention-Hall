@@ -87,7 +87,7 @@ if(!isset($_SESSION['admin'])){
                             <th>No.</th>
                             <th>Service</th>
                             <th class="text-center">Charge</th>
-                            <th></th>
+                            <th class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
