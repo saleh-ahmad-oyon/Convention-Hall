@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2016 at 08:15 PM
+-- Generation Time: Feb 24, 2016 at 01:09 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -824,7 +824,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `additional_menu`
 --
 ALTER TABLE `additional_menu`
-  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=52;
+  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `adminlogin`
 --
@@ -844,7 +844,7 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `gate`
 --
 ALTER TABLE `gate`
-  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `hall_booking`
 --
@@ -869,7 +869,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `set_menu`
 --
 ALTER TABLE `set_menu`
-  MODIFY `sm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `sm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `shift`
 --
@@ -879,7 +879,7 @@ ALTER TABLE `shift`
 -- AUTO_INCREMENT for table `stage`
 --
 ALTER TABLE `stage`
-  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `status`
 --
