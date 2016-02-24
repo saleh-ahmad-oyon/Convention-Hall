@@ -234,6 +234,5 @@ if(isset($_SESSION['admin'])){
 
 	<!-- Demo Settings -->
 	<script src="assets/js/neon-demo.js"></script>
-
 </body>
 </html>
