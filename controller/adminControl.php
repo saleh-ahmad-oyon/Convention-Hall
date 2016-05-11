@@ -1,83 +1,120 @@
 <?php
     require '../model/db.php';
-    function totalUser(){
+
+    function totalUser()
+    {
         $totalUser = getTotalUser();
         return $totalUser;
     }
-    function pendingBookings(){
+
+    function pendingBookings()
+    {
         $pendingBookings = getPendingBookings();
         return $pendingBookings;
     }
-    function approvedBookings(){
+
+    function approvedBookings()
+    {
         $approved = getApprovedBookings();
         return $approved;
     }
-    function totalBookings(){
+
+    function totalBookings()
+    {
         $totalBookings = getTotalBookings();
         return $totalBookings;
     }
-    function pendingInfo(){
+
+    function pendingInfo()
+    {
         $pending = getPending();
         return $pending;
     }
-    function approveInfo(){
+
+    function approveInfo()
+    {
         $approve = getApprove();
         return $approve;
     }
-    function completeBookingInfo(){
+
+    function completeBookingInfo()
+    {
         $approve = getCompleteBookingInfo();
         return $approve;
     }
-    function bookingInfo(){
+
+    function bookingInfo()
+    {
         $booking = allBookingInfo();
         return $booking;
     }
-    function detailsBooking($id){
+
+    function detailsBooking($id)
+    {
         $book = getOrderInfo($id);
         return $book;
     }
-    function Misc(){
+
+    function Misc()
+    {
         $row = getMisc();
         return $row;
     }
-    function schedule(){
+
+    function schedule()
+    {
         $row = getSchedule();
         return $row;
     }
-    function feature(){
+
+    function feature()
+    {
         $row = getFeatures();
         return $row;
     }
-    function advantages(){
+
+    function advantages()
+    {
         $row = getAdvc();
         return $row;
     }
-    function services(){
+
+    function services()
+    {
         $row = getServices();
         return $row;
     }
-function getGate(){
-    $gate = gate();
-    return $gate;
-}
-function getStage(){
-    $stage = stage();
-    return $stage;
-}
-function getAllAdditionalFood(){
-    $addiFood = addiFood();
-    return $addiFood;
-}
-function getAllFullFood(){
-    $addiFoodFull = addiFoodFull();
-    return $addiFoodFull;
-}
-function getPersonalInfo(){
-    $proInfo = getAllPersonalInfo();
-    return $proInfo;
-}
-function getSetMenu(){
-    $setMenu = setMenu();
-    return $setMenu;
-}
-?>
+
+    function getGate()
+    {
+        $gate = gate();
+        return $gate;
+    }
+
+    function getStage()
+    {
+        $stage = stage();
+        return $stage;
+    }
+
+    function getAllAdditionalFood()
+    {
+        $addiFood = addiFood();
+        return $addiFood;
+    }
+
+    function getAllFullFood()
+    {
+        $addiFoodFull = addiFoodFull();
+        return $addiFoodFull;
+    }
+
+    function getPersonalInfo(){
+        $proInfo = getAllPersonalInfo();
+        return $proInfo;
+    }
+
+    function getSetMenu(){
+        $setMenu = setMenu();
+        return $setMenu;
+    }
