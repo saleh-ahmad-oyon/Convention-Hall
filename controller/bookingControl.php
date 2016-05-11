@@ -1,40 +1,55 @@
 <?php
     require 'model/db.php';
 
-    function getAllShift(){
+    function getAllShift()
+    {
         $shift = getShift();
         return $shift;
     }
+
     function getAllPurposes(){
         $purpose = getPurposes();
         return $purpose;
     }
-    function getAllServices(){
+
+    function getAllServices()
+    {
         $serv = getServices();
         return $serv;
     }
-    function getAllAdditionalFood(){
+
+    function getAllAdditionalFood()
+    {
         $addiFood = addiFood();
         return $addiFood;
     }
-    function getAllFullFood(){
+
+    function getAllFullFood()
+    {
         $addiFoodFull = addiFoodFull();
         return $addiFoodFull;
     }
-    function getStage(){
+
+    function getStage()
+    {
         $stage = stage();
         return $stage;
     }
-    function getGate(){
+
+    function getGate()
+    {
         $gate = gate();
         return $gate;
     }
-    function checkSameDate(){
+
+    function checkSameDate()
+    {
         $book = sameDate();
         return $book;
     }
-    function getSetMenu(){
+
+    function getSetMenu()
+    {
         $setMenu = setMenu();
         return $setMenu;
     }
-?>
