@@ -14,7 +14,7 @@ function checkUserEmail($email){
 }
 function insertUser($fname, $lname, $email, $contact, $pass){
     $conn = db_conn();
-    $selectQuery = "call new_user(:fname, :lname, :email, :contact, :pass)";
+    $selectQuery = "CALL new_user(:fname, :lname, :email, :contact, :pass)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':fname' => $fname, ':lname' => $lname, ':email' => $email, ':contact' => $contact, ':pass' => $pass));
@@ -25,7 +25,7 @@ function insertUser($fname, $lname, $email, $contact, $pass){
 }
 function addSchedule($shift, $time){
     $conn = db_conn();
-    $selectQuery = "call insert_schedule(:shift, :time)";
+    $selectQuery = "CALL insert_schedule(:shift, :time)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':shift' => $shift, ':time' => $time));
@@ -36,7 +36,7 @@ function addSchedule($shift, $time){
 }
 function addCharges($service, $price){
     $conn = db_conn();
-    $selectQuery = "call insert_service(:service, :price)";
+    $selectQuery = "CALL insert_service(:service, :price)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':service' => $service, ':price' => $price));
@@ -238,7 +238,7 @@ function similarDateShift($date, $shift){
 }
 function setOrder($user, $date, $shift, $purpose, $service, $guest, $gate, $stage, $food, $totalCost, $fullamount, $setMenu, $today){
     $conn = db_conn();
-    $selectQuery = "call give_booking(:usr, :dat, :shift, :purpose, :service, :guest, :gate, :stage, :food, :totalCost, :fullamount, :setMenu, :today)";
+    $selectQuery = "CALL give_booking(:usr, :dat, :shift, :purpose, :service, :guest, :gate, :stage, :food, :totalCost, :fullamount, :setMenu, :today)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':usr' => $user, ':dat' => $date, ':shift' => $shift, ':purpose' => $purpose, ':service' => $service, ':guest' => $guest, ':gate' => $gate, ':stage' => $stage, ':food' => $food, ':totalCost' => $totalCost, ':fullamount' => $fullamount, ':setMenu' => $setMenu, ':today' => $today));
@@ -606,7 +606,7 @@ function deleteAdvantage($id){
 }
 function getOrderInfo($id){
     $conn = db_conn();
-    $selectQuery = 'call admin_orders(?)';
+    $selectQuery = 'CALL admin_orders(?)';
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
@@ -911,7 +911,7 @@ function updateAdvantage($adv, $id){
 }
 function addFeature($desc){
     $conn = db_conn();
-    $selectQuery = "call insert_feature(?)";
+    $selectQuery = "CALL insert_feature(?)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($desc));
@@ -922,7 +922,7 @@ function addFeature($desc){
 }
 function insertNewGate($name, $cost, $image){
     $conn = db_conn();
-    $selectQuery = "call insert_gate(:name, :image, :cost)";
+    $selectQuery = "CALL insert_gate(:name, :image, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
@@ -933,7 +933,7 @@ function insertNewGate($name, $cost, $image){
 }
 function insertNewSetItems($title, $items, $cost){
     $conn = db_conn();
-    $selectQuery = "call insert_setmenu(:title, :items, :cost)";
+    $selectQuery = "CALL insert_setmenu(:title, :items, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $title, ':items' =>$items, ':cost' => $cost));
@@ -944,7 +944,7 @@ function insertNewSetItems($title, $items, $cost){
 }
 function insertNewFood($name, $cost, $image, $keys){
     $conn = db_conn();
-    $selectQuery = "call insert_addi_food(:name, :image, :cost, :keys)";
+    $selectQuery = "CALL insert_addi_food(:name, :image, :cost, :keys)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost, ':keys' => $keys));
@@ -955,7 +955,7 @@ function insertNewFood($name, $cost, $image, $keys){
 }
 function insertNewStage($stageName, $stageCost, $image){
     $conn = db_conn();
-    $selectQuery = "call insert_stage(:name, :image, :cost)";
+    $selectQuery = "CALL insert_stage(:name, :image, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $stageName, ':image' =>$image, ':cost' => $stageCost));
@@ -966,7 +966,7 @@ function insertNewStage($stageName, $stageCost, $image){
 }
 function addAdvantages($advantage){
     $conn = db_conn();
-    $selectQuery = "call insert_advantage(?)";
+    $selectQuery = "CALL insert_advantage(?)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($advantage));
