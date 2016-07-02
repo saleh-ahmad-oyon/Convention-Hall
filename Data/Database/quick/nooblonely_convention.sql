@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.0.10.14
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 02, 2016 at 12:59 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- Host: localhost:3306
+-- Generation Time: Jul 02, 2016 at 11:53 AM
+-- Server version: 10.1.14-MariaDB
+-- PHP Version: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,17 +14,18 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `convention_hall`
+-- Database: `nooblonely_convention`
 --
 
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_orders` (IN `orderID` INT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `admin_orders`(IN `orderID` INT)
+BEGIN
 SELECT user.u_fname, user.u_lname, user.u_email, user.u_contact, `order_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `food`, `guest_number`, gate.g_title, gate.g_image, gate.g_price, set_menu.sm_title, set_menu.sm_description, set_menu.sm_price, stage.st_title, stage.st_image, stage.st_price, status.status_cond, `total_cost`, `paid_cost`, hall_booking.fullFood, hall_booking.date_of_booking
 FROM `hall_booking`
 INNER JOIN user ON user.s_id = hall_booking.user_id
@@ -34,48 +35,59 @@ LEFT JOIN set_menu ON set_menu.sm_id = hall_booking.set_menu
 INNER JOIN status ON status.status_id = hall_booking.order_status WHERE `order_id` = orderID;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `give_booking` (IN `usr` INT, IN `dat` DATE, IN `shift` TEXT, IN `purpose` TEXT, IN `service` TEXT, IN `guest` INT, IN `gate` INT, IN `stage` INT, IN `food` TEXT, IN `totalCost` DECIMAL(10,2), IN `fullamount` TEXT, IN `setMenu` INT, IN `today` DATE)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `give_booking`(IN `usr` INT, IN `dat` DATE, IN `shift` TEXT, IN `purpose` TEXT, IN `service` TEXT, IN `guest` INT, IN `gate` INT, IN `stage` INT, IN `food` TEXT, IN `totalCost` DECIMAL(10,2), IN `fullamount` TEXT, IN `setMenu` INT, IN `today` DATE)
+BEGIN
 INSERT INTO `hall_booking`(`user_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `guest_number`, `welcome_gate`, `stage`, `food`, `total_cost`, `fullFood`, `set_menu`, `date_of_booking`) VALUES (usr,dat,shift,purpose,service,guest,gate,stage,food, totalCost, fullamount, setMenu, today);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_addi_food` (IN `foodTitle` TEXT, IN `foodImage` TEXT, IN `foodPrice` DECIMAL(10,2), IN `foodKeywords` TEXT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_addi_food`(IN `foodTitle` TEXT, IN `foodImage` TEXT, IN `foodPrice` DECIMAL(10,2), IN `foodKeywords` TEXT)
+BEGIN
 INSERT INTO `additional_menu`(`am_title`, `am_image`, `am_price`, `keywords`) 
 VALUES (foodTitle,foodImage,foodPrice,foodKeywords);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_advantage` (IN `newAdv` TEXT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_advantage`(IN `newAdv` TEXT)
+BEGIN
 INSERT INTO `advantages`(`adv_desc`) VALUES (newAdv);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_feature` (IN `feat` TEXT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_feature`(IN `feat` TEXT)
+BEGIN
 INSERT INTO `features`(`f_desc`) VALUES (feat);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_gate` (IN `addname` TEXT, IN `addImage` TEXT, IN `addPrice` DECIMAL(10,2))  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_gate`(IN `addname` TEXT, IN `addImage` TEXT, IN `addPrice` DECIMAL(10,2))
+BEGIN
 INSERT INTO `gate`(`g_title`, `g_image`, `g_price`) VALUES (addname,addImage,addPrice);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_schedule` (IN `newShift` TEXT, IN `newTime` TEXT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_schedule`(IN `newShift` TEXT, IN `newTime` TEXT)
+BEGIN
 INSERT INTO `shift`(`shift_name`, `shift_time`) VALUES (newShift, newTime);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_service` (IN `serv` TEXT, IN `price` DECIMAL(10,2))  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_service`(IN `serv` TEXT, IN `price` DECIMAL(10,2))
+BEGIN
 INSERT INTO `services`(`serv_name`, `Serv_price`) VALUES (serv, price);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_setmenu` (IN `title` TEXT, IN `description` TEXT, IN `cost` DECIMAL(10,2))  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_setmenu`(IN `title` TEXT, IN `description` TEXT, IN `cost` DECIMAL(10,2))
+BEGIN
 INSERT INTO `set_menu`(`sm_title`, `sm_description`, `sm_price`) VALUES (title, description, cost);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_stage` (IN `title` TEXT, IN `image` TEXT, IN `cost` DECIMAL(10,2))  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `insert_stage`(IN `title` TEXT, IN `image` TEXT, IN `cost` DECIMAL(10,2))
+BEGIN
 INSERT INTO `stage`(`st_title`, `st_image`, `st_price`) VALUES (title,image,cost);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `new_user` (IN `fname` TEXT, IN `lname` TEXT, IN `email` VARCHAR(255), IN `contact` TEXT, IN `pass` TEXT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `new_user`(IN `fname` TEXT, IN `lname` TEXT, IN `email` VARCHAR(255), IN `contact` TEXT, IN `pass` TEXT)
+BEGIN
 INSERT INTO `user`(`u_fname`, `u_lname`, `u_email`, `u_contact`, `u_pass`) VALUES (fname, lname, email, contact, pass);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `user_orders` (IN `orderID` INT)  BEGIN
+CREATE DEFINER=`nooblonely`@`localhost` PROCEDURE `user_orders`(IN `orderID` INT)
+BEGIN
 SELECT hall_booking.order_date, hall_booking.order_shift, `order_id`,  hall_booking.order_purpose, hall_booking.services, status.status_cond, hall_booking.guest_number, gate.g_title, gate.g_image, gate.g_price, stage.st_title, stage.st_image, stage.st_price, hall_booking.food, hall_booking.total_cost, set_menu.sm_title, set_menu.sm_description, set_menu.sm_price, hall_booking.paid_cost, hall_booking.fullFood, hall_booking.date_of_booking
 FROM hall_booking
 LEFT JOIN gate ON gate.g_id = hall_booking.welcome_gate
@@ -92,7 +104,7 @@ DELIMITER ;
 -- Table structure for table `additional_menu`
 --
 
-CREATE TABLE `additional_menu` (
+CREATE TABLE IF NOT EXISTS `additional_menu` (
   `am_id` int(11) NOT NULL COMMENT 'Additional Menu ID',
   `am_title` text NOT NULL,
   `am_image` text NOT NULL,
@@ -117,7 +129,7 @@ INSERT INTO `additional_menu` (`am_id`, `am_title`, `am_image`, `am_price`, `key
 (10, 'Cup Doi', 'doi.jpg', '25.00', 'Cup Doi\r\ncup dodhi\r\nCup yogurt\r\nCup Dodi'),
 (11, 'Prawn Korma', 'PrawnKorma.jpg', '150.00', 'Prawn Korma\r\nshrimp korma\r\nchingri korma\r\nPrawn corma\r\nshrimp corma\r\nchingri corma'),
 (12, 'Mutton Vuna', 'muttonVuna.jpg', '100.00', 'Mutton Vuna\r\nkhasir vuna\r\nkhasit torkari\r\nmutton torkari'),
-(13, 'Naan Roti', 'naan.jpg', '30.00', 'Naan Roti\r\nnan ruti\r\nnaan ruti\r\nnan rooti\r\nnaan ruti'),
+(13, 'Naan Roti', 'naan.jpg', '30.00', 'Naan Roti\r\nnan ruti\r\nnaan ruti\r\nnan nooblone_coursei\r\nnaan ruti'),
 (14, 'Chicken BBQ', 'bbq-roasted-chicken.jpg', '100.00', 'Chicken BBQ\r\nmurgi BBQ\r\nmorgi bbq\r\nmurgi vaga\r\nmorgi vaga'),
 (15, 'Pakki Biriyani', 'pakki-biriyani.jpg', '190.00', 'Pakki Biriyani\r\nPakki Birani\r\nrice'),
 (16, 'Fruit Salad', 'FruitSalad.jpg', '50.00', 'Fruit Salad\r\nfoler salad'),
@@ -147,32 +159,30 @@ INSERT INTO `additional_menu` (`am_id`, `am_title`, `am_image`, `am_price`, `key
 --
 -- Stand-in structure for view `addi_food`
 --
-CREATE TABLE `addi_food` (
+CREATE TABLE IF NOT EXISTS `addi_food` (
 `am_id` int(11)
 ,`am_title` text
 ,`am_image` text
 ,`am_price` decimal(10,2)
 );
-
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `addi_food_full`
 --
-CREATE TABLE `addi_food_full` (
+CREATE TABLE IF NOT EXISTS `addi_food_full` (
 `am_id` int(11)
 ,`am_title` text
 ,`am_image` text
 ,`am_price` decimal(10,2)
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `adminlogin`
 --
 
-CREATE TABLE `adminlogin` (
+CREATE TABLE IF NOT EXISTS `adminlogin` (
   `a_id` int(11) NOT NULL,
   `a_user` text NOT NULL,
   `a_pass` text NOT NULL
@@ -191,7 +201,7 @@ INSERT INTO `adminlogin` (`a_id`, `a_user`, `a_pass`) VALUES
 -- Table structure for table `advantages`
 --
 
-CREATE TABLE `advantages` (
+CREATE TABLE IF NOT EXISTS `advantages` (
   `adv_id` int(11) NOT NULL,
   `adv_desc` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -212,7 +222,7 @@ INSERT INTO `advantages` (`adv_id`, `adv_desc`) VALUES
 --
 -- Stand-in structure for view `all_booking_info`
 --
-CREATE TABLE `all_booking_info` (
+CREATE TABLE IF NOT EXISTS `all_booking_info` (
 `order_id` int(11)
 ,`order_date` date
 ,`order_purpose` text
@@ -220,13 +230,12 @@ CREATE TABLE `all_booking_info` (
 ,`paid_cost` decimal(10,2)
 ,`date_of_booking` date
 );
-
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `approve_bookings`
 --
-CREATE TABLE `approve_bookings` (
+CREATE TABLE IF NOT EXISTS `approve_bookings` (
 `order_id` int(11)
 ,`order_date` date
 ,`order_purpose` text
@@ -234,13 +243,12 @@ CREATE TABLE `approve_bookings` (
 ,`paid_cost` decimal(10,2)
 ,`date_of_booking` date
 );
-
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `complete_booking`
 --
-CREATE TABLE `complete_booking` (
+CREATE TABLE IF NOT EXISTS `complete_booking` (
 `order_id` int(11)
 ,`order_date` date
 ,`order_purpose` text
@@ -248,14 +256,13 @@ CREATE TABLE `complete_booking` (
 ,`paid_cost` decimal(10,2)
 ,`date_of_booking` date
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `features`
 --
 
-CREATE TABLE `features` (
+CREATE TABLE IF NOT EXISTS `features` (
   `f_id` int(11) NOT NULL,
   `f_desc` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -275,7 +282,7 @@ INSERT INTO `features` (`f_id`, `f_desc`) VALUES
 -- Table structure for table `gate`
 --
 
-CREATE TABLE `gate` (
+CREATE TABLE IF NOT EXISTS `gate` (
   `g_id` int(11) NOT NULL,
   `g_title` text NOT NULL,
   `g_image` text NOT NULL,
@@ -302,20 +309,19 @@ INSERT INTO `gate` (`g_id`, `g_title`, `g_image`, `g_price`) VALUES
 --
 -- Stand-in structure for view `gate_view`
 --
-CREATE TABLE `gate_view` (
+CREATE TABLE IF NOT EXISTS `gate_view` (
 `g_id` int(11)
 ,`g_title` text
 ,`g_image` text
 ,`g_price` decimal(10,2)
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `hall_booking`
 --
 
-CREATE TABLE `hall_booking` (
+CREATE TABLE IF NOT EXISTS `hall_booking` (
   `user_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `order_date` date NOT NULL,
@@ -349,7 +355,7 @@ INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, 
 -- Table structure for table `misc`
 --
 
-CREATE TABLE `misc` (
+CREATE TABLE IF NOT EXISTS `misc` (
   `misc_id` int(11) NOT NULL,
   `misc_vat` double NOT NULL,
   `misc_extra_cost` decimal(10,2) NOT NULL
@@ -367,18 +373,17 @@ INSERT INTO `misc` (`misc_id`, `misc_vat`, `misc_extra_cost`) VALUES
 --
 -- Stand-in structure for view `order_date_shift`
 --
-CREATE TABLE `order_date_shift` (
+CREATE TABLE IF NOT EXISTS `order_date_shift` (
 `order_id` int(11)
 ,`order_date` date
 ,`order_shift` text
 );
-
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `pending_bookings`
 --
-CREATE TABLE `pending_bookings` (
+CREATE TABLE IF NOT EXISTS `pending_bookings` (
 `order_id` int(11)
 ,`order_date` date
 ,`order_purpose` text
@@ -386,14 +391,13 @@ CREATE TABLE `pending_bookings` (
 ,`paid_cost` decimal(10,2)
 ,`date_of_booking` date
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `puposes`
 --
 
-CREATE TABLE `puposes` (
+CREATE TABLE IF NOT EXISTS `puposes` (
   `p_id` int(11) NOT NULL,
   `p_name` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -414,28 +418,26 @@ INSERT INTO `puposes` (`p_id`, `p_name`) VALUES
 --
 -- Stand-in structure for view `purpose_view`
 --
-CREATE TABLE `purpose_view` (
+CREATE TABLE IF NOT EXISTS `purpose_view` (
 `p_name` text
 );
-
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `schedule_view`
 --
-CREATE TABLE `schedule_view` (
+CREATE TABLE IF NOT EXISTS `schedule_view` (
 `shift_id` int(11)
 ,`shift_name` text
 ,`shift_time` text
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `services`
 --
 
-CREATE TABLE `services` (
+CREATE TABLE IF NOT EXISTS `services` (
   `serv_id` int(11) NOT NULL,
   `serv_name` text NOT NULL,
   `Serv_price` decimal(10,2) NOT NULL
@@ -459,19 +461,18 @@ INSERT INTO `services` (`serv_id`, `serv_name`, `Serv_price`) VALUES
 --
 -- Stand-in structure for view `service_view`
 --
-CREATE TABLE `service_view` (
+CREATE TABLE IF NOT EXISTS `service_view` (
 `serv_id` int(11)
 ,`serv_name` text
 ,`Serv_price` decimal(10,2)
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `set_menu`
 --
 
-CREATE TABLE `set_menu` (
+CREATE TABLE IF NOT EXISTS `set_menu` (
   `sm_id` bigint(20) NOT NULL,
   `sm_title` text NOT NULL,
   `sm_description` text NOT NULL,
@@ -493,7 +494,7 @@ INSERT INTO `set_menu` (`sm_id`, `sm_title`, `sm_description`, `sm_price`) VALUE
 -- Table structure for table `shift`
 --
 
-CREATE TABLE `shift` (
+CREATE TABLE IF NOT EXISTS `shift` (
   `shift_id` int(11) NOT NULL,
   `shift_name` text NOT NULL,
   `shift_time` text NOT NULL
@@ -514,7 +515,7 @@ INSERT INTO `shift` (`shift_id`, `shift_name`, `shift_time`) VALUES
 -- Table structure for table `stage`
 --
 
-CREATE TABLE `stage` (
+CREATE TABLE IF NOT EXISTS `stage` (
   `st_id` int(11) NOT NULL,
   `st_title` text NOT NULL,
   `st_image` text NOT NULL,
@@ -541,20 +542,19 @@ INSERT INTO `stage` (`st_id`, `st_title`, `st_image`, `st_price`) VALUES
 --
 -- Stand-in structure for view `stage_view`
 --
-CREATE TABLE `stage_view` (
+CREATE TABLE IF NOT EXISTS `stage_view` (
 `st_id` int(11)
 ,`st_title` text
 ,`st_image` text
 ,`st_price` decimal(10,2)
 );
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `status`
 --
 
-CREATE TABLE `status` (
+CREATE TABLE IF NOT EXISTS `status` (
   `status_id` int(11) NOT NULL,
   `status_cond` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -575,7 +575,7 @@ INSERT INTO `status` (`status_id`, `status_cond`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `u_fname` text NOT NULL,
   `u_lname` text NOT NULL,
   `u_email` varchar(255) NOT NULL,
@@ -590,23 +590,22 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`u_fname`, `u_lname`, `u_email`, `u_contact`, `u_pass`, `s_id`, `time_of_registration`) VALUES
-('Saleh', 'Oyon', 'salehoyon@hotmail.com', '+880-1520103065', '$2y$10$02uWh7z4FOADl4eusus1aOFgucFFp7/zb1751lBoXx1Bpx1ASbcTC', 1, '2016-02-17 18:59:40'),
-('Sakib', 'Hasan', 'sakibhasan60@yahoo.com', '+880-1199080237', '$2y$10$U.hWpcMChAZRnSglDukDROvmZFm3yXZbYd5ehPI64jEZI.LtkwlpK', 2, '2016-02-17 18:59:45'),
-('Saleh', 'Ahmad', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$/H/wb3pjIscHSTxiLG51G.PcqohYJ4W2iInxwEScH3l7ZKSP72zv2', 3, '2016-02-17 18:59:48');
+('Saleh', 'Oyon', 'salehoyon@hotmail.com', '+880-1520103065', '$2y$10$02uWh7z4FOADl4eusus1aOFgucFFp7/zb1751lBoXx1Bpx1ASbcTC', 1, '2016-02-17 12:59:40'),
+('Sakib', 'Hasan', 'sakibhasan60@yahoo.com', '+880-1199080237', '$2y$10$U.hWpcMChAZRnSglDukDROvmZFm3yXZbYd5ehPI64jEZI.LtkwlpK', 2, '2016-02-17 12:59:45'),
+('Saleh', 'Ahmad', 'nissongo102@gmail.com', '+880-1626785569', '$2y$10$/H/wb3pjIscHSTxiLG51G.PcqohYJ4W2iInxwEScH3l7ZKSP72zv2', 3, '2016-02-17 12:59:48');
 
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `view_all_user`
 --
-CREATE TABLE `view_all_user` (
+CREATE TABLE IF NOT EXISTS `view_all_user` (
 `u_fname` text
 ,`u_lname` text
 ,`u_email` varchar(255)
 ,`u_contact` text
 ,`time_of_registration` timestamp
 );
-
 -- --------------------------------------------------------
 
 --
@@ -614,7 +613,7 @@ CREATE TABLE `view_all_user` (
 --
 DROP TABLE IF EXISTS `addi_food`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `addi_food`  AS  select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` from `additional_menu` where (not((`additional_menu`.`am_title` like '%full%'))) order by `additional_menu`.`am_title` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `addi_food` AS select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` from `additional_menu` where (not((`additional_menu`.`am_title` like '%full%'))) order by `additional_menu`.`am_title`;
 
 -- --------------------------------------------------------
 
@@ -623,7 +622,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `addi_food_full`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `addi_food_full`  AS  select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` from `additional_menu` where (`additional_menu`.`am_title` like '%full%') order by `additional_menu`.`am_title` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `addi_food_full` AS select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` from `additional_menu` where (`additional_menu`.`am_title` like '%full%') order by `additional_menu`.`am_title`;
 
 -- --------------------------------------------------------
 
@@ -632,7 +631,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `all_booking_info`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `all_booking_info`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` order by `hall_booking`.`order_id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `all_booking_info` AS select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` order by `hall_booking`.`order_id` desc;
 
 -- --------------------------------------------------------
 
@@ -641,7 +640,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `approve_bookings`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `approve_bookings`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 2) order by `hall_booking`.`order_id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `approve_bookings` AS select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 2) order by `hall_booking`.`order_id` desc;
 
 -- --------------------------------------------------------
 
@@ -650,7 +649,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `complete_booking`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `complete_booking`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 3) order by `hall_booking`.`order_id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `complete_booking` AS select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 3) order by `hall_booking`.`order_id` desc;
 
 -- --------------------------------------------------------
 
@@ -659,7 +658,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `gate_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `gate_view`  AS  select `gate`.`g_id` AS `g_id`,`gate`.`g_title` AS `g_title`,`gate`.`g_image` AS `g_image`,`gate`.`g_price` AS `g_price` from `gate` order by `gate`.`g_title` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `gate_view` AS select `gate`.`g_id` AS `g_id`,`gate`.`g_title` AS `g_title`,`gate`.`g_image` AS `g_image`,`gate`.`g_price` AS `g_price` from `gate` order by `gate`.`g_title`;
 
 -- --------------------------------------------------------
 
@@ -668,7 +667,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `order_date_shift`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `order_date_shift`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_shift` AS `order_shift` from `hall_booking` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `order_date_shift` AS select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_shift` AS `order_shift` from `hall_booking`;
 
 -- --------------------------------------------------------
 
@@ -677,7 +676,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `pending_bookings`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pending_bookings`  AS  select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 1) order by `hall_booking`.`order_id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `pending_bookings` AS select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` where (`hall_booking`.`order_status` = 1) order by `hall_booking`.`order_id` desc;
 
 -- --------------------------------------------------------
 
@@ -686,7 +685,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `purpose_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `purpose_view`  AS  select `puposes`.`p_name` AS `p_name` from `puposes` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `purpose_view` AS select `puposes`.`p_name` AS `p_name` from `puposes`;
 
 -- --------------------------------------------------------
 
@@ -695,7 +694,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `schedule_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `schedule_view`  AS  select `shift`.`shift_id` AS `shift_id`,`shift`.`shift_name` AS `shift_name`,`shift`.`shift_time` AS `shift_time` from `shift` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `schedule_view` AS select `shift`.`shift_id` AS `shift_id`,`shift`.`shift_name` AS `shift_name`,`shift`.`shift_time` AS `shift_time` from `shift`;
 
 -- --------------------------------------------------------
 
@@ -704,7 +703,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `service_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `service_view`  AS  select `services`.`serv_id` AS `serv_id`,`services`.`serv_name` AS `serv_name`,`services`.`Serv_price` AS `Serv_price` from `services` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `service_view` AS select `services`.`serv_id` AS `serv_id`,`services`.`serv_name` AS `serv_name`,`services`.`Serv_price` AS `Serv_price` from `services`;
 
 -- --------------------------------------------------------
 
@@ -713,7 +712,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `stage_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `stage_view`  AS  select `stage`.`st_id` AS `st_id`,`stage`.`st_title` AS `st_title`,`stage`.`st_image` AS `st_image`,`stage`.`st_price` AS `st_price` from `stage` order by `stage`.`st_title` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `stage_view` AS select `stage`.`st_id` AS `st_id`,`stage`.`st_title` AS `st_title`,`stage`.`st_image` AS `st_image`,`stage`.`st_price` AS `st_price` from `stage` order by `stage`.`st_title`;
 
 -- --------------------------------------------------------
 
@@ -722,172 +721,8 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_all_user`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_all_user`  AS  select `user`.`u_fname` AS `u_fname`,`user`.`u_lname` AS `u_lname`,`user`.`u_email` AS `u_email`,`user`.`u_contact` AS `u_contact`,`user`.`time_of_registration` AS `time_of_registration` from `user` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`nooblonely`@`localhost` SQL SECURITY DEFINER VIEW `view_all_user` AS select `user`.`u_fname` AS `u_fname`,`user`.`u_lname` AS `u_lname`,`user`.`u_email` AS `u_email`,`user`.`u_contact` AS `u_contact`,`user`.`time_of_registration` AS `time_of_registration` from `user`;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `additional_menu`
---
-ALTER TABLE `additional_menu`
-  ADD PRIMARY KEY (`am_id`);
-
---
--- Indexes for table `adminlogin`
---
-ALTER TABLE `adminlogin`
-  ADD PRIMARY KEY (`a_id`);
-
---
--- Indexes for table `advantages`
---
-ALTER TABLE `advantages`
-  ADD PRIMARY KEY (`adv_id`);
-
---
--- Indexes for table `features`
---
-ALTER TABLE `features`
-  ADD PRIMARY KEY (`f_id`);
-
---
--- Indexes for table `gate`
---
-ALTER TABLE `gate`
-  ADD PRIMARY KEY (`g_id`);
-
---
--- Indexes for table `hall_booking`
---
-ALTER TABLE `hall_booking`
-  ADD PRIMARY KEY (`order_id`);
-
---
--- Indexes for table `misc`
---
-ALTER TABLE `misc`
-  ADD PRIMARY KEY (`misc_id`);
-
---
--- Indexes for table `puposes`
---
-ALTER TABLE `puposes`
-  ADD PRIMARY KEY (`p_id`);
-
---
--- Indexes for table `services`
---
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`serv_id`);
-
---
--- Indexes for table `set_menu`
---
-ALTER TABLE `set_menu`
-  ADD PRIMARY KEY (`sm_id`);
-
---
--- Indexes for table `shift`
---
-ALTER TABLE `shift`
-  ADD PRIMARY KEY (`shift_id`);
-
---
--- Indexes for table `stage`
---
-ALTER TABLE `stage`
-  ADD PRIMARY KEY (`st_id`);
-
---
--- Indexes for table `status`
---
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`status_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`s_id`),
-  ADD UNIQUE KEY `u_email` (`u_email`),
-  ADD UNIQUE KEY `u_email_2` (`u_email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `additional_menu`
---
-ALTER TABLE `additional_menu`
-  MODIFY `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID', AUTO_INCREMENT=54;
---
--- AUTO_INCREMENT for table `adminlogin`
---
-ALTER TABLE `adminlogin`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `advantages`
---
-ALTER TABLE `advantages`
-  MODIFY `adv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `features`
---
-ALTER TABLE `features`
-  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `gate`
---
-ALTER TABLE `gate`
-  MODIFY `g_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
---
--- AUTO_INCREMENT for table `hall_booking`
---
-ALTER TABLE `hall_booking`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `misc`
---
-ALTER TABLE `misc`
-  MODIFY `misc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `puposes`
---
-ALTER TABLE `puposes`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `services`
---
-ALTER TABLE `services`
-  MODIFY `serv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `set_menu`
---
-ALTER TABLE `set_menu`
-  MODIFY `sm_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `shift`
---
-ALTER TABLE `shift`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `stage`
---
-ALTER TABLE `stage`
-  MODIFY `st_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `status`
---
-ALTER TABLE `status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
