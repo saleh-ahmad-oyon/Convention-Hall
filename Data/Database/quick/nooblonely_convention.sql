@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jul 02, 2016 at 11:53 AM
+-- Generation Time: Jul 04, 2016 at 05:57 PM
 -- Server version: 10.1.14-MariaDB
 -- PHP Version: 5.4.31
 
@@ -105,12 +105,13 @@ DELIMITER ;
 --
 
 CREATE TABLE IF NOT EXISTS `additional_menu` (
-  `am_id` int(11) NOT NULL COMMENT 'Additional Menu ID',
+  `am_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Additional Menu ID',
   `am_title` text NOT NULL,
   `am_image` text NOT NULL,
   `am_price` decimal(10,2) NOT NULL,
-  `keywords` text NOT NULL COMMENT 'Keywords for Searching'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `keywords` text NOT NULL COMMENT 'Keywords for Searching',
+  PRIMARY KEY (`am_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `additional_menu`
@@ -183,10 +184,11 @@ CREATE TABLE IF NOT EXISTS `addi_food_full` (
 --
 
 CREATE TABLE IF NOT EXISTS `adminlogin` (
-  `a_id` int(11) NOT NULL,
+  `a_id` int(11) NOT NULL AUTO_INCREMENT,
   `a_user` text NOT NULL,
-  `a_pass` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `a_pass` text NOT NULL,
+  PRIMARY KEY (`a_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `adminlogin`
@@ -202,9 +204,10 @@ INSERT INTO `adminlogin` (`a_id`, `a_user`, `a_pass`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `advantages` (
-  `adv_id` int(11) NOT NULL,
-  `adv_desc` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `adv_id` int(11) NOT NULL AUTO_INCREMENT,
+  `adv_desc` text NOT NULL,
+  PRIMARY KEY (`adv_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `advantages`
@@ -263,9 +266,10 @@ CREATE TABLE IF NOT EXISTS `complete_booking` (
 --
 
 CREATE TABLE IF NOT EXISTS `features` (
-  `f_id` int(11) NOT NULL,
-  `f_desc` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `f_id` int(11) NOT NULL AUTO_INCREMENT,
+  `f_desc` text NOT NULL,
+  PRIMARY KEY (`f_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `features`
@@ -283,11 +287,12 @@ INSERT INTO `features` (`f_id`, `f_desc`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `gate` (
-  `g_id` int(11) NOT NULL,
+  `g_id` int(11) NOT NULL AUTO_INCREMENT,
   `g_title` text NOT NULL,
   `g_image` text NOT NULL,
-  `g_price` decimal(10,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `g_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`g_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `gate`
@@ -301,8 +306,8 @@ INSERT INTO `gate` (`g_id`, `g_title`, `g_image`, `g_price`) VALUES
 (5, 'Gate 5', 'gate5.jpg', '30000.00'),
 (6, 'Gate 6', 'gate6.jpeg', '10000.00'),
 (7, 'Gate 7', 'gate7.jpg', '15000.00'),
-(34, 'Gate 9', '173092000009.jpg', '65000.00'),
-(30, 'Gate 8', 'gate8.jpg', '10000.00');
+(8, 'Gate 9', '173092000009.jpg', '65000.00'),
+(9, 'Gate 8', 'gate8.jpg', '10000.00');
 
 -- --------------------------------------------------------
 
@@ -323,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `gate_view` (
 
 CREATE TABLE IF NOT EXISTS `hall_booking` (
   `user_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_date` date NOT NULL,
   `order_shift` text NOT NULL,
   `order_purpose` text NOT NULL,
@@ -337,17 +342,18 @@ CREATE TABLE IF NOT EXISTS `hall_booking` (
   `paid_cost` decimal(10,2) NOT NULL DEFAULT '0.00',
   `fullFood` text NOT NULL,
   `set_menu` int(11) NOT NULL,
-  `date_of_booking` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `date_of_booking` date NOT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `hall_booking`
 --
 
 INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, `order_purpose`, `services`, `guest_number`, `welcome_gate`, `stage`, `food`, `order_status`, `total_cost`, `paid_cost`, `fullFood`, `set_menu`, `date_of_booking`) VALUES
-(1, 13, '2016-02-27', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '61|2|3', 300, 0, 7, '18|26', 2, '94875.00', '25000.00', '7|0;9|0;8|0;35|0', 0, '2016-02-17'),
-(3, 12, '2016-02-29', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 0, '0', 3, '164910.00', '164910.00', '7|1;9|0;8|0;35|0', 1, '2016-02-17'),
-(3, 11, '2016-02-29', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 2, 3, '18|17|36', 1, '378350.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-17');
+(1, 1, '2016-02-27', 'Evening 7:00 PM to 11:30 PM', 'Gaye Holud', '61|2|3', 300, 0, 7, '18|26', 2, '94875.00', '25000.00', '7|0;9|0;8|0;35|0', 0, '2016-02-17'),
+(3, 2, '2016-02-29', 'Day 12:00 PM to 4:30 PM', 'Birthday Party', '1|2|3', 200, 6, 0, '0', 3, '164910.00', '164910.00', '7|1;9|0;8|0;35|0', 1, '2016-02-17'),
+(3, 3, '2016-02-29', 'Evening 7:00 PM to 11:30 PM', 'Wedding Ceremony', '61|2|3', 500, 2, 3, '18|17|36', 1, '378350.00', '0.00', '7|5;9|0;8|1;35|0', 3, '2016-02-17');
 
 -- --------------------------------------------------------
 
@@ -356,10 +362,11 @@ INSERT INTO `hall_booking` (`user_id`, `order_id`, `order_date`, `order_shift`, 
 --
 
 CREATE TABLE IF NOT EXISTS `misc` (
-  `misc_id` int(11) NOT NULL,
+  `misc_id` int(11) NOT NULL AUTO_INCREMENT,
   `misc_vat` double NOT NULL,
-  `misc_extra_cost` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `misc_extra_cost` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`misc_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `misc`
@@ -398,9 +405,10 @@ CREATE TABLE IF NOT EXISTS `pending_bookings` (
 --
 
 CREATE TABLE IF NOT EXISTS `puposes` (
-  `p_id` int(11) NOT NULL,
-  `p_name` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `p_name` text NOT NULL,
+  PRIMARY KEY (`p_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `puposes`
@@ -438,10 +446,11 @@ CREATE TABLE IF NOT EXISTS `schedule_view` (
 --
 
 CREATE TABLE IF NOT EXISTS `services` (
-  `serv_id` int(11) NOT NULL,
+  `serv_id` int(11) NOT NULL AUTO_INCREMENT,
   `serv_name` text NOT NULL,
-  `Serv_price` decimal(10,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `Serv_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`serv_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `services`
@@ -473,11 +482,12 @@ CREATE TABLE IF NOT EXISTS `service_view` (
 --
 
 CREATE TABLE IF NOT EXISTS `set_menu` (
-  `sm_id` bigint(20) NOT NULL,
+  `sm_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sm_title` text NOT NULL,
   `sm_description` text NOT NULL,
-  `sm_price` decimal(10,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `sm_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`sm_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `set_menu`
@@ -495,10 +505,11 @@ INSERT INTO `set_menu` (`sm_id`, `sm_title`, `sm_description`, `sm_price`) VALUE
 --
 
 CREATE TABLE IF NOT EXISTS `shift` (
-  `shift_id` int(11) NOT NULL,
+  `shift_id` int(11) NOT NULL AUTO_INCREMENT,
   `shift_name` text NOT NULL,
-  `shift_time` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `shift_time` text NOT NULL,
+  PRIMARY KEY (`shift_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `shift`
@@ -516,11 +527,12 @@ INSERT INTO `shift` (`shift_id`, `shift_name`, `shift_time`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `stage` (
-  `st_id` int(11) NOT NULL,
+  `st_id` int(11) NOT NULL AUTO_INCREMENT,
   `st_title` text NOT NULL,
   `st_image` text NOT NULL,
-  `st_price` decimal(10,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `st_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`st_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `stage`
@@ -555,9 +567,10 @@ CREATE TABLE IF NOT EXISTS `stage_view` (
 --
 
 CREATE TABLE IF NOT EXISTS `status` (
-  `status_id` int(11) NOT NULL,
-  `status_cond` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_cond` text NOT NULL,
+  PRIMARY KEY (`status_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `status`
@@ -581,9 +594,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `u_email` varchar(255) NOT NULL,
   `u_contact` text NOT NULL,
   `u_pass` text NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `time_of_registration` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `s_id` int(11) NOT NULL AUTO_INCREMENT,
+  `time_of_registration` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`s_id`),
+  UNIQUE KEY `u_email` (`u_email`),
+  UNIQUE KEY `u_email_2` (`u_email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `user`
