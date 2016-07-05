@@ -357,7 +357,7 @@ function getAddiFoodInfo($id){
 }
 function setMenuInfo($key){
     $conn = db_conn();
-    $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `Set_Menu` WHERE `sm_id` = ?';
+    $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `set_menu` WHERE `sm_id` = ?';
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($key));
@@ -673,7 +673,7 @@ function addiFoodFull(){
 }
 function setMenu(){
     $conn = db_conn();
-    $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `Set_Menu`';
+    $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `set_menu`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
