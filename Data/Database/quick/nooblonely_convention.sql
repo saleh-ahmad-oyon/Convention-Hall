@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Jul 04, 2016 at 05:57 PM
+-- Generation Time: Jul 05, 2016 at 06:49 AM
 -- Server version: 10.1.14-MariaDB
 -- PHP Version: 5.4.31
 
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `services` (
   `serv_name` text NOT NULL,
   `Serv_price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`serv_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `services`
@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `shift` (
   `shift_name` text NOT NULL,
   `shift_time` text NOT NULL,
   PRIMARY KEY (`shift_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `shift`
