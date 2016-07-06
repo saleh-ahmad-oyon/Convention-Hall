@@ -24,4 +24,3 @@
                     window.location="http://localhost/convention/admin";
                   </script>';
     }
-?>

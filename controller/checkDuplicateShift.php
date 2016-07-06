@@ -8,4 +8,3 @@
     if(similarDateShift($date, $value)){
         echo "**$value has already booked !! Please select another shift.";
     }
-?>

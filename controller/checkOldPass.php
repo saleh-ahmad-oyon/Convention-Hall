@@ -7,4 +7,3 @@
     if(!loginSuccess($email, $value)){
         echo "**Old Password didn't match !!";
     }
-?>

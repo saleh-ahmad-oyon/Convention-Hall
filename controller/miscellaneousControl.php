@@ -60,4 +60,3 @@
         $id = $_POST['ServId'];
         deleteService($id);
     }
-?>

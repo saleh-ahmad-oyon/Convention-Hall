@@ -12,4 +12,3 @@ if(isset($_POST['delete'])){
                     window.location="'.SERVER.'";
                   </script>';
 }
-?>

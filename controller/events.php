@@ -13,4 +13,3 @@ foreach($row as $r){
     $i++;
 }
 echo json_encode($outp, JSON_UNESCAPED_SLASHES);
-?>

@@ -24,4 +24,3 @@
             header('Location: '.SERVER.'/login?err=1');
         }
     }
-?>

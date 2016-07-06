@@ -6,4 +6,3 @@
     if(checkUserEmail($value)){
         echo "**Email already used";
     }
-?>
