@@ -1,6 +1,8 @@
 <?php
 require_once 'db_connection.php';
-function checkUserEmail($email){
+
+function checkUserEmail($email)
+{
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `user` WHERE `u_email` = ?";
     try{
@@ -12,9 +14,11 @@ function checkUserEmail($email){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
 }
-function insertUser($fname, $lname, $email, $contact, $pass){
+
+function insertUser($fname, $lname, $email, $contact, $pass)
+{
     $conn = db_conn();
-    $selectQuery = "CALL new_user(:fname, :lname, :email, :contact, :pass)";
+    $selectQuery = "call new_user(:fname, :lname, :email, :contact, :pass)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':fname' => $fname, ':lname' => $lname, ':email' => $email, ':contact' => $contact, ':pass' => $pass));
@@ -23,9 +27,11 @@ function insertUser($fname, $lname, $email, $contact, $pass){
     }
     $conn = null;
 }
-function addSchedule($shift, $time){
+
+function addSchedule($shift, $time)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_schedule(:shift, :time)";
+    $selectQuery = "call insert_schedule(:shift, :time)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':shift' => $shift, ':time' => $time));
@@ -34,9 +40,11 @@ function addSchedule($shift, $time){
     }
     $conn = null;
 }
-function addCharges($service, $price){
+
+function addCharges($service, $price)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_service(:service, :price)";
+    $selectQuery = "call insert_service(:service, :price)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':service' => $service, ':price' => $price));
@@ -45,7 +53,9 @@ function addCharges($service, $price){
     }
     $conn = null;
 }
-function getScheduleID($shift, $time){
+
+function getScheduleID($shift, $time)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `shift_id` FROM `shift` WHERE `shift_name` = ? AND `shift_time` = ?";
     try{
@@ -57,7 +67,9 @@ function getScheduleID($shift, $time){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['shift_id'];
 }
-function loginSuccess($email, $pass){
+
+function loginSuccess($email, $pass)
+{
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `user` WHERE `u_email` = ?";
     try{
@@ -88,9 +100,13 @@ function loginSuccess($email, $pass){
         return false;
     }
 }
-function addiFood(){
+
+function addiFood()
+{
     $conn = db_conn();
-    $selectQuery = 'select * from addi_food';
+    //$selectQuery = 'select * from addi_food';
+    $selectQuery = "select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` 
+from `additional_menu` where (not((`additional_menu`.`am_title` like '%full%'))) order by `additional_menu`.`am_title`";
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -99,7 +115,9 @@ function addiFood(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function personalInfo($user){
+
+function personalInfo($user)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `u_fname`, `u_lname`, `u_email`, `u_contact` FROM `user` WHERE `u_email` = ?";
     try{
@@ -111,9 +129,17 @@ function personalInfo($user){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getAllPersonalInfo(){
+
+function getAllPersonalInfo()
+{
     $conn = db_conn();
-    $selectQuery = "SELECT * FROM view_all_user";
+    //$selectQuery = "SELECT * FROM `view_all_user`";
+    $selectQuery = "select `user`.`u_fname` AS `u_fname`,
+`user`.`u_lname` AS `u_lname`,
+`user`.`u_email` AS `u_email`,
+`user`.`u_contact` AS `u_contact`,
+`user`.`time_of_registration` AS `time_of_registration` 
+from `user`";
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -122,7 +148,9 @@ function getAllPersonalInfo(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function updatePass($newPass, $email){
+
+function updatePass($newPass, $email)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `user` SET `u_pass`= ? WHERE `u_email` = ?";
     try{
@@ -133,7 +161,9 @@ function updatePass($newPass, $email){
     }
     $conn = null;
 }
-function updateInfo($fname, $lname, $email, $contact, $user){
+
+function updateInfo($fname, $lname, $email, $contact, $user)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `user` SET `u_fname`=:fname,`u_lname`=:lname,`u_email`=:email,`u_contact`=:contact WHERE `u_email`=:user";
     try{
@@ -144,7 +174,9 @@ function updateInfo($fname, $lname, $email, $contact, $user){
     }
     $conn = null;
 }
-function getUserID($email){
+
+function getUserID($email)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `s_id` FROM `user` WHERE `u_email` = ?";
     try{
@@ -156,7 +188,9 @@ function getUserID($email){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function checkEditedEmail($email, $userId){
+
+function checkEditedEmail($email, $userId)
+{
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `user` WHERE `u_email` = ? and `s_id` <> ?";
     try{
@@ -168,9 +202,16 @@ function checkEditedEmail($email, $userId){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
 }
-function stage(){
+
+function stage()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM stage_view';
+    //$selectQuery = 'SELECT * FROM stage_view';
+    $selectQuery = 'SELECT `stage`.`st_id` AS `st_id`,
+`stage`.`st_title` AS `st_title`,
+`stage`.`st_image` AS `st_image`,
+`stage`.`st_price` AS `st_price` 
+FROM `stage` ORDER BY `stage`.`st_title`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -179,9 +220,13 @@ function stage(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function gate(){
+
+function gate()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM gate_view';
+    //$selectQuery = 'SELECT * FROM gate_view';
+    $selectQuery = 'select `gate`.`g_id` AS `g_id`,`gate`.`g_title` AS `g_title`,
+`gate`.`g_image` AS `g_image`,`gate`.`g_price` AS `g_price` from `gate` order by `gate`.`g_title`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -190,9 +235,15 @@ function gate(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getServices(){
+
+function getServices()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM service_view';
+    //$selectQuery = 'SELECT * FROM service_view';
+    $selectQuery = 'select `services`.`serv_id` AS `serv_id`,
+`services`.`serv_name` AS `serv_name`,
+`services`.`Serv_price` AS `Serv_price` 
+FROM `services`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -201,9 +252,12 @@ function getServices(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getPurposes(){
+
+function getPurposes()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM purpose_view';
+    //$selectQuery = 'SELECT * FROM purpose_view';
+    $selectQuery = 'SELECT `puposes`.`p_name` AS `p_name` FROM `puposes';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -212,7 +266,9 @@ function getPurposes(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getShift(){
+
+function getShift()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `shift_name`, `shift_time` FROM `shift`';
     try{
@@ -224,7 +280,9 @@ function getShift(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function similarDateShift($date, $shift){
+
+function similarDateShift($date, $shift)
+{
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `hall_booking` WHERE `order_date` = :date AND `order_shift` = :shift";
     try{
@@ -236,9 +294,11 @@ function similarDateShift($date, $shift){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
 }
-function setOrder($user, $date, $shift, $purpose, $service, $guest, $gate, $stage, $food, $totalCost, $fullamount, $setMenu, $today){
+
+function setOrder($user, $date, $shift, $purpose, $service, $guest, $gate, $stage, $food, $totalCost, $fullamount, $setMenu, $today)
+{
     $conn = db_conn();
-    $selectQuery = "CALL give_booking(:usr, :dat, :shift, :purpose, :service, :guest, :gate, :stage, :food, :totalCost, :fullamount, :setMenu, :today)";
+    $selectQuery = "call give_booking(:usr, :dat, :shift, :purpose, :service, :guest, :gate, :stage, :food, :totalCost, :fullamount, :setMenu, :today)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':usr' => $user, ':dat' => $date, ':shift' => $shift, ':purpose' => $purpose, ':service' => $service, ':guest' => $guest, ':gate' => $gate, ':stage' => $stage, ':food' => $food, ':totalCost' => $totalCost, ':fullamount' => $fullamount, ':setMenu' => $setMenu, ':today' => $today));
@@ -247,7 +307,9 @@ function setOrder($user, $date, $shift, $purpose, $service, $guest, $gate, $stag
     }
     $conn = null;
 }
-function getUserOrders($orderID){
+
+function getUserOrders($orderID)
+{
     $conn = db_conn();
     $selectQuery = "CALL user_orders(?)";
     try{
@@ -259,7 +321,9 @@ function getUserOrders($orderID){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getFoodTitle($fid){
+
+function getFoodTitle($fid)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `am_title` FROM `additional_menu` WHERE `am_id` = ?";
     try{
@@ -271,7 +335,9 @@ function getFoodTitle($fid){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_title'];
 }
-function getFoodImage($fid){
+
+function getFoodImage($fid)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `am_image` FROM `additional_menu` WHERE `am_id` = ?";
     try{
@@ -283,7 +349,9 @@ function getFoodImage($fid){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_image'];
 }
-function getFoodPrice($fid){
+
+function getFoodPrice($fid)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `am_price` FROM `additional_menu` WHERE `am_id` = ?";
     try{
@@ -295,7 +363,9 @@ function getFoodPrice($fid){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_price'];
 }
-function getServiceName($sid){
+
+function getServiceName($sid)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `serv_name` FROM `services` WHERE `serv_id` = ?";
     try{
@@ -307,7 +377,9 @@ function getServiceName($sid){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_name'];
 }
-function getServicePrice($sid){
+
+function getServicePrice($sid)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `Serv_price` FROM `services` WHERE `serv_id` = ?";
     try{
@@ -319,7 +391,9 @@ function getServicePrice($sid){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['Serv_price'];
 }
-function getGateValue($gate){
+
+function getGateValue($gate)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `g_price` FROM `gate` WHERE `g_id` = ?";
     try{
@@ -331,7 +405,9 @@ function getGateValue($gate){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['g_price'];
 }
-function getGateInfo($gate){
+
+function getGateInfo($gate)
+{
     $conn = db_conn();
     $selectQuery = "SELECT * FROM `gate` WHERE `g_id` = ?";
     try{
@@ -343,7 +419,9 @@ function getGateInfo($gate){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getAddiFoodInfo($id){
+
+function getAddiFoodInfo($id)
+{
     $conn = db_conn();
     $selectQuery = "SELECT * FROM `additional_menu` WHERE `am_id` = ?";
     try{
@@ -355,7 +433,9 @@ function getAddiFoodInfo($id){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function setMenuInfo($key){
+
+function setMenuInfo($key)
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `set_menu` WHERE `sm_id` = ?';
     try{
@@ -367,7 +447,9 @@ function setMenuInfo($key){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getStageValue($stage){
+
+function getStageValue($stage)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `st_price` FROM `stage` WHERE `st_id` = ?";
     try{
@@ -379,7 +461,9 @@ function getStageValue($stage){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['st_price'];
 }
-function getStageInfo($stage){
+
+function getStageInfo($stage)
+{
     $conn = db_conn();
     $selectQuery = "SELECT * FROM `stage` WHERE `st_id` = ?";
     try{
@@ -391,7 +475,9 @@ function getStageInfo($stage){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getPriceSetMenu($setMenu){
+
+function getPriceSetMenu($setMenu)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `sm_price` FROM `set_menu` WHERE `sm_id` = ?";
     try{
@@ -403,7 +489,9 @@ function getPriceSetMenu($setMenu){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['sm_price'];
 }
-function checkAdmin($user, $pass){
+
+function checkAdmin($user, $pass)
+{
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `adminlogin` WHERE `a_user` = ? AND `a_pass` = ?";
     try{
@@ -416,9 +504,15 @@ function checkAdmin($user, $pass){
     return ($row['num'] == 1) ? true : false ;
 
 }
-function getDateShift(){
+
+function getDateShift()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `order_date_shift`';
+    //$selectQuery = 'SELECT * FROM `order_date_shift`';
+    $selectQuery = 'select `hall_booking`.`order_id` AS `order_id`,
+`hall_booking`.`order_date` AS `order_date`,
+`hall_booking`.`order_shift` AS `order_shift`
+ FROM `hall_booking`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -427,7 +521,9 @@ function getDateShift(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function changeStatus($order, $paid, $o){
+
+function changeStatus($order, $paid, $o)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `hall_booking` SET `order_status`= :orderStatus, `paid_cost`= :paidCost WHERE `order_id` = :orderID";
     try{
@@ -438,7 +534,9 @@ function changeStatus($order, $paid, $o){
     }
     $conn = null;
 }
-function updateGate($name, $cost, $image, $id){
+
+function updateGate($name, $cost, $image, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `gate` SET `g_title`= :title,`g_image`= :image,`g_price`= :price WHERE `g_id` = :id";
     try{
@@ -449,7 +547,9 @@ function updateGate($name, $cost, $image, $id){
     }
     $conn = null;
 }
-function updateGateWithoutImage($name, $cost, $id){
+
+function updateGateWithoutImage($name, $cost, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `gate` SET `g_title`= :title, `g_price`= :price WHERE `g_id` = :id";
     try{
@@ -460,7 +560,9 @@ function updateGateWithoutImage($name, $cost, $id){
     }
     $conn = null;
 }
-function updateAdditionalFood($name, $cost, $keys, $image, $id){
+
+function updateAdditionalFood($name, $cost, $keys, $image, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `additional_menu` SET `am_title`=:title,`am_image`=:image,`am_price`=:price,`keywords`=:keywords WHERE `am_id` = :id";
     try{
@@ -471,7 +573,9 @@ function updateAdditionalFood($name, $cost, $keys, $image, $id){
     }
     $conn = null;
 }
-function updateAdditionalFoodWithoutImage($name, $cost, $keys, $id){
+
+function updateAdditionalFoodWithoutImage($name, $cost, $keys, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `additional_menu` SET `am_title`=:title,`am_price`=:price,`keywords`=:keywords WHERE `am_id` = :id";
     try{
@@ -482,7 +586,9 @@ function updateAdditionalFoodWithoutImage($name, $cost, $keys, $id){
     }
     $conn = null;
 }
-function updateSetMenu($title, $items, $cost, $key){
+
+function updateSetMenu($title, $items, $cost, $key)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `set_menu` SET `sm_title`=:title,`sm_description`=:items,`sm_price`=:price WHERE `sm_id` = :id";
     try{
@@ -493,7 +599,9 @@ function updateSetMenu($title, $items, $cost, $key){
     }
     $conn = null;
 }
-function updateStage($name, $cost, $image, $id){
+
+function updateStage($name, $cost, $image, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `stage` SET `st_title`=:title,`st_image`=:image,`st_price`=:price WHERE `st_id` = :id";
     try{
@@ -504,7 +612,9 @@ function updateStage($name, $cost, $image, $id){
     }
     $conn = null;
 }
-function updateStageWithoutImage($name, $cost, $id){
+
+function updateStageWithoutImage($name, $cost, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `stage` SET `st_title`=:title,`st_price`=:price WHERE `st_id` = :id";
     try{
@@ -515,7 +625,9 @@ function updateStageWithoutImage($name, $cost, $id){
     }
     $conn = null;
 }
-function deleteOrder($order){
+
+function deleteOrder($order)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `hall_booking` WHERE `order_id` = ?";
     try{
@@ -526,7 +638,9 @@ function deleteOrder($order){
     }
     $conn = null;
 }
-function deleteGate($gateID){
+
+function deleteGate($gateID)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `gate` WHERE `g_id` = ?";
     try{
@@ -537,7 +651,9 @@ function deleteGate($gateID){
     }
     $conn = null;
 }
-function deleteAddiFood($id){
+
+function deleteAddiFood($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `additional_menu` WHERE `am_id` = ?";
     try{
@@ -548,7 +664,9 @@ function deleteAddiFood($id){
     }
     $conn = null;
 }
-function deleteStage($id){
+
+function deleteStage($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `stage` WHERE `st_id` = ?";
     try{
@@ -559,7 +677,9 @@ function deleteStage($id){
     }
     $conn = null;
 }
-function deleteSetMenu($id){
+
+function deleteSetMenu($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `set_menu` WHERE `sm_id` = ?";
     try{
@@ -570,7 +690,9 @@ function deleteSetMenu($id){
     }
     $conn = null;
 }
-function deleteSchedule($id){
+
+function deleteSchedule($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `shift` WHERE `shift_id` = ?";
     try{
@@ -581,7 +703,9 @@ function deleteSchedule($id){
     }
     $conn = null;
 }
-function deleteFeature($id){
+
+function deleteFeature($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `features` WHERE `f_id` = ?";
     try{
@@ -592,7 +716,9 @@ function deleteFeature($id){
     }
     $conn = null;
 }
-function deleteAdvantage($id){
+
+function deleteAdvantage($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `advantages` WHERE `adv_id` = ?";
     try{
@@ -604,9 +730,11 @@ function deleteAdvantage($id){
 
     $conn = null;
 }
-function getOrderInfo($id){
+
+function getOrderInfo($id)
+{
     $conn = db_conn();
-    $selectQuery = 'CALL admin_orders(?)';
+    $selectQuery = 'call admin_orders(?)';
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
@@ -616,7 +744,9 @@ function getOrderInfo($id){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function sameDate(){
+
+function sameDate()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT DISTINCT(order_date) FROM `hall_booking`';
     try{
@@ -649,7 +779,9 @@ function sameDate(){
     }
     return $twice;
 }
-function getItemName($item){
+
+function getItemName($item)
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `am_title`, `am_image`,`am_price` FROM `additional_menu` WHERE `keywords` LIKE \'%'.$item.'%\' or `am_price` BETWEEN 1 and \''.$item.'\' order by `am_title` asc';
     try{
@@ -660,9 +792,14 @@ function getItemName($item){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function addiFoodFull(){
+
+function addiFoodFull()
+{
     $conn = db_conn();
-    $selectQuery = 'select * from addi_food_full';
+    //$selectQuery = 'select * from addi_food_full';
+    $selectQuery = "select `additional_menu`.`am_id` AS `am_id`,`additional_menu`.`am_title` AS `am_title`,
+`additional_menu`.`am_image` AS `am_image`,`additional_menu`.`am_price` AS `am_price` 
+from `additional_menu` where (`additional_menu`.`am_title` like '%full%') order by `additional_menu`.`am_title`";
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -671,7 +808,9 @@ function addiFoodFull(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function setMenu(){
+
+function setMenu()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `sm_id`, `sm_title`, `sm_description`, `sm_price` FROM `set_menu`';
     try{
@@ -682,7 +821,9 @@ function setMenu(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getAdvc(){
+
+function getAdvc()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `adv_id`, `adv_desc` FROM `advantages`';
     try{
@@ -693,7 +834,9 @@ function getAdvc(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getFeatures(){
+
+function getFeatures()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `f_id`, `f_desc` FROM `features`';
     try{
@@ -704,7 +847,9 @@ function getFeatures(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getServiceID($quantity){
+
+function getServiceID($quantity)
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `serv_id` FROM `services` WHERE `serv_name` LIKE \'%'.$quantity.'%\'';
     try{
@@ -715,7 +860,9 @@ function getServiceID($quantity){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_id'];
 }
-function getBasicServices(){
+
+function getBasicServices()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `serv_name`, `Serv_price` FROM `services` WHERE `serv_id` BETWEEN 1 AND 4';
     try{
@@ -726,7 +873,9 @@ function getBasicServices(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getBookingInfo($user){
+
+function getBookingInfo($user)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `order_id`, `order_date`,`order_purpose`,`total_cost`, `paid_cost`,`date_of_booking` FROM `hall_booking` WHERE `user_id` = ? ORDER BY `order_id` DESC";
     try{
@@ -738,7 +887,9 @@ function getBookingInfo($user){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getMisc(){
+
+function getMisc()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT `misc_id`, `misc_vat`, `misc_extra_cost` FROM `misc`';
     try{
@@ -749,7 +900,9 @@ function getMisc(){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
 }
-function getTotalUser(){
+
+function getTotalUser()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT COUNT(`s_id`) as `num` FROM `user`';
     try {
@@ -760,7 +913,9 @@ function getTotalUser(){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
 }
-function getPendingBookings(){
+
+function getPendingBookings()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT COUNT(1) as `num` FROM `hall_booking` WHERE `order_status` = 1';
     try{
@@ -771,7 +926,9 @@ function getPendingBookings(){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
 }
-function getApprovedBookings(){
+
+function getApprovedBookings()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT COUNT(1) as `num` FROM `hall_booking` WHERE `order_status` = 2';
     try{
@@ -782,7 +939,9 @@ function getApprovedBookings(){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
 }
-function getTotalBookings(){
+
+function getTotalBookings()
+{
     $conn = db_conn();
     $selectQuery = 'SELECT COUNT(`order_id`) as `num` FROM `hall_booking`';
     try{
@@ -793,9 +952,19 @@ function getTotalBookings(){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
 }
-function getPending(){
+
+function getPending()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM pending_bookings';
+    //$selectQuery = 'SELECT * FROM pending_bookings';
+    $selectQuery = 'select `hall_booking`.`order_id` AS `order_id`,
+`hall_booking`.`order_date` AS `order_date`,
+`hall_booking`.`order_purpose` AS `order_purpose`,
+`hall_booking`.`total_cost` AS `total_cost`,
+`hall_booking`.`paid_cost` AS `paid_cost`,
+`hall_booking`.`date_of_booking` AS `date_of_booking` 
+FROM `hall_booking` WHERE (`hall_booking`.`order_status` = 1) 
+ORDER BY `hall_booking`.`order_id` DESC';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -804,9 +973,15 @@ function getPending(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getApprove(){
+
+function getApprove()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM approve_bookings';
+    //$selectQuery = 'SELECT * FROM approve_bookings';
+    $selectQuery = 'select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,
+`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,
+`hall_booking`.`paid_cost` AS `paid_cost`,`hall_booking`.`date_of_booking` AS `date_of_booking` 
+from `hall_booking` where (`hall_booking`.`order_status` = 2) order by `hall_booking`.`order_id` desc';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -815,9 +990,15 @@ function getApprove(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function getCompleteBookingInfo(){
+
+function getCompleteBookingInfo()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM complete_booking';
+    //$selectQuery = 'SELECT * FROM complete_booking';
+    $selectQuery = 'select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,
+`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,`hall_booking`.`paid_cost` AS `paid_cost`,
+`hall_booking`.`date_of_booking` AS `date_of_booking` 
+from `hall_booking` where (`hall_booking`.`order_status` = 3) order by `hall_booking`.`order_id` desc';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -826,9 +1007,15 @@ function getCompleteBookingInfo(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function allBookingInfo(){
+
+function allBookingInfo()
+{
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM all_booking_info';
+    //$selectQuery = 'SELECT * FROM all_booking_info';
+    $selectQuery = 'select `hall_booking`.`order_id` AS `order_id`,`hall_booking`.`order_date` AS `order_date`,
+`hall_booking`.`order_purpose` AS `order_purpose`,`hall_booking`.`total_cost` AS `total_cost`,
+`hall_booking`.`paid_cost` AS `paid_cost`,
+`hall_booking`.`date_of_booking` AS `date_of_booking` from `hall_booking` order by `hall_booking`.`order_id` desc';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
@@ -837,7 +1024,9 @@ function allBookingInfo(){
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function updateVat($vat){
+
+function updateVat($vat)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `misc` SET `misc_vat`= ? WHERE `misc_id` = 1";
     try{
@@ -848,7 +1037,9 @@ function updateVat($vat){
     }
     $conn = null;
 }
-function updateExtraCost($cost){
+
+function updateExtraCost($cost)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `misc` SET `misc_extra_cost` = ? WHERE `misc_id` = 1";
     try{
@@ -859,13 +1050,21 @@ function updateExtraCost($cost){
     }
     $conn = null;
 }
-function getSchedule(){
+
+function getSchedule()
+{
     $conn = db_conn();
-    $stmt = $conn->query('SELECT * FROM schedule_view');
+    //$stmt = $conn->query('SELECT * FROM schedule_view');
+    $stmt = $conn->query('select `shift`.`shift_id` AS `shift_id`,
+`shift`.`shift_name` AS `shift_name`,
+`shift`.`shift_time` AS `shift_time` 
+FROM `shift`');
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
 }
-function updateSchedule($shift, $time, $id){
+
+function updateSchedule($shift, $time, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `shift` SET `shift_name`= ?,`shift_time`= ? WHERE `shift_id` = ?";
     try{
@@ -876,7 +1075,9 @@ function updateSchedule($shift, $time, $id){
     }
     $conn = null;
 }
-function updateServices($service, $price, $id){
+
+function updateServices($service, $price, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `services` SET `serv_name`= :service,`Serv_price`= :price WHERE `serv_id` = :id";
     try{
@@ -887,7 +1088,9 @@ function updateServices($service, $price, $id){
     }
     $conn = null;
 }
-function updateFeature($feature, $id){
+
+function updateFeature($feature, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `features` SET `f_desc`= ? WHERE `f_id` = ?";
     try{
@@ -898,7 +1101,9 @@ function updateFeature($feature, $id){
     }
     $conn = null;
 }
-function updateAdvantage($adv, $id){
+
+function updateAdvantage($adv, $id)
+{
     $conn = db_conn();
     $selectQuery = "UPDATE `advantages` SET `adv_desc`= ? WHERE `adv_id` = ?";
     try{
@@ -909,9 +1114,11 @@ function updateAdvantage($adv, $id){
     }
     $conn = null;
 }
-function addFeature($desc){
+
+function addFeature($desc)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_feature(?)";
+    $selectQuery = "call insert_feature(?)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($desc));
@@ -920,9 +1127,11 @@ function addFeature($desc){
     }
     $conn = null;
 }
-function insertNewGate($name, $cost, $image){
+
+function insertNewGate($name, $cost, $image)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_gate(:name, :image, :cost)";
+    $selectQuery = "call insert_gate(:name, :image, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
@@ -931,9 +1140,11 @@ function insertNewGate($name, $cost, $image){
     }
     $conn = null;
 }
-function insertNewSetItems($title, $items, $cost){
+
+function insertNewSetItems($title, $items, $cost)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_setmenu(:title, :items, :cost)";
+    $selectQuery = "call insert_setmenu(:title, :items, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $title, ':items' =>$items, ':cost' => $cost));
@@ -942,9 +1153,11 @@ function insertNewSetItems($title, $items, $cost){
     }
     $conn = null;
 }
-function insertNewFood($name, $cost, $image, $keys){
+
+function insertNewFood($name, $cost, $image, $keys)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_addi_food(:name, :image, :cost, :keys)";
+    $selectQuery = "call insert_addi_food(:name, :image, :cost, :keys)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost, ':keys' => $keys));
@@ -953,9 +1166,11 @@ function insertNewFood($name, $cost, $image, $keys){
     }
     $conn = null;
 }
-function insertNewStage($stageName, $stageCost, $image){
+
+function insertNewStage($stageName, $stageCost, $image)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_stage(:name, :image, :cost)";
+    $selectQuery = "call insert_stage(:name, :image, :cost)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $stageName, ':image' =>$image, ':cost' => $stageCost));
@@ -964,9 +1179,11 @@ function insertNewStage($stageName, $stageCost, $image){
     }
     $conn = null;
 }
-function addAdvantages($advantage){
+
+function addAdvantages($advantage)
+{
     $conn = db_conn();
-    $selectQuery = "CALL insert_advantage(?)";
+    $selectQuery = "call insert_advantage(?)";
     try{
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($advantage));
@@ -975,7 +1192,9 @@ function addAdvantages($advantage){
     }
     $conn = null;
 }
-function getFeatureID($desc){
+
+function getFeatureID($desc)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `f_id` FROM `features` WHERE `f_desc` = ?";
     try{
@@ -987,7 +1206,9 @@ function getFeatureID($desc){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['f_id'];
 }
-function getAdvantageID($advantage){
+
+function getAdvantageID($advantage)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `adv_id` FROM `advantages` WHERE `adv_desc` = ?";
     try{
@@ -999,7 +1220,9 @@ function getAdvantageID($advantage){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['adv_id'];
 }
-function getServID($service, $price){
+
+function getServID($service, $price)
+{
     $conn = db_conn();
     $selectQuery = "SELECT `serv_id` FROM `services` WHERE `serv_name` = ? AND `Serv_price` = ?";
     try{
@@ -1011,7 +1234,9 @@ function getServID($service, $price){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_id'];
 }
-function deleteService($id){
+
+function deleteService($id)
+{
     $conn = db_conn();
     $selectQuery = "DELETE FROM `services` WHERE `serv_id` = ?";
     try{
@@ -1022,4 +1247,3 @@ function deleteService($id){
     }
     $conn = null;
 }
-?>
