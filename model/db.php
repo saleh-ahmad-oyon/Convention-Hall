@@ -5,10 +5,10 @@ function checkUserEmail($email)
 {
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `user` WHERE `u_email` = ?";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -19,10 +19,10 @@ function insertUser($fname, $lname, $email, $contact, $pass)
 {
     $conn = db_conn();
     $selectQuery = "call new_user(:fname, :lname, :email, :contact, :pass)";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':fname' => $fname, ':lname' => $lname, ':email' => $email, ':contact' => $contact, ':pass' => $pass));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $conn = null;
@@ -32,10 +32,10 @@ function addSchedule($shift, $time)
 {
     $conn = db_conn();
     $selectQuery = "call insert_schedule(:shift, :time)";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':shift' => $shift, ':time' => $time));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $conn = null;
@@ -45,10 +45,10 @@ function addCharges($service, $price)
 {
     $conn = db_conn();
     $selectQuery = "call insert_service(:service, :price)";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':service' => $service, ':price' => $price));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $conn = null;
@@ -58,10 +58,10 @@ function getScheduleID($shift, $time)
 {
     $conn = db_conn();
     $selectQuery = "SELECT `shift_id` FROM `shift` WHERE `shift_name` = ? AND `shift_time` = ?";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($shift, $time));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -72,10 +72,10 @@ function loginSuccess($email, $pass)
 {
     $conn = db_conn();
     $selectQuery = "SELECT COUNT(1) as `num` FROM `user` WHERE `u_email` = ?";
-    try{
+    try {
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email));
-    }catch(PDOException $e){
+    } catch (PDOException $e) {
         handle_sql_errors($selectQuery, $e->getMessage());
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -83,20 +83,20 @@ function loginSuccess($email, $pass)
     if($row['num'] == 1){
         $user = $email;
         $selectQuery2 = "SELECT `u_pass` FROM `user` WHERE `u_email` = ?";
-        try{
+        try {
             $stmt2 = $conn->prepare($selectQuery2);
             $stmt2->execute(array($user));
-        }catch(PDOException $e){
+        } catch (PDOException $e) {
             handle_sql_errors($selectQuery, $e->getMessage());
         }
         $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
         $dataPass = $row2['u_pass'];
-        if(password_verify($pass, $dataPass)){
+        if (password_verify($pass, $dataPass)) {
             return true;
-        }else{
+        } else {
             return false;
         }
-    }else{
+    } else {
         return false;
     }
 }
