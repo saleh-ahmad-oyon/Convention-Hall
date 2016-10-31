@@ -2,9 +2,9 @@
 session_start();
 require '../controller/define.php';
 require  '../controller/adminControl.php';
-if(!isset($_SESSION['admin'])){
+if (!isset($_SESSION['admin'])) {
     header('Location: '.SERVER.'/404');
-}else{
+} else {
     $allBookings = bookingInfo();
 }
 ?>
@@ -36,7 +36,7 @@ if(!isset($_SESSION['admin'])){
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="<?= SERVER; ?>/third_party/html5shiv/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
