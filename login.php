@@ -17,8 +17,6 @@
         <?php require_once 'includes/head.php'; ?>
         <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
-        <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-        <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
         <style>body { padding-top: 70px; }</style>
     </head>
     <body>
@@ -77,5 +75,7 @@
     <footer>
         <?php require "includes/footer.php";?>
     </footer>
+    <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+    <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
     </body>
 </html>

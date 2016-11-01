@@ -18,12 +18,6 @@
         <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
         <link href="<?= SERVER; ?>/assets/css/checkbox.css" rel="stylesheet"/>
-        <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-        <script src="<?= SERVER; ?>/assets/js/checkbox.js"></script>
-        <script src="<?= SERVER; ?>/assets/js/jquery.maskedinput.min.js"></script>
-        <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
-        <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
         <style>body { padding-top: 70px; }</style>
     </head>
     <body>
@@ -80,7 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="g-recaptcha" data-theme="dark" data-size="normal" data-sitekey="6Ld3rg8TAAAAACGH7e9bMjc8f8ZIPFRBoRwh9r0v"></div>
+                                    <div id="google-recaptcha" class="g-recaptcha" data-theme="dark" data-size="normal"
+                                         data-sitekey="6Ld3rg8TAAAAACGH7e9bMjc8f8ZIPFRBoRwh9r0v"></div>
                                 </div>
                                 <button type="submit" name="signUpBtn" class="btn btn-primary btn-block">Sign Up</button><br/>
                             </form>
@@ -98,54 +93,60 @@
         <footer>
             <?php require "includes/footer.php";?>
         </footer>
+        <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/checkbox.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/jquery.maskedinput.min.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
+        <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script>
+            //AJAX Code to check  input field values when onblur event triggerd.
+            function validate(field, query) {
+                var xmlhttp;
+                if (window.XMLHttpRequest) {
+                    // for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp=new XMLHttpRequest();
+                } else {
+                    // for IE6, IE5
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
+                        document.getElementById(field).innerHTML = "Validating..";
+                    } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        document.getElementById(field).innerHTML = xmlhttp.responseText;
+                        if(xmlhttp.responseText != ''){
+                            //adding class .has-error
+                            var id='emailVal';
+                            var myClassName="has-error";
+                            var d;
+                            d=document.getElementById(id);
+                            d.className=d.className.replace(myClassName,"");
+                            d.className = d.className + ' ' + myClassName;
+                            document.getElementById('email1').focus();
+                        }
+                    }
+                    else {
+                        document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
+                    }
+                };
+                /*xmlhttp.open("POST", "controller/checkDuplicateEmail.php", true);
+                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                 xmlhttp.send("query=" + query);*/
+
+                xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, false);
+                xmlhttp.send();
+            }
+
+            /*$(window).resize(function(){
+             if($(window).width() <= 480){
+             $('#google-recaptcha').removeAttr('data-size');
+             $('#google-recaptcha').attr('data-size', 'compact');
+             } else {
+             $('#google-recaptcha').removeAttr('data-size');
+             $('#google-recaptcha').attr('data-size', 'normal');
+             }
+             });*/
+        </script>
     </body>
 </html>
-<script>
-    //AJAX Code to check  input field values when onblur event triggerd.
-    function validate(field, query)
-    {
-        var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// for IE6, IE5
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function()
-        {
-            if (xmlhttp.readyState != 4 && xmlhttp.status == 200)
-            {
-                document.getElementById(field).innerHTML = "Validating..";
-            }
-            else if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-            {
-                document.getElementById(field).innerHTML = xmlhttp.responseText;
-                if(xmlhttp.responseText != ''){
-
-                    //adding class .has-error
-                    var id='emailVal';
-                    var myClassName="has-error";
-                    var d;
-                    d=document.getElementById(id);
-                    d.className=d.className.replace(myClassName,"");
-                    d.className = d.className + ' ' + myClassName;
-
-                    document.getElementById('email1').focus();
-
-                }
-            }
-            else
-            {
-                document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
-            }
-        }
-        /*xmlhttp.open("POST", "controller/checkDuplicateEmail.php", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("query=" + query);*/
-
-        xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, false);
-        xmlhttp.send();
-    }
-</script>
