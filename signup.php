@@ -36,7 +36,8 @@
                                 <div class="padding-border solid-border">
                                     <h1>Sign Up</h1>
                                     <br/><br/>
-                                    <form action="<?php echo SERVER; ?>/controller/signUpSuccess" method="post" onsubmit="return confirmation();">
+                                    <form action="<?php echo SERVER; ?>/controller/signUpSuccess" method="post"
+                                          onsubmit="return confirmation();">
                                 <div class="form-group">
                                     <label>First Name</label>
                                     <input type="text" class="onlyChars form-control" autofocus="autofocus" name="fname"
@@ -72,13 +73,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control" name="pass" required="required" id="newPass"
+                                    <input type="password"
+                                           class="form-control"
+                                           name="pass"
+                                           required="required"
+                                           id="newPass"
                                            pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                            onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The password must contain one or more uppercase characters, one or more lowercase characters, one or more numeric values, one or more special characters, and length must be greater than or equal to 4' : ''); if(this.checkValidity()) form.cpass.pattern = this.value;" />
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <input type="password" class="form-control" name="cpass" required="required" id="confirmNewPass"
+                                    <input type="password"
+                                           class="form-control"
+                                           name="cpass"
+                                           required="required"
+                                           id="confirmNewPass"
                                            pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
                                            onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" />
                                 </div>
@@ -122,10 +131,10 @@
                 var xmlhttp;
                 if (window.XMLHttpRequest) {
                     // for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp=new XMLHttpRequest();
+                    xmlhttp = new XMLHttpRequest();
                 } else {
                     // for IE6, IE5
-                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
@@ -134,10 +143,9 @@
                         document.getElementById(field).innerHTML = xmlhttp.responseText;
                         if(xmlhttp.responseText != ''){
                             //adding class .has-error
-                            var id='emailVal';
-                            var myClassName="has-error";
-                            var d;
-                            d=document.getElementById(id);
+                            var id = 'emailVal';
+                            var myClassName = "has-error";
+                            var d=document.getElementById(id);
                             d.className=d.className.replace(myClassName,"");
                             d.className = d.className + ' ' + myClassName;
                             document.getElementById('email1').focus();
