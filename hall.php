@@ -1,31 +1,23 @@
-<?php require 'controller/define.php';
-$login =false;
-if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
-    if(!isset($_SESSION['user'])){
-        $_SESSION['user'] = $_COOKIE['user'];
+<?php
+    require 'controller/define.php';
+
+    $login = false;
+    if (isset($_COOKIE['user']) || isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['user'] = $_COOKIE['user'];
+        }
+        $login = true;
     }
-    $login = true;
-}
 ?>
 <!DOCTYPE HTML>
 <html>
     <head>
         <?php require_once 'includes/head.php'; ?>
-        <link href="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+        <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
         <style>
             body { padding-top: 70px; }
         </style>
-        <script>
-            $(document).ready(function(){
-                $('.carousel').carousel({
-                    interval: 2000
-                });
-                $('#myCarousel').carousel('cycle');
-            });
-        </script>
     </head>
     <body>
         <div id="wrap">
@@ -50,15 +42,15 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active">
-                                            <img src="<?php echo SERVER ?>/assets/img/hall/1.jpg" alt="">
+                                            <img src="<?= SERVER ?>/assets/img/hall/1.jpg" alt="">
                                         </div>
 
                                         <div class="item">
-                                            <img src="<?php echo SERVER ?>/assets/img/hall/2.jpg" alt="">
+                                            <img src="<?= SERVER ?>/assets/img/hall/2.jpg" alt="">
                                         </div>
 
                                         <div class="item">
-                                            <img src="<?php echo SERVER ?>/assets/img/hall/4.jpg" alt="">
+                                            <img src="<?= SERVER ?>/assets/img/hall/4.jpg" alt="">
                                         </div>
                                     </div>
 
@@ -80,10 +72,20 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
             </main>
         </div>
         <audio autoplay="autoplay" controls="controls" loop="loop" class="hidden">
-            <source src="<?php echo SERVER; ?>/assets/audio/shania-twain-from-this-moment-on.ogg" />
+            <source src="<?= SERVER; ?>/assets/audio/shania-twain-from-this-moment-on.ogg" />
         </audio>
-    <footer>
-        <?php require "includes/footer.php";?>
-    </footer>
+        <footer>
+            <?php require "includes/footer.php";?>
+        </footer>
+        <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+        <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.carousel').carousel({
+                    interval: 2000
+                });
+                $('#myCarousel').carousel('cycle');
+            });
+        </script>
     </body>
 </html>

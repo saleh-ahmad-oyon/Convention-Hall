@@ -1,25 +1,25 @@
 <?php
-session_start();
-require 'controller/define.php';
-$login =false;
-if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
-    if(!isset($_SESSION['user'])){
-        $_SESSION['user'] = $_COOKIE['user'];
+    session_start();
+
+    require 'controller/define.php';
+
+    $login = false;
+    if (isset($_COOKIE['user']) || isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['user'] = $_COOKIE['user'];
+        }
+        $login = true;
+    } elseif (!$login){
+        header('Location: '.SERVER.'/404');
     }
-    $login = true;
-} elseif(!$login){
-    header('Location: '.SERVER.'/404');
-}
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
     <?php require_once 'includes/head.php'; ?>
-    <link href="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
-    <link href="<?php echo SERVER; ?>/assets/css/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-    <script src="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
+    <link href="<?= SERVER; ?>/assets/css/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
     <style>
         body { padding-top: 51px; }
     </style>
@@ -41,7 +41,7 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
                                     <div class="padding-border solid-border">
                                         <h3 class="text-center">Changing Password</h3>
                                         <br/><br/>
-                                        <form action="<?php echo SERVER; ?>/controller/changePasswordSuccess" method="post">
+                                        <form action="<?= SERVER; ?>/controller/changePasswordSuccess" method="post">
                                             <div class="form-group">
                                                 <p id="oldPass" class="text-white"></p>
                                                 <label>Old Password</label>
@@ -74,42 +74,36 @@ if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
     <footer>
         <?php require "includes/footer.php";?>
     </footer>
+    <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+    <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <script>
+        //AJAX Code to check  input field values when onblur event triggerd.
+        function validate(field, query) {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                // for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp=new XMLHttpRequest();
+            } else {
+                // for IE6, IE5
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
+                    document.getElementById(field).innerHTML = "Validating..";
+                } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById(field).innerHTML = xmlhttp.responseText;
+                    if(xmlhttp.responseText != ''){
+                        document.getElementById('oldPass1').focus();
+                    }
+                } else {
+                    document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
+                }
+            };
+            xmlhttp.open("POST", "controller/checkOldPass.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("query=" + query);
+        }
+    </script>
+    <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
 </body>
 </html>
-<script>
-    //AJAX Code to check  input field values when onblur event triggerd.
-    function validate(field, query)
-    {
-        var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// for IE6, IE5
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function()
-        {
-            if (xmlhttp.readyState != 4 && xmlhttp.status == 200)
-            {
-                document.getElementById(field).innerHTML = "Validating..";
-            }
-            else if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-            {
-                document.getElementById(field).innerHTML = xmlhttp.responseText;
-                if(xmlhttp.responseText != ''){
-                    document.getElementById('oldPass1').focus();
-                }
-            }
-            else
-            {
-                document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
-            }
-        }
-        xmlhttp.open("POST", "controller/checkOldPass.php", true);
-        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("query=" + query);
-    }
-</script>
-<script src="<?php echo SERVER; ?>/assets/js/custom.js"></script>
