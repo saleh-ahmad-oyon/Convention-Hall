@@ -171,7 +171,7 @@
                         <div class="row">
                             <div class="col-sm-12 text-center">
                                 <?php foreach($addiFood as $f): ?>
-                                    <div class="col-sm-4 col-md-3 padding-top-20">
+                                    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20">
                                         <div class="solid-border">
                                             <div class="idffi h-180 zoom">
                                                 <img src="<?= SERVER; ?>/assets/img/food/<?= $f['am_image']; ?>" alt="<?= $f['am_title']; ?>"/>
@@ -188,7 +188,7 @@
                         <div class="row">
                             <div class="col-sm-12 text-center">
                                 <?php foreach($addiFoodFull as $f): ?>
-                                    <div class="col-sm-4 col-md-3 padding-top-20">
+                                    <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20" id='col-resize'>
                                         <div class="solid-border">
                                             <div class="idffi h-180 zoom">
                                                 <img src="<?= SERVER; ?>/assets/img/food/<?= $f['am_image']; ?>" alt="<?= $f['am_title']; ?>"/>
@@ -231,7 +231,6 @@
             });
 
             $(document).ready(function(){
-
                 $('a[href^="#"]').click(function(e) {
                     jQuery('html,body').animate({ scrollTop: jQuery(this.hash).offset().top}, 1000);
                     return false;
