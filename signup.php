@@ -99,8 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div id="google-recaptcha" class="g-recaptcha" data-theme="dark" data-size="normal"
-                                         data-sitekey="6Ld3rg8TAAAAACGH7e9bMjc8f8ZIPFRBoRwh9r0v"></div>
+                                    <div id="html_element"></div>
                                 </div>
                                 <button type="submit" name="signUpBtn" class="btn btn-primary btn-block">Sign Up</button><br/>
                             </form>
@@ -124,7 +123,19 @@
         <script src="<?= SERVER; ?>/assets/js/jquery.maskedinput.min.js"></script>
         <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
         <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+
+        <script type="text/javascript">
+            var onloadCallback = function() {
+                grecaptcha.render('html_element', {
+                    'sitekey' : '6Ld3rg8TAAAAACGH7e9bMjc8f8ZIPFRBoRwh9r0v',
+                    'theme'   : 'dark',
+                    'size'    : 'normal'
+                });
+            };
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+                async defer>
+        </script>
         <script>
             //AJAX Code to check  input field values when onblur event triggerd.
             function validate(field, query) {
