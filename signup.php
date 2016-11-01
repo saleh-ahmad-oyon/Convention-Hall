@@ -1,13 +1,13 @@
 <?php
     require 'controller/define.php';
-    $login =false;
-    if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
-        if(!isset($_SESSION['user'])){
+    $login = false;
+    if (isset($_COOKIE['user']) || isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             $_SESSION['user'] = $_COOKIE['user'];
         }
         $login = true;
     }
-    if($login){
+    if ($login) {
         header('Location: '.SERVER.'');
     }
 ?>
@@ -15,14 +15,14 @@
 <html>
     <head>
         <?php require_once 'includes/head.php'; ?>
-        <link href="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/checkbox.css" rel="stylesheet"/>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/js/checkbox.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery.maskedinput.min.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/js/custom.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+        <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/checkbox.css" rel="stylesheet"/>
+        <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/checkbox.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/jquery.maskedinput.min.js"></script>
+        <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
+        <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
         <script src='https://www.google.com/recaptcha/api.js'></script>
         <style>body { padding-top: 70px; }</style>
     </head>
@@ -36,9 +36,8 @@
                     <div class="cover-image-sign-up"></div>
                     <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="col-sm-3 col-md-3 col-lg-3 hidden-xs"></div>
-                        <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-sm-12">
+                        <div class="col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
                                     <h1>Sign Up</h1>
@@ -88,7 +87,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 hidden-xs"></div>
+                        <div class="col-sm-2 col-lg-3 hidden-xs"></div>
                     </div>
                 </div>
             </div>
