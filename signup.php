@@ -125,11 +125,12 @@
         <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 
         <script type="text/javascript">
+            var size = $(window).width() <= 480 ? 'compact' : 'normal';
             var onloadCallback = function() {
                 grecaptcha.render('html_element', {
                     'sitekey' : '6Ld3rg8TAAAAACGH7e9bMjc8f8ZIPFRBoRwh9r0v',
                     'theme'   : 'dark',
-                    'size'    : 'normal'
+                    'size'    : size
                 });
             };
         </script>
@@ -173,16 +174,6 @@
                 xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, false);
                 xmlhttp.send();
             }
-
-            /*$(window).resize(function(){
-             if($(window).width() <= 480){
-             $('#google-recaptcha').removeAttr('data-size');
-             $('#google-recaptcha').attr('data-size', 'compact');
-             } else {
-             $('#google-recaptcha').removeAttr('data-size');
-             $('#google-recaptcha').attr('data-size', 'normal');
-             }
-             });*/
         </script>
     </body>
 </html>
