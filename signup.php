@@ -58,7 +58,7 @@
                                            required="required"
                                            pattern="[([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)]i"
                                            onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Insert Email Correctly' : ''); if(this.checkValidity()) form.cemail.pattern = this.value;"
-                                           onblur="validate('email', this.value)" />
+                                           onblur="validateEmail('email', this.value)" />
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Email</label>
@@ -137,43 +137,6 @@
         <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
                 async defer>
         </script>
-        <script>
-            //AJAX Code to check  input field values when onblur event triggerd.
-            function validate(field, query) {
-                var xmlhttp;
-                if (window.XMLHttpRequest) {
-                    // for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else {
-                    // for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
-                        document.getElementById(field).innerHTML = "Validating..";
-                    } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        document.getElementById(field).innerHTML = xmlhttp.responseText;
-                        if(xmlhttp.responseText != ''){
-                            //adding class .has-error
-                            var id = 'emailVal';
-                            var myClassName = "has-error";
-                            var d=document.getElementById(id);
-                            d.className=d.className.replace(myClassName,"");
-                            d.className = d.className + ' ' + myClassName;
-                            document.getElementById('email1').focus();
-                        }
-                    }
-                    else {
-                        document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
-                    }
-                };
-                /*xmlhttp.open("POST", "controller/checkDuplicateEmail.php", true);
-                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                 xmlhttp.send("query=" + query);*/
-
-                xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, false);
-                xmlhttp.send();
-            }
-        </script>
+        <script src="<?= SERVER; ?>/assets/js/validate_script.js"></script>
     </body>
 </html>

@@ -1,9 +1,18 @@
 <?php
-    session_start();
-    require '../model/db.php';
+/** starts session */
+session_start();
 
-    $value = $_POST['query'];
-    $email = $_SESSION['user'];
-    if(!loginSuccess($email, $value)){
-        echo "**Old Password didn't match !!";
-    }
+/** required file */
+require '../model/db.php';
+
+/**
+ * @var string $value   Old Password of the user
+ * @var string $email   email of the user
+ */
+$value = $_POST['query'];
+$email = $_SESSION['user'];
+
+/** check if the old password matched */
+if (!loginSuccess($email, $value)) {
+    echo "**Please insert correct old password.";
+}

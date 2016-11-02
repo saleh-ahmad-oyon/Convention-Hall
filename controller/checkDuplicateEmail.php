@@ -1,8 +1,11 @@
 <?php
-    require '../model/db.php';
-    $value = $_GET['query'];
-    //$value = $_POST['query'];
+/** required file */
+require '../model/db.php';
 
-    if(checkUserEmail($value)){
-        echo "**Email already used";
-    }
+/** @var string $value   Given email by the new user */
+$value = $_GET['query'];
+
+/** check if the email is exist */
+if (checkUserEmail($value)) {
+    echo "**This email has already used. Please try another email.";
+}

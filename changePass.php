@@ -45,7 +45,7 @@
                                             <div class="form-group">
                                                 <p id="oldPass" class="text-white"></p>
                                                 <label>Old Password</label>
-                                                <input type="password" id="oldPass1" class="form-control" name="oldPass" required="required" onblur="validate('oldPass', this.value)" />
+                                                <input type="password" id="oldPass1" class="form-control" name="oldPass" required="required" onblur="validatePassword('oldPass', this.value)" />
                                             </div>
                                             <div class="form-group">
                                                 <label>New Password</label>
@@ -76,34 +76,7 @@
     </footer>
     <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
     <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-    <script>
-        //AJAX Code to check  input field values when onblur event triggerd.
-        function validate(field, query) {
-            var xmlhttp;
-            if (window.XMLHttpRequest) {
-                // for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp=new XMLHttpRequest();
-            } else {
-                // for IE6, IE5
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
-                    document.getElementById(field).innerHTML = "Validating..";
-                } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById(field).innerHTML = xmlhttp.responseText;
-                    if(xmlhttp.responseText != ''){
-                        document.getElementById('oldPass1').focus();
-                    }
-                } else {
-                    document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
-                }
-            };
-            xmlhttp.open("POST", "controller/checkOldPass.php", true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("query=" + query);
-        }
-    </script>
+    <script src="<?= SERVER; ?>/assets/js/validate_script.js"></script>
     <script src="<?= SERVER; ?>/assets/js/custom.js"></script>
 </body>
 </html>
