@@ -2,10 +2,10 @@ var myCenter = new google.maps.LatLng(23.8233556, 90.3668054);
 var initMap = function() {
     var mapProp = {
         center : {
-            lat: 23.8233556,
-            lng: 90.3668054
+            lat : 23.8233556,
+            lng : 90.3668054
         },
-        scrollwheel: false,
+        scrollwheel : false,
         zoom : 16,
         mapTypeId : google.maps.MapTypeId.ROADMAP
     };
