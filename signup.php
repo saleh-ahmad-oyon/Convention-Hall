@@ -36,17 +36,25 @@
                                 <div class="padding-border solid-border">
                                     <h1>Sign Up</h1>
                                     <br/><br/>
-                                    <form action="<?php echo SERVER; ?>/controller/signUpSuccess" method="post"
+                                    <form action="<?php echo SERVER; ?>/controller/signUpSuccess"
+                                          method="post"
                                           onsubmit="return confirmation();">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="onlyChars form-control" autofocus="autofocus" name="fname"
-                                           pattern="(?=.*[a-zA-Z])+([.,\s])*.{2,}" title="Only letters, space, dot and comma allowed" />
+                                    <input type="text"
+                                           class="onlyChars form-control"
+                                           autofocus="autofocus"
+                                           name="fname"
+                                           pattern="(?=.*[a-zA-Z])+([.,\s])*.{2,}"
+                                           title="Only letters, space, dot and comma allowed" />
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="onlyChars form-control" name="lname"
-                                           pattern="(?=.*[a-zA-Z])+([.,\s])*.{2,}" title="Only letters, space, dot and comma allowed" />
+                                    <input type="text"
+                                           class="onlyChars form-control"
+                                           name="lname"
+                                           pattern="(?=.*[a-zA-Z])+([.,\s])*.{2,}"
+                                           title="Only letters, space, dot and comma allowed" />
                                 </div>
                                 <div class="form-group" id="emailVal">
                                     <p id="email" class="text-danger"></p>
@@ -62,14 +70,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Email</label>
-                                    <input type="email" class="form-control" name="cemail" required="required"
+                                    <input type="email"
+                                           class="form-control"
+                                           name="cemail"
+                                           required="required"
                                            pattern="[([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)]i"
                                            onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same email as above' : '');" />
                                 </div>
                                 <div class="form-group">
                                     <label>Contact No.</label>
-                                    <input type="tel" class="phnNum form-control" name="contact" id="phone" required="required"
-                                           pattern="(?=.*[0-9])+.{5,}" title="please insert a valid Phone Number" />
+                                    <input type="tel"
+                                           class="phnNum form-control"
+                                           name="contact"
+                                           id="phone"
+                                           required="required"
+                                           pattern="(?=.*[0-9])+.{5,}"
+                                           title="please insert a valid Phone Number" />
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
@@ -94,7 +110,10 @@
                                 <div class="form-group">
                                     <div class="cf">
                                         <label for="agree" class="ccbx" style="font-weight: normal">
-                                            <input type="checkbox" required="required" id="agree" name="agree">&nbsp;&nbsp;<b>I agree all terms and conditions.</b>
+                                            <input type="checkbox"
+                                                   required="required"
+                                                   id="agree"
+                                                   name="agree">&nbsp;&nbsp;<b>I agree all terms and conditions.</b>
                                         </label>
                                     </div>
                                 </div>
