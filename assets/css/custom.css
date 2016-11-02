@@ -282,10 +282,14 @@ a:focus{
     transform: scale(1.2);
 }
 .navbar-brand {
-    padding: 8px 15px;
+    padding: 8px 12px;
 }
 .padding-top-20{
     padding-top: 20px;
+}
+
+.break-big-word{
+    word-break: break-all
 }
 
 @media screen and (max-width:480px){
