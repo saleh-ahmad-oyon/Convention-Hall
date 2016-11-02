@@ -250,9 +250,6 @@ a:focus{
 .selectedClass{
     background-color: lightseagreen;
 }
-.solid-border label{
-    margin-bottom: 0;
-}
 .text-white{
     color: #fff;
 }
