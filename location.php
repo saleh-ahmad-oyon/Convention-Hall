@@ -31,7 +31,7 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <br/>
-                                <div id="googleMap" style="width:500px;height:380px;"></div>
+                                <div id="googleMap" style="width:100%;height:380px;"></div>
                             </div>
                             <div class="col-md-3"></div>
                         </div>
@@ -45,6 +45,7 @@
 
         <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
         <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2A618H4TLuOR0DZKlMWqcufONoBOng-c&callback=initMap"></script>
         <script src="<?= SERVER ?>/assets/js/googlemap.js"></script>
     </body>
