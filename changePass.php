@@ -32,15 +32,13 @@
             </header>
             <section>
                 <div class="change-pass"></div>
-                <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-5">
+                            <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-8">
                                 <div class="col-md-12 padding-20">
                                     <div class="padding-border solid-border">
                                         <h3 class="text-center">Changing Password</h3>
-                                        <br/><br/>
+                                        <br/>
                                         <form action="<?= SERVER; ?>/controller/changePasswordSuccess" method="post">
                                             <div class="form-group">
                                                 <p id="oldPass" class="text-white"></p>
@@ -80,10 +78,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4"></div>
+                            <div class="col-md-4 col-sm-2"></div>
                         </div>
                     </div>
-                </div>
             </section>
             <br /><br />
         </main>
