@@ -45,15 +45,32 @@
                                             <div class="form-group">
                                                 <p id="oldPass" class="text-white"></p>
                                                 <label>Old Password</label>
-                                                <input type="password" id="oldPass1" class="form-control" name="oldPass" required="required" onblur="validatePassword('oldPass', this.value)" />
+                                                <input type="password"
+                                                       id="oldPass1"
+                                                       class="form-control"
+                                                       name="oldPass"
+                                                       required="required"
+                                                       onblur="validatePassword('oldPass', this.value)" />
                                             </div>
                                             <div class="form-group">
                                                 <label>New Password</label>
-                                                <input type="password" class="form-control" name="newPass" required="required" id="newPass" pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The password must contain one or more uppercase characters, one or more lowercase characters, one or more numeric values, one or more special characters, and length must be greater than or equal to 4' : ''); if(this.checkValidity()) form.confirmNewPass.pattern = this.value;" />
+                                                <input type="password"
+                                                       class="form-control"
+                                                       name="newPass"
+                                                       required="required"
+                                                       id="newPass"
+                                                       pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                                       onchange="this.setCustomValidity(this.validity.patternMismatch ? 'The password must contain one or more uppercase characters, one or more lowercase characters, one or more numeric values, one or more special characters, and length must be greater than or equal to 4' : ''); if(this.checkValidity()) form.confirmNewPass.pattern = this.value;" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Confirm Password</label>
-                                                <input type="password" class="form-control" name="confirmNewPass" required="required" id="confirmNewPass" pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" />
+                                                <input type="password"
+                                                       class="form-control"
+                                                       name="confirmNewPass"
+                                                       required="required"
+                                                       id="confirmNewPass"
+                                                       pattern="(?=^.{4,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                                       onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" />
                                             </div>
                                             <br/>
                                             <div class="text-center">
