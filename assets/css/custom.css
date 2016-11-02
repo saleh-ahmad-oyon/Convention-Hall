@@ -237,7 +237,7 @@ a:focus{
     padding-top: 30px;
 }
 .padding-border{
-    padding:10px;
+    padding:20px;
     background-color: rgba(245,245,245,.28);
 }
 .orders-list{
@@ -305,4 +305,8 @@ a:focus{
     .col-xxs-3{width:25%}
     .col-xxs-2{width:16.66666667%}
     .col-xxs-1{width:8.33333333%}
+
+    .padding-border{
+        padding:10px;
+    }
 }

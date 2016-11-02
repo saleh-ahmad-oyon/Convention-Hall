@@ -30,7 +30,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4">
+                        <div class="col-sm-offset-1 col-sm-10 col-lg-offset-4 col-lg-4">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
                                     <h1>Login</h1>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-lg-4 hidden-xs hidden-sm"></div>
+                        <div class="col-sm-1 col-lg-4 hidden-xs"></div>
                     </div>
                 </div>
                 <br/>
