@@ -38,8 +38,7 @@
                 <div class="profile-back"></div>
                 <div class="container">
                     <div class="col-md-12">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-5">
+                        <div class="col-md-offset-4 col-md-4 col-sm-offset-2 col-sm-8">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
                                     <h3 class="text-center">Personal Information</h3><br/>
@@ -82,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
+                        <div class="col-md-4 col-sm-2 hidden-xs"></div>
                     </div>
                 </div>
             </section>

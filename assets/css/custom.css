@@ -26,7 +26,6 @@ html, body{
     left: 0;
     right: 0;
     z-index: -1;
-    top:0;
     background: url("../img/background-learner.jpg") bottom no-repeat fixed;
     background-size: cover;
     //filter: blur(2px);
@@ -39,7 +38,6 @@ html, body{
     left: 0;
     right: 0;
     z-index: -1;
-    top:0;
     background-image: url("../img/404-not.jpg");
     background-position: center;
     background-repeat: no-repeat;
@@ -62,7 +60,6 @@ html, body{
     left: 0;
     right: 0;
     z-index: -1;
-    top:0;
     background-image: url("../img/CyberSecurityPadlock-640x480.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
@@ -79,7 +76,6 @@ html, body{
     left: 0;
     right: 0;
     z-index: -1;
-    top:0;
     background-image: url("../img/personal-data.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
@@ -100,7 +96,7 @@ h1.asasas{
     text-align: center;
     line-height:200px;
     color: #fff;
-    text-shadow: 0px 2px 2px rgba(0,0,0,.7);
+    text-shadow: 0 2px 2px rgba(0,0,0,.7);
     font-size: 46px;
 }
 .solid-border{
@@ -200,7 +196,7 @@ footer{
     margin-top: -150px;
     clear:both;
     padding: 30px 0;
-    height: 150px;
+    min-height: 150px;
     font-size: 12px;
     line-height: 2
 }

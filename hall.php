@@ -28,8 +28,7 @@
                 <section>
                     <div class="container">
                         <div class="com-md-12">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
+                            <div class="col-md-offset-3 col-md-6">
                                 <br/>
                                 <div id="myCarousel" class="carousel slide" >
                                     <!-- Indicators -->
