@@ -209,35 +209,10 @@
             <?php require "includes/footer.php";?>
         </footer>
         <div id="totopscroller"></div>
+
         <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
         <script src="<?= SERVER; ?>/assets/js/jquery.totop.js"></script>
-        <script>
-            function sticky_relocate() {
-                var window_top = $(window).scrollTop();
-                var div_top = $('.fixed-top-nav-top').offset().top;
-                if (window_top > div_top) {
-                    $('#fixed-top-nav-sec').addClass('fixed-top-nav');
-                    $('#service').addClass('row-padding');
-                    $('#menu').addClass('row-padding-62');
-                } else {
-                    $('#fixed-top-nav-sec').removeClass('fixed-top-nav');
-                    $('#service').removeClass('row-padding');
-                    $('#menu').removeClass('row-padding-62');
-                }
-            }
-            $(function() {
-                $(window).scroll(sticky_relocate);
-                sticky_relocate();
-            });
-
-            $(document).ready(function(){
-                $('a[href^="#"]').click(function(e) {
-                    jQuery('html,body').animate({ scrollTop: jQuery(this.hash).offset().top}, 1000);
-                    return false;
-                    e.preventDefault();
-                });
-            });
-        </script>
+        <script src="<?= SERVER; ?>/assets/js/sticky.js"></script>
         <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
         <script>
             $(function(){

@@ -74,6 +74,7 @@
     <footer>
         <?php require "includes/footer.php";?>
     </footer>
+
     <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
     <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
     <script src="<?= SERVER; ?>/assets/js/validate_script.js"></script>

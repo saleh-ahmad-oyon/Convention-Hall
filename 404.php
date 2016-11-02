@@ -1,5 +1,5 @@
 <?php require 'controller/define.php'; ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
     <head>
         <?php require_once 'includes/head.php'; ?>
