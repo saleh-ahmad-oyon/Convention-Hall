@@ -1,77 +1,42 @@
 <?php
     session_start();
+
     require 'controller/bookingControl.php';
     require 'controller/define.php';
 
-    $login =false;
-    if(isset($_COOKIE['user']) || isset($_SESSION['user'])){
-        if(!isset($_SESSION['user'])){
+    $login = false;
+    if (isset($_COOKIE['user']) || isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             $_SESSION['user'] = $_COOKIE['user'];
         }
         $login = true;
 
-        $shift = getAllShift();
-        $purpose = getAllPurposes();
-        $serv = getAllServices();
-        $addiFood = getAllAdditionalFood();
+        $shift        = getAllShift();
+        $purpose      = getAllPurposes();
+        $serv         = getAllServices();
+        $addiFood     = getAllAdditionalFood();
         $addiFoodFull = getAllFullFood();
-        $stage = getStage();
-        $gate = getGate();
-        $book = checkSameDate();
-        $setMenu = getSetMenu();
-        $booked = implode(",", $book);
+        $stage        = getStage();
+        $gate         = getGate();
+        $book         = checkSameDate();
+        $setMenu      = getSetMenu();
+        $booked       = implode(",", $book);
     }
 ?>
 <!DOCTYPE HTML>
 <html>
     <head>
         <?php require_once 'includes/head.php'; ?>
-        <link href="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/checkbox.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
-        <link href="<?php echo SERVER; ?>/assets/css/jquery-ui.min.css" rel="stylesheet"/>
-        <link href="<?php echo SERVER; ?>/assets/css/jquery-ui.theme.min.css" rel="stylesheet"/>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery-ui.min.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/js/checkbox.js"></script>
-        <script src="<?php echo SERVER; ?>/assets/js/jquery.totop.js"></script>
-        <link href="<?php echo SERVER; ?>/assets/css/totop.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="<?php echo SERVER; ?>/third_party/chosen/bootstrap-chosen.css" />
-        <script src="<?php echo SERVER; ?>/third_party/chosen/chosen.jquery.js"></script>
-        <script>
-            var array = "<?php echo $booked; ?>";
-            $(function() {
-                $( "#datepicker" ).datepicker({
-                    beforeShowDay: function(date){
-                        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                        return [ array.indexOf(string) == -1 ]
-                    },
-                    showOnFocus: true,
-                    showOtherMonths: true,
-                    changeMonth: true,
-                    changeYear: true,
-                    showButtonPanel: true,
-                    dateFormat: "dd/mm/yy",
-                    minDate: '+0D'
-                });
-                /*$( "#shift" )
-                    .selectmenu()
-                    .selectmenu( "menuWidget" )
-                    .addClass( "overflow" );*/
-                /*$( "#purpose" )
-                    .selectmenu()
-                    .selectmenu( "menuWidget" )
-                    .addClass( "overflow" );*/
+        <link href="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/checkbox.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/custom.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/jquery-ui.min.css" rel="stylesheet"/>
+        <link href="<?= SERVER; ?>/assets/css/jquery-ui.theme.min.css" rel="stylesheet"/>
 
-            });
+        <link href="<?= SERVER; ?>/assets/css/totop.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="<?= SERVER; ?>/third_party/chosen/bootstrap-chosen.css" />
 
-            //chosen (Select)
-            $(function() {
-                $('.chosen-select').chosen();
-            });
-        </script>
         <style>
             /*.overflow {
                 height: 107px;
@@ -96,7 +61,7 @@
                                 <div class="col-md-12 text-center">
                                     <h4>You have to login to Book Hall.</h4>
                                     <br/>
-                                    <a href="<?php echo SERVER; ?>/login" class="btn btn-primary">Login</a>
+                                    <a href="<?= SERVER; ?>/login" class="btn btn-primary">Login</a>
                                 </div>
                             </div>
                             <div class="col-md-3"></div>
@@ -106,7 +71,7 @@
             <?php else: ?>
             <div class="container">
                 <h1 class="text-center">Booking</h1><br/><br/><br/><br/>
-                <form action="<?php echo SERVER; ?>/controller/bookingSuccess.php" method="post" onsubmit="return confirmation();">
+                <form action="<?= SERVER; ?>/controller/bookingSuccess.php" method="post" onsubmit="return confirmation();">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
@@ -122,7 +87,7 @@
                                     <select name="shift" class="form-control" id="shift" onblur="validate('shift1', this.value)">
                                         <option></option>
                                         <?php foreach($shift as $value): ?>
-                                            <option><?php echo $value['shift_name'], " ", $value['shift_time']; ?></option>
+                                            <option><?= $value['shift_name'], " ", $value['shift_time']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -134,12 +99,12 @@
                         <div class="col-md-12">
                             <h3>Select The purpose</h3>
                             <br/><br/>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <select name="purpose" data-placeholder="" class="form-control chosen-select">
                                         <option></option>
                                         <?php foreach($purpose as $p): ?>
-                                            <option><?php echo $p['p_name']; ?></option>
+                                            <option><?= $p['p_name']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -164,8 +129,8 @@
                                         <tr>
                                             <td>
                                                 <div class="cf">
-                                                    <label for="serv<?php echo $countserv; ?>" class="ccbx">
-                                                <input type="checkbox" id="serv<?php echo $countserv; ?>" name="service[]" value="<?php echo $se['serv_id']; ?>"
+                                                    <label for="serv<?= $countserv; ?>" class="ccbx">
+                                                <input type="checkbox" id="serv<?= $countserv; ?>" name="service[]" value="<?= $se['serv_id']; ?>"
                                                     <?php if(strpos($se['serv_name'],'Service Charge')!== false || strpos($se['serv_name'],'Hall Charge')!== false) :?>
                                                         checked="checked" disabled="disabled"
                                                     <?php endif; $countserv++; ?>
@@ -176,8 +141,8 @@
                                                         </label>
                                                     </div>
                                             </td>
-                                            <td><?php echo $se['serv_name']; ?></td>
-                                            <td class="text-right">&#2547;&nbsp;<?php echo $se['Serv_price']; ?></td>
+                                            <td><?= $se['serv_name']; ?></td>
+                                            <td class="text-right">&#2547;&nbsp;<?= $se['Serv_price']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>
@@ -200,31 +165,23 @@
                     </div>
                     <br/><br/>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-sm-12">
                             <h3>Select Welcome Gate Design</h3>
                             <br/><br/>
-                            <?php
-                            $count = 0;
-                            foreach($gate as $g): ?>
-                                <div class="col-md-3 text-center">
+                            <?php foreach($gate as $g): ?>
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20 text-center">
                                     <div class="solid-border gates">
-                                        <input type="radio" id="gate<?php echo $count; ?>" name="gate" value="<?php echo $g['g_id']; ?>" />
-                                        <label for="gate<?php echo $count; ?>">
+                                        <input type="radio" id="gate<?= $count; ?>" name="gate" value="<?= $g['g_id']; ?>" />
+                                        <label for="gate<?= $count; ?>">
                                             <div class="idffi h-180 zoom">
-                                                <img src="<?php echo SERVER; ?>/assets/img/gate/<?php echo $g['g_image']; ?>" alt="<?php echo $g['g_title']; ?>"/>
+                                                <img src="<?= SERVER; ?>/assets/img/gate/<?= $g['g_image']; ?>" alt="<?= $g['g_title']; ?>"/>
                                             </div>
-                                            <h3><?php echo $g['g_title']; ?></h3>
-                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $g['g_price']; ?></span></p>
+                                            <h4><?= $g['g_title']; ?></h4>
+                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?= $g['g_price']; ?></span></p>
                                         </label>
-                                        <?php $count++; ?>
                                     </div>
                                 </div>
-                                <?php
-                                if($count%4 == 0){
-                                    echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
-                                }
-                            endforeach;
-                            ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <br/><br/>
@@ -232,117 +189,84 @@
                         <div class="col-md-12">
                             <h3>Select Stage Decoration</h3>
                             <br/><br/>
-                            <?php
-                            $count = 0;
-                            $stCount = 1;
-                            foreach($stage as $s): ?>
-                                <div class="col-md-3 text-center">
+                            <?php foreach($stage as $i => $s): ?>
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20 text-center">
                                     <div class="solid-border stages">
-                                        <input type="radio" id="stage<?php echo $stCount; ?>" name="stage" value="<?php echo $s['st_id']; ?>" />
-                                        <label for="stage<?php echo $stCount; ?>">
+                                        <input type="radio" id="stage<?= $i+1; ?>" name="stage" value="<?= $s['st_id']; ?>" />
+                                        <label for="stage<?= $i+1; ?>">
                                             <div class="idffi h-180 zoom">
-                                                <img src="<?php echo SERVER; ?>/assets/img/stage/<?php echo $s['st_image']; ?>" alt="<?php echo $s['st_title']; ?>"/>
+                                                <img src="<?= SERVER; ?>/assets/img/stage/<?= $s['st_image']; ?>" alt="<?= $s['st_title']; ?>"/>
                                             </div>
-                                            <h3><?php echo $s['st_title']; ?></h3>
-                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $s['st_price']; ?></span></p>
+                                            <h4><?= $s['st_title']; ?></h4>
+                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?= $s['st_price']; ?></span></p>
                                         </label>
-                                        <?php $stCount++; $count++; ?>
                                     </div>
                                 </div>
-                                <?php
-                                if($count%4 == 0){
-                                    echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
-                                }
-                            endforeach;
-                            ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <br/><br/>
                     <div class="row">
-                        <div class="col-md-12 text-center">
+                        <div class="col-xs-12 text-center">
                             <h3>Food Menu</h3>
                             <br/><br/>
-                            <?php
-                            $count = 0;
-                            foreach($setMenu as $sm): ?>
-                                <div class="col-md-4">
+                            <?php foreach($setMenu as $sm): ?>
+                                <div class="col-xs-12 col-sm-4 padding-top-20">
                                     <div class="col-md-12 solid-border set-menu">
-                                        <input type="radio" id="setMenu<?php echo $count; ?>" name="setMenu" value="<?php echo $sm['sm_id']; ?>" />
-                                        <label for="setMenu<?php echo $count; ?>">
-                                            <h3><?php echo $sm['sm_title']; ?></h3>
+                                        <input type="radio" id="setMenu<?= $count; ?>" name="setMenu" value="<?= $sm['sm_id']; ?>" />
+                                        <label for="setMenu<?= $count; ?>">
+                                            <h3><?= $sm['sm_title']; ?></h3>
                                             <?php $menuDesc = explode('|', $sm['sm_description']);
                                             foreach($menuDesc as $md):?>
-                                                <p><?php echo $md; ?></p>
+                                                <p><?= $md; ?></p>
                                             <?php endforeach; ?>
-                                            <p>Price:&nbsp;&#2547;&nbsp;<?php echo $sm['sm_price']; ?></p>
+                                            <p>Price:&nbsp;&#2547;&nbsp;<?= $sm['sm_price']; ?></p>
                                         </label>
-                                        <?php $count++; ?>
                                     </div>
                                 </div>
-                                <?php
-                                if($count%3 == 0){
-                                    echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
-                                }
-                            endforeach; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <br/><hr/>
                     <div class="row">
                         <div class="col-md-12">
-                            <?php
-                            $count = 0;
-                            $foodCount = 1;
-                            foreach($addiFood as $f): ?>
-                                <div class="col-md-3 text-center">
+                            <?php foreach($addiFood as $i => $f): ?>
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20 text-center">
                                     <div class="solid-border addiFood">
-                                        <input type="checkbox" id="food<?php echo $foodCount; ?>" name="food[]" value="<?php echo $f['am_id']; ?>"/>
-                                        <label for="food<?php echo $foodCount; ?>">
+                                        <input type="checkbox" id="food<?= $i+1; ?>" name="food[]" value="<?= $f['am_id']; ?>"/>
+                                        <label for="food<?= $i+1; ?>">
                                             <div class="idffi h-180 zoom">
-                                                <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
+                                                <img src="<?= SERVER; ?>/assets/img/food/<?= $f['am_image']; ?>" alt="<?= $f['am_title']; ?>"/>
                                             </div>
-                                            <h3><?php echo $f['am_title']; ?></h3>
-                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?php echo $f['am_price']; ?></span></p>
+                                            <h4><?= $f['am_title']; ?></h4>
+                                            <p><span>Price:&nbsp;&#2547;&nbsp;<?= $f['am_price']; ?></span></p>
                                         </label>
-                                        <?php $foodCount++; $count++; ?>
                                     </div>
                                 </div>
-                                <?php
-                                if($count%4 == 0){
-                                    echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
-                                }
-                                endforeach;
-                                ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <br/><hr/>
                     <div class="row">
                         <div class="col-md-12">
-                            <?php
-                            $count = 0;
-                            foreach($addiFoodFull as $f): ?>
-                                <div class="col-md-3 text-center">
+                            <?php foreach($addiFoodFull as $f): ?>
+                                <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20 text-center">
                                     <div class="solid-border">
                                         <label for="food">
                                             <div class="idffi h-180 zoom">
-                                                <img src="<?php echo SERVER; ?>/assets/img/food/<?php echo $f['am_image']; ?>" alt="<?php echo $f['am_title']; ?>"/>
+                                                <img src="<?= SERVER; ?>/assets/img/food/<?= $f['am_image']; ?>" alt="<?= $f['am_title']; ?>"/>
                                             </div>
-                                            <h3><?php echo $f['am_title']; ?></h3>
-                                                <div class="col-xs-7"><p><span>Price: &#2547; <?php echo $f['am_price']; ?></span></p></div>
+                                            <h4><?= $f['am_title']; ?></h4>
+                                                <div class="col-xs-7"><p><span>Price: &#2547; <?= $f['am_price']; ?></span></p></div>
                                                 <div class="col-xs-5">
                                                     <input type="number" name="amount[]" min="0" class="form-control" value="0">
                                                 </div>
-                                            <input type="hidden" value="<?php echo $f['am_id']; ?>" name="foodFull[]">
+                                            <input type="hidden" value="<?= $f['am_id']; ?>" name="foodFull[]">
                                             <br/><br/><br/>
                                         </label>
-                                        <?php $count++; ?>
                                     </div>
                                 </div>
-                                <?php
-                                if($count%4 == 0){
-                                    echo "</div></div><br/><div class='row'><div class='col-md-12 text-center'> ";
-                                }
-                                endforeach;
-                                ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <br/><br/>
@@ -366,10 +290,48 @@
         <?php require "includes/footer.php";?>
     </footer>
     <div id="totopscroller"> </div>
+    <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
+    <script src="<?= SERVER; ?>/assets/js/jquery-ui.min.js"></script>
+    <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <script src="<?= SERVER; ?>/assets/js/checkbox.js"></script>
+    <script src="<?= SERVER; ?>/assets/js/jquery.totop.js"></script>
+    <script src="<?= SERVER; ?>/third_party/chosen/chosen.jquery.js"></script>
+    <script>
+        var array = "<?= $booked; ?>";
+        $(function() {
+            $( "#datepicker" ).datepicker({
+                beforeShowDay: function(date){
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [ array.indexOf(string) == -1 ]
+                },
+                showOnFocus: true,
+                showOtherMonths: true,
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: "dd/mm/yy",
+                minDate: '+0D'
+            });
+            $( "#shift" )
+             .selectmenu()
+             .selectmenu( "menuWidget" )
+             .addClass( "overflow" );
+            /*$( "#purpose" )
+             .selectmenu()
+             .selectmenu( "menuWidget" )
+             .addClass( "overflow" );*/
+
+        });
+
+        //chosen (Select)
+        $(function() {
+            $('.chosen-select').chosen();
+        });
+    </script>
     <script>
         $(function(){
             $('#totopscroller').totopscroller({
-                //link:'<?php echo SERVER; ?>'
+                //link:'<?= SERVER; ?>'
             });
         })
     </script>
@@ -388,32 +350,25 @@
 
         var xmlhttp;
 
-        if (window.XMLHttpRequest)
-        {// for IE7+, Firefox, Chrome, Opera, Safari
+        if (window.XMLHttpRequest) {
+            // for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// for IE6, IE5
+        } else {
+            // for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
-        xmlhttp.onreadystatechange = function()
-        {
-            if (xmlhttp.readyState != 4 && xmlhttp.status == 200)
-            {
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
                 document.getElementById(field).innerHTML = "Validating..";
-            }
-            else if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-            {
+            } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById(field).innerHTML = xmlhttp.responseText;
-                if(xmlhttp.responseText != ''){
+                if (xmlhttp.responseText != '') {
                     document.getElementById('shift').value = '';
                 }
-            }
-            else
-            {
+            } else {
                 document.getElementById(field).innerHTML = "Error Occurred. <a href='booking.php'>Reload Or Try Again</a> the page.";
             }
-        }
+        };
         xmlhttp.open("GET", "controller/checkDuplicateShift.php?query=" + query + "&date=" + date1, false);
         xmlhttp.send();
     }

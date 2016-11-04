@@ -211,7 +211,7 @@ function stage()
 `stage`.`st_title` AS `st_title`,
 `stage`.`st_image` AS `st_image`,
 `stage`.`st_price` AS `st_price` 
-FROM `stage` ORDER BY `stage`.`st_title`';
+FROM `stage` ORDER BY `stage`.`st_id`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
