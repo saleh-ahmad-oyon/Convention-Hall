@@ -63,10 +63,11 @@
     color: #ddd;
 }
 .ccbx.disabled span {
+    border: 1px solid #ab1313;
     color: #ddd;
 }
 .ccbx.disabled:hover span {
-    border-color: #ddd;
+    border: 1px solid #ab1313;
 }
 .ccbx.disabled.checked span {
     background-color: #ddd;
