@@ -15,10 +15,12 @@ function validateEmail(field, query) {
             document.getElementById(field).innerHTML = xmlhttp.responseText;
             if(xmlhttp.responseText != ''){
                 //adding class .has-error
-                var id = 'emailVal';
-                var myClassName = "has-error";
-                var d=document.getElementById(id);
-                d.className=d.className.replace(myClassName,"");
+                var
+                    id = 'emailVal',
+                    myClassName = "has-error",
+                    d = document.getElementById(id);
+
+                d.className = d.className.replace(myClassName,"");
                 d.className = d.className + ' ' + myClassName;
                 document.getElementById('email1').focus();
             }
@@ -40,10 +42,10 @@ function validatePassword(field, query) {
     var xmlhttp;
     if (window.XMLHttpRequest) {
         // for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
+        xmlhttp = new XMLHttpRequest();
     } else {
         // for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {

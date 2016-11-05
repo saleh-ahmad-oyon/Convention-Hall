@@ -84,13 +84,13 @@
                             <div class="col-md-6">
                                 <h3>Select Shift</h3>
                                 <div class="form-group">
-                                    <p id="shift1" class="text-danger"></p>
                                     <select name="shift" class="form-control" id="shift" onblur="shiftvalidate('shift1', this.value)">
                                         <option></option>
                                         <?php foreach($shift as $value): ?>
                                             <option><?= $value['shift_name'], " ", $value['shift_time']; ?></option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <p id="shift1" class="text-danger"></p>
                                 </div>
                             </div>
                         </div>
@@ -313,10 +313,10 @@
                 dateFormat: "dd/mm/yy",
                 minDate: '+0D'
             });
-            $( "#shift" )
+            /*$( "#shift" )
              .selectmenu()
              .selectmenu( "menuWidget" )
-             .addClass( "overflow" );
+             .addClass( "overflow" );*/
             /*$( "#purpose" )
              .selectmenu()
              .selectmenu( "menuWidget" )
