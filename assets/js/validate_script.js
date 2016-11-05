@@ -66,8 +66,9 @@ function validatePassword(field, query) {
 //check date and shift if it's valid when onblur event triggerd.
 function shiftvalidate(field, query)
 {
-    var date1   = document.getElementById('datepicker').value  ;
-    var xmlhttp = '';
+    var
+        date1   = document.getElementById('datepicker').value,
+        xmlhttp = '';
 
     if (window.XMLHttpRequest) {
         // for IE7+, Firefox, Chrome, Opera, Safari
