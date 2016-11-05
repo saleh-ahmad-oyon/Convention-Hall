@@ -42,6 +42,7 @@
                 height: 107px;
             }*/
             body { padding-top: 70px; }
+            label { margin-bottom: 0 }
         </style>
     </head>
     <body>
@@ -84,7 +85,7 @@
                                 <h3>Select Shift</h3>
                                 <div class="form-group">
                                     <p id="shift1" class="text-danger"></p>
-                                    <select name="shift" class="form-control" id="shift" onblur="validate('shift1', this.value)">
+                                    <select name="shift" class="form-control" id="shift" onblur="shiftvalidate('shift1', this.value)">
                                         <option></option>
                                         <?php foreach($shift as $value): ?>
                                             <option><?= $value['shift_name'], " ", $value['shift_time']; ?></option>
@@ -168,11 +169,11 @@
                         <div class="col-sm-12">
                             <h3>Select Welcome Gate Design</h3>
                             <br/><br/>
-                            <?php foreach($gate as $g): ?>
+                            <?php foreach($gate as $i => $g): ?>
                                 <div class="col-xxs-12 col-xs-6 col-sm-4 col-md-3 padding-top-20 text-center">
                                     <div class="solid-border gates">
-                                        <input type="radio" id="gate<?= $count; ?>" name="gate" value="<?= $g['g_id']; ?>" />
-                                        <label for="gate<?= $count; ?>">
+                                        <input type="radio" id="gate<?= $i+1 ?>" name="gate" value="<?= $g['g_id']; ?>" />
+                                        <label for="gate<?= $i+1 ?>">
                                             <div class="idffi h-180 zoom">
                                                 <img src="<?= SERVER; ?>/assets/img/gate/<?= $g['g_image']; ?>" alt="<?= $g['g_title']; ?>"/>
                                             </div>
@@ -210,11 +211,11 @@
                         <div class="col-xs-12 text-center">
                             <h3>Food Menu</h3>
                             <br/><br/>
-                            <?php foreach($setMenu as $sm): ?>
+                            <?php foreach($setMenu as $i=> $sm): ?>
                                 <div class="col-xs-12 col-sm-4 padding-top-20">
                                     <div class="col-md-12 solid-border set-menu">
-                                        <input type="radio" id="setMenu<?= $count; ?>" name="setMenu" value="<?= $sm['sm_id']; ?>" />
-                                        <label for="setMenu<?= $count; ?>">
+                                        <input type="radio" id="setMenu<?= $i+1 ?>" name="setMenu" value="<?= $sm['sm_id']; ?>" />
+                                        <label for="setMenu<?= $i+1 ?>">
                                             <h3><?= $sm['sm_title']; ?></h3>
                                             <?php $menuDesc = explode('|', $sm['sm_description']);
                                             foreach($menuDesc as $md):?>
@@ -273,7 +274,7 @@
                     <div class="form-group">
                         <div class="cf">
                             <label for="agree" class="ccbx">
-                                <input type="checkbox" required="required" id="agree" name="booking">&nbsp;&nbsp;I agree to pay&nbsp;&#2547; 25000.00 advanced.
+                                <input type="checkbox" required="required" id="agree" name="booking">&nbsp;&nbsp;I agree to pay&nbsp;&#2547; 25000.00 in advanced.
                             </label>
                         </div>
                     </div>
@@ -327,49 +328,17 @@
         $(function() {
             $('.chosen-select').chosen();
         });
-    </script>
-    <script>
+
+        function confirmation() {
+            var r = confirm("You have to pay T.K. 25000.00 in Advanced through bkash in 01626785569.\n\nAre you sure to continue?");
+            return r ? true : false;
+        }
         $(function(){
             $('#totopscroller').totopscroller({
                 //link:'<?= SERVER; ?>'
             });
         })
     </script>
+    <script src="<?= SERVER ?>/assets/js/validate_script.js"></script>
     </body>
 </html>
-<script>
-    function confirmation() {
-        var r = confirm("You have to pay T.K. 25000.00 in Advanced through bkash in 01626785569.\n\nAre you sure to continue?");
-        return r ? true : false;
-    }
-
-    //AJAX Code to check  input field values when onblur event triggerd.
-    function validate(field, query)
-    {
-        var date1 = document.getElementById('datepicker').value  ;
-
-        var xmlhttp;
-
-        if (window.XMLHttpRequest) {
-            // for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
-        } else {
-            // for IE6, IE5
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
-                document.getElementById(field).innerHTML = "Validating..";
-            } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById(field).innerHTML = xmlhttp.responseText;
-                if (xmlhttp.responseText != '') {
-                    document.getElementById('shift').value = '';
-                }
-            } else {
-                document.getElementById(field).innerHTML = "Error Occurred. <a href='booking.php'>Reload Or Try Again</a> the page.";
-            }
-        };
-        xmlhttp.open("GET", "controller/checkDuplicateShift.php?query=" + query + "&date=" + date1, false);
-        xmlhttp.send();
-    }
-</script>

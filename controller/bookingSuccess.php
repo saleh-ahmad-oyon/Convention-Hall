@@ -49,6 +49,8 @@ if (isset($_POST['bookingbtn'])) {
 
     $dob  = $_POST['dobooking'];
     $date = str_replace('/', '-', $dob);
+
+    date_default_timezone_set('Asia/Dhaka');
     $date = date('Y-m-d', strtotime($date));
 
     $shift   = $_POST['shift'];

@@ -62,3 +62,33 @@ function validatePassword(field, query) {
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("query=" + query);
 }
+
+//check date and shift if it's valid when onblur event triggerd.
+function shiftvalidate(field, query)
+{
+    var date1   = document.getElementById('datepicker').value  ;
+    var xmlhttp = '';
+
+    if (window.XMLHttpRequest) {
+        // for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState != 4 && xmlhttp.status == 200) {
+            document.getElementById(field).innerHTML = "Validating..";
+        } else if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById(field).innerHTML = xmlhttp.responseText;
+            if (xmlhttp.responseText != '') {
+                document.getElementById('shift').value = '';
+            }
+        } else {
+            document.getElementById(field).innerHTML = "Error Occurred. <a href='booking.php'>Reload Or Try Again</a> the page.";
+        }
+    };
+    xmlhttp.open("GET", "controller/checkDuplicateShift.php?query=" + query + "&date=" + date1, false);
+    xmlhttp.send();
+}
