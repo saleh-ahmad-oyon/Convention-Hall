@@ -9,8 +9,11 @@
                         $ccbx = $this.find('.ccbx'),
                         $crbtn = $this.find('.crbtn'),
                         checkbox = $ccbx.find(':checkbox'),
-                        radiobtn = $ccbx.find('input:radio'),
-                        innerEls = '<span title="You can\'t select this. Amount will be calculated based on no. of guests."><i></i></span>';
+                        radiobtn = $ccbx.find('input:radio');
+
+                    var innerEls = checkbox.is(':disabled') && !checkbox.is(':checked') ?
+                         '<span title="You can\'t select this. Amount will be calculated based on no. of guests."><i></i></span>' :
+                         '<span><i></i></span>';
 
                     $ccbx.find('input').wrap(innerEls);
                     $crbtn.find('input').wrap(innerEls);
