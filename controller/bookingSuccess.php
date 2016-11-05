@@ -30,10 +30,10 @@ function getTotalBookingAmount($service, $guest, $gate, $stage, $food, $full, $a
     }
 
     $fullamount = 0.00;
-    $j=0;
+    $j = 0;
 
     for ($i=0; $i<count($full); $i++) {
-        for ($j; $j<$i+1 ; $j++) {
+        for ($j ; $j<$i+1 ; $j++) {
             $fullamount += ((double)getFoodPrice($full[$i]) * $amount[$j]);
         }
     }
