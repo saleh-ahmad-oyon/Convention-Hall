@@ -61,8 +61,8 @@ if (isset($_POST['bookingbtn'])) {
         $service = implode('|', $_POST['service']);
     }
 
-    $service .= '1|2';
-    $guest = $_POST['guestNum'];
+    $service .= $service == '' ? '1|2' : '|1|2';
+    $guest   = $_POST['guestNum'];
 
     if ($guest <=500) {
         $service.='|'.getServiceID(500);

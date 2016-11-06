@@ -285,6 +285,11 @@ a:focus{
     word-break: break-all
 }
 
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
 @media screen and (max-width:480px){
     .col-xxs-12{width:100%}
     .col-xxs-11{width:91.66666667%}
