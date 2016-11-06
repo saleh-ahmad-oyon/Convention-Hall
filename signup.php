@@ -31,7 +31,7 @@
                     <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">
+                        <div class="col-sm-8 col-lg-6 col-centered">
                             <div class="padding-20">
                                 <div class="padding-border solid-border">
                                     <h1>Sign Up</h1>
@@ -125,7 +125,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2 col-lg-3 hidden-xs"></div>
                     </div>
                 </div>
             </div>
