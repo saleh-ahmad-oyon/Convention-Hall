@@ -78,13 +78,13 @@
                             <div class="col-md-6">
                                 <h3>Select Date</h3>
                                 <div class="form-group">
-                                    <input type="text" id="datepicker" placeholder="dd/mm/yyyy" name="dobooking" class="form-control">
+                                    <input type="text" required id="datepicker" placeholder="dd/mm/yyyy" name="dobooking" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <h3>Select Shift</h3>
                                 <div class="form-group">
-                                    <select name="shift" class="form-control" id="shift" onblur="shiftvalidate('shift1', this.value)">
+                                    <select name="shift" required class="form-control chosen-select" id="shift">
                                         <option></option>
                                         <?php foreach($shift as $value): ?>
                                             <option><?= $value['shift_name'], " ", $value['shift_time']; ?></option>
@@ -102,7 +102,7 @@
                             <br/><br/>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select name="purpose" data-placeholder="" class="form-control chosen-select">
+                                    <select name="purpose" required data-placeholder="" class="form-control chosen-select">
                                         <option></option>
                                         <?php foreach($purpose as $p): ?>
                                             <option><?= $p['p_name']; ?></option>
@@ -313,18 +313,8 @@
                 dateFormat: "dd/mm/yy",
                 minDate: '+0D'
             });
-            /*$( "#shift" )
-             .selectmenu()
-             .selectmenu( "menuWidget" )
-             .addClass( "overflow" );*/
-            /*$( "#purpose" )
-             .selectmenu()
-             .selectmenu( "menuWidget" )
-             .addClass( "overflow" );*/
-
         });
 
-        //chosen (Select)
         $(function() {
             $('.chosen-select').chosen();
         });
@@ -337,7 +327,11 @@
             $('#totopscroller').totopscroller({
                 //link:'<?= SERVER; ?>'
             });
-        })
+        });
+
+        $('select#shift').change(function(){
+            shiftvalidate('shift1', this.value);
+        });
     </script>
     <script src="<?= SERVER ?>/assets/js/validate_script.js"></script>
     </body>
