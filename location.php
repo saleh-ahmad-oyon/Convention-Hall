@@ -46,7 +46,7 @@
         <script src="<?= SERVER; ?>/assets/js/jquery-2.2.0.min.js"></script>
         <script src="<?= SERVER; ?>/assets/css/bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2A618H4TLuOR0DZKlMWqcufONoBOng-c&callback=initMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkMmlXTAnX124IkvgQc0HAzqTbHMjf4QE&callback=initMap"></script>
         <script src="<?= SERVER ?>/assets/js/googlemap.js"></script>
     </body>
 </html>
