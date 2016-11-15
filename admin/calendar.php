@@ -26,20 +26,22 @@ if(!isset($_SESSION['admin'])){
 	<link rel="stylesheet" href="assets/css/custom.css">
 
 
-	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="<?= SERVER; ?>/third_party/html5shiv/html5shiv.min.js"></script>
+    <script src="<?= SERVER ?>/third_party/respond.min.js"></script>
 	<![endif]-->
-    <link href='<?php echo SERVER; ?>/assets/css/fullcalendar.css' rel='stylesheet' />
-    <link href='<?php echo SERVER; ?>/assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
-    <script src='<?php echo SERVER; ?>/assets/js/moment.min.js'></script>
-    <script src='<?php echo SERVER; ?>/assets/js/jquery.min.js'></script>
-    <script src='<?php echo SERVER; ?>/assets/js/fullcalendar.min.js'></script>
+    <link href='<?= SERVER; ?>/assets/css/fullcalendar.css' rel='stylesheet' />
+    <link href='<?= SERVER; ?>/assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='<?= SERVER; ?>/assets/js/moment.min.js'></script>
+    <script src='<?= SERVER; ?>/assets/js/jquery.min.js'></script>
+    <script src='<?= SERVER; ?>/assets/js/fullcalendar.min.js'></script>
     <script>
-        var baseurl = '<?php echo SERVER ?>/controller/';
+        var baseurl = '<?= SERVER ?>/controller/';
         $(document).ready(function() {
             $('#calendar').fullCalendar({
                 header: {
@@ -81,7 +83,7 @@ if(!isset($_SESSION['admin'])){
                 <ul class="list-inline links-list pull-right">
                     <li class="sep"></li>
                     <li>
-                        <a href="<?php echo SERVER; ?>/controller/logout">
+                        <a href="<?= SERVER; ?>/controller/logout">
                             Log Out <i class="entypo-logout right"></i>
                         </a>
                     </li>

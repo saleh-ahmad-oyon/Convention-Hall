@@ -36,12 +36,14 @@ if(isset($_SESSION['admin'])){
 	<script src="assets/js/jquery-1.11.0.min.js"></script>
 	<script>$.noConflict();</script>
 
-	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<!--[if lt IE 9]>
+    <script src="assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="<?= SERVER; ?>/third_party/html5shiv/html5shiv.min.js"></script>
+    <script src="<?= SERVER ?>/third_party/respond.min.js"></script>
 	<![endif]-->
     <style>
         .login-page .login-header {
@@ -55,14 +57,14 @@ if(isset($_SESSION['admin'])){
 <body class="page-body login-page login-form-fall" data-url="http://neon.dev">
     <!-- This is needed when you send requests via Ajax -->
     <script type="text/javascript">
-        var baseurl = '<?php echo SERVER ?>/controller/';
+        var baseurl = '<?= SERVER ?>/controller/';
     </script>
 
     <div class="login-container">
         <div class="login-header login-caret">
             <div class="login-content">
-                <a href="<?php echo SERVER; ?>" class="logo">
-                    <img src="<?php echo SERVER; ?>/assets/img/logo/logo_with_text.png" width="120" alt="" />
+                <a href="<?= SERVER; ?>" class="logo">
+                    <img src="<?= SERVER; ?>/assets/img/logo/logo_with_text.png" width="120" alt="" />
                 </a>
                 <!-- progress bar indicator -->
                 <div class="login-progressbar-indicator">
