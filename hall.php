@@ -37,6 +37,11 @@
                                         <li data-target="#myCarousel" data-slide-to="1"></li>
                                         <li data-target="#myCarousel" data-slide-to="2"></li>
                                         <li data-target="#myCarousel" data-slide-to="3"></li>
+                                        <li data-target="#myCarousel" data-slide-to="4"></li>
+                                        <li data-target="#myCarousel" data-slide-to="5"></li>
+                                        <li data-target="#myCarousel" data-slide-to="6"></li>
+                                        <li data-target="#myCarousel" data-slide-to="7"></li>
+                                        <li data-target="#myCarousel" data-slide-to="8"></li>
                                     </ol>
 
                                     <!-- Wrapper for slides -->
@@ -50,11 +55,26 @@
                                         </div>
 
                                         <div class="item">
-                                            <img src="<?= SERVER ?>/assets/img/hall/4.jpg" alt="">
+                                            <img src="<?= SERVER ?>/assets/img/hall/3.jpg" alt="">
                                         </div>
 
                                         <div class="item">
-                                            <img src="<?= SERVER ?>/assets/img/hall/setara_4.jpg" alt="">
+                                            <img src="<?= SERVER ?>/assets/img/hall/4.jpg" alt="">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<?= SERVER ?>/assets/img/hall/5.jpg" alt="">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<?= SERVER ?>/assets/img/hall/6.jpg" alt="">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<?= SERVER ?>/assets/img/hall/7.jpg" alt="">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<?= SERVER ?>/assets/img/hall/8.jpg" alt="">
+                                        </div>
+                                        <div class="item">
+                                            <img src="<?= SERVER ?>/assets/img/hall/9.jpg" alt="">
                                         </div>
                                     </div>
 
@@ -87,9 +107,11 @@
         <script>
             $(document).ready(function(){
                 $('.carousel').carousel({
-                    interval: 2000
+                    interval: 3000,
+                    pause: 'hover',
+                    keyboard: true,
+                    wrap: true
                 });
-                $('#myCarousel').carousel('cycle');
             });
         </script>
     </body>

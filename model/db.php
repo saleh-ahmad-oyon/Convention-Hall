@@ -1,6 +1,18 @@
 <?php
 require_once 'db_connection.php';
 
+function Errors($e)
+{
+    echo 'Error Message: '.$e->getMessage(). '<br/>';
+    echo 'Error Code: '.$e->getCode().'<br/>';
+    echo 'Error File Path: '.$e->getFile().'<br/>';
+    echo 'Line Number: '.$e->getLine().'<br/>';
+    echo 'Trace: ';
+    echo '<pre>';
+    var_dump($e->getTrace());
+    echo '</pre>';
+}
+
 function checkUserEmail($email)
 {
     $conn = db_conn();
@@ -9,7 +21,7 @@ function checkUserEmail($email)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
@@ -23,7 +35,7 @@ function insertUser($fname, $lname, $email, $contact, $pass)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':fname' => $fname, ':lname' => $lname, ':email' => $email, ':contact' => $contact, ':pass' => $pass));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -36,7 +48,7 @@ function addSchedule($shift, $time)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':shift' => $shift, ':time' => $time));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -49,7 +61,7 @@ function addCharges($service, $price)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':service' => $service, ':price' => $price));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -62,7 +74,7 @@ function getScheduleID($shift, $time)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($shift, $time));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['shift_id'];
@@ -76,7 +88,7 @@ function loginSuccess($email, $pass)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email));
     } catch (PDOException $e) {
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -87,7 +99,7 @@ function loginSuccess($email, $pass)
             $stmt2 = $conn->prepare($selectQuery2);
             $stmt2->execute(array($user));
         } catch (PDOException $e) {
-            handle_sql_errors($selectQuery, $e->getMessage());
+            Errors($e);
         }
         $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
         $dataPass = $row2['u_pass'];
@@ -110,7 +122,7 @@ from `additional_menu` where (not((`additional_menu`.`am_title` like '%full%')))
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -124,7 +136,7 @@ function personalInfo($user)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($user));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -143,7 +155,7 @@ from `user`";
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -157,7 +169,7 @@ function updatePass($newPass, $email)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($newPass, $email));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -170,7 +182,7 @@ function updateInfo($fname, $lname, $email, $contact, $user)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':fname' => $fname, ':lname' => $lname, ':email' => $email, ':contact' => $contact, ':user' => $user));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -183,7 +195,7 @@ function getUserID($email)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -197,7 +209,7 @@ function checkEditedEmail($email, $userId)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($email, $userId));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
@@ -215,7 +227,7 @@ FROM `stage` ORDER BY `stage`.`st_id`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -230,7 +242,7 @@ function gate()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -247,7 +259,7 @@ FROM `services`';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -261,7 +273,7 @@ function getPurposes()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -274,7 +286,7 @@ function getShift()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
 
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -289,7 +301,7 @@ function similarDateShift($date, $shift)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':date' => $date, ':shift' => $shift));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
@@ -303,7 +315,7 @@ function setOrder($user, $date, $shift, $purpose, $service, $guest, $gate, $stag
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':usr' => $user, ':dat' => $date, ':shift' => $shift, ':purpose' => $purpose, ':service' => $service, ':guest' => $guest, ':gate' => $gate, ':stage' => $stage, ':food' => $food, ':totalCost' => $totalCost, ':fullamount' => $fullamount, ':setMenu' => $setMenu, ':today' => $today));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -316,7 +328,7 @@ function getUserOrders($orderID)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($orderID));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -330,7 +342,7 @@ function getFoodTitle($fid)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($fid));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_title'];
@@ -344,7 +356,7 @@ function getFoodImage($fid)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($fid));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_image'];
@@ -358,7 +370,7 @@ function getFoodPrice($fid)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($fid));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['am_price'];
@@ -372,7 +384,7 @@ function getServiceName($sid)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($sid));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_name'];
@@ -386,7 +398,7 @@ function getServicePrice($sid)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($sid));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['Serv_price'];
@@ -400,7 +412,7 @@ function getGateValue($gate)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($gate));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['g_price'];
@@ -414,7 +426,7 @@ function getGateInfo($gate)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($gate));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -428,7 +440,7 @@ function getAddiFoodInfo($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -442,7 +454,7 @@ function setMenuInfo($key)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($key));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -456,7 +468,7 @@ function getStageValue($stage)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($stage));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['st_price'];
@@ -470,7 +482,7 @@ function getStageInfo($stage)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($stage));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -484,7 +496,7 @@ function getPriceSetMenu($setMenu)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($setMenu));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['sm_price'];
@@ -498,7 +510,7 @@ function checkAdmin($user, $pass)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($user, $pass));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return ($row['num'] == 1) ? true : false ;
@@ -516,7 +528,7 @@ function getDateShift()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -530,7 +542,7 @@ function changeStatus($order, $paid, $o)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':orderStatus' => $o, ':paidCost' => $paid, ':orderID' => $order));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -543,7 +555,7 @@ function updateGate($name, $cost, $image, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -556,7 +568,7 @@ function updateGateWithoutImage($name, $cost, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':price' => $cost, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -569,7 +581,7 @@ function updateAdditionalFood($name, $cost, $keys, $image, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -582,7 +594,7 @@ function updateAdditionalFoodWithoutImage($name, $cost, $keys, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':price' => $cost, ':keywords' => $keys, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -595,7 +607,7 @@ function updateSetMenu($title, $items, $cost, $key)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $title, ':items' => $items, ':price' => $cost, ':id' => $key));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -608,7 +620,7 @@ function updateStage($name, $cost, $image, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':image' => $image, ':price' => $cost, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -621,7 +633,7 @@ function updateStageWithoutImage($name, $cost, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $name, ':price' => $cost, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -634,7 +646,7 @@ function deleteOrder($order)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($order));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -647,7 +659,7 @@ function deleteGate($gateID)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($gateID));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -660,7 +672,7 @@ function deleteAddiFood($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -673,7 +685,7 @@ function deleteStage($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -686,7 +698,7 @@ function deleteSetMenu($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -699,7 +711,7 @@ function deleteSchedule($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -712,7 +724,7 @@ function deleteFeature($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -725,7 +737,7 @@ function deleteAdvantage($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
 
     $conn = null;
@@ -739,7 +751,7 @@ function getOrderInfo($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -752,7 +764,7 @@ function sameDate()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $twice = array();
@@ -763,14 +775,14 @@ function sameDate()
             $stmt2 = $conn->prepare($selectQuery2);
             $stmt2->execute(array(':odate' => $re));
         }catch(PDOException $e){
-            handle_sql_errors($selectQuery, $e->getMessage());
+            Errors($e);
         }
         $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
         $selectQuery3 = "SELECT COUNT(1) as `num` FROM shift";
         try{
             $stmt3 = $conn->query($selectQuery3);
         }catch(PDOException $e){
-            handle_sql_errors($selectQuery, $e->getMessage());
+            Errors($e);
         }
         $row3 = $stmt3->fetch(PDO::FETCH_ASSOC);
         if($row2['num'] == $row3['num']){
@@ -787,7 +799,7 @@ function getItemName($item)
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -803,7 +815,7 @@ from `additional_menu` where (`additional_menu`.`am_title` like '%full%') order 
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -816,7 +828,7 @@ function setMenu()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -829,7 +841,7 @@ function getAdvc()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -842,7 +854,7 @@ function getFeatures()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -855,7 +867,7 @@ function getServiceID($quantity)
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_id'];
@@ -868,7 +880,7 @@ function getBasicServices()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -882,7 +894,7 @@ function getBookingInfo($user)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($user));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -895,7 +907,7 @@ function getMisc()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row;
@@ -908,7 +920,7 @@ function getTotalUser()
     try {
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-            handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
@@ -921,7 +933,7 @@ function getPendingBookings()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
@@ -934,7 +946,7 @@ function getApprovedBookings()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
@@ -947,7 +959,7 @@ function getTotalBookings()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['num'];
@@ -968,7 +980,7 @@ ORDER BY `hall_booking`.`order_id` DESC';
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -985,7 +997,7 @@ from `hall_booking` where (`hall_booking`.`order_status` = 2) order by `hall_boo
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -1002,7 +1014,7 @@ from `hall_booking` where (`hall_booking`.`order_status` = 3) order by `hall_boo
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -1019,7 +1031,7 @@ function allBookingInfo()
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $row;
@@ -1033,7 +1045,7 @@ function updateVat($vat)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($vat));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1046,7 +1058,7 @@ function updateExtraCost($cost)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($cost));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1071,7 +1083,7 @@ function updateSchedule($shift, $time, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($shift, $time, $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1084,7 +1096,7 @@ function updateServices($service, $price, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':service' => $service, ':price' => $price, ':id' => $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1097,7 +1109,7 @@ function updateFeature($feature, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($feature, $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1110,7 +1122,7 @@ function updateAdvantage($adv, $id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($adv, $id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1123,7 +1135,7 @@ function addFeature($desc)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($desc));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1136,7 +1148,7 @@ function insertNewGate($name, $cost, $image)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1149,7 +1161,7 @@ function insertNewSetItems($title, $items, $cost)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':title' => $title, ':items' =>$items, ':cost' => $cost));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1162,7 +1174,7 @@ function insertNewFood($name, $cost, $image, $keys)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $name, ':image' =>$image, ':cost' => $cost, ':keys' => $keys));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1175,7 +1187,7 @@ function insertNewStage($stageName, $stageCost, $image)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array(':name' => $stageName, ':image' =>$image, ':cost' => $stageCost));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1188,7 +1200,7 @@ function addAdvantages($advantage)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($advantage));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
@@ -1201,7 +1213,7 @@ function getFeatureID($desc)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($desc));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['f_id'];
@@ -1215,7 +1227,7 @@ function getAdvantageID($advantage)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($advantage));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['adv_id'];
@@ -1229,7 +1241,7 @@ function getServID($service, $price)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($service, $price));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['serv_id'];
@@ -1243,7 +1255,7 @@ function deleteService($id)
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute(array($id));
     }catch(PDOException $e){
-        handle_sql_errors($selectQuery, $e->getMessage());
+        Errors($e);
     }
     $conn = null;
 }
