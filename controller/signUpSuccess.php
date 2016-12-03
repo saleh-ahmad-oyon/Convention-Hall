@@ -10,7 +10,7 @@ if(isset($_POST['signUpBtn'])){
     $contact  = $_POST['contact'];
     $postPass = $_POST['pass'];
     $pass     = password_hash($postPass, PASSWORD_BCRYPT);
-    $captcha  ='';
+    $captcha  = '';
 
     if (isset($_POST['g-recaptcha-response'])) {
         $captcha = $_POST['g-recaptcha-response'];
@@ -23,16 +23,26 @@ if(isset($_POST['signUpBtn'])){
     }
 
     $secretKey = '6Ld3rg8TAAAAADLoleP1CehvC4L7M2Bj87F2z5Jv';
-    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
-    $decoded_response = json_decode($response, true);
 
-    if ($decoded_response["success"] == FALSE) {
+    require_once "../third_party/recaptchalib.php";
+
+    /** check secret key */
+    $reCaptcha = new ReCaptcha($secretKey);
+
+    /** if submitted check response */
+    if ($_POST["g-recaptcha-response"]) {
+        $response = $reCaptcha->verifyResponse(
+            $_SERVER["REMOTE_ADDR"],
+            $captcha
+        );
+    }
+
+    if (!$response->success) {
         echo '<script language="javascript">
                             alert("You are Spammer ! Get the F%%k out");
                             window.location="'.SERVER.'";
                           </script>';
-    }
-    elseif(!checkUserEmail($email)){
+    } elseif (!checkUserEmail($email)) {
         insertUser($fname, $lname, $email, $contact, $pass);
         $_SESSION['user']= $email;
         $row = getUserID($email);
