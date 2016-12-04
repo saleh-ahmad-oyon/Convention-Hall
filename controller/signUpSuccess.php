@@ -9,9 +9,10 @@ function CallAPI($method, $url, $data = false)
 
     switch ($method) {
         case "POST":
-            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POST, true);
             if ($data) {
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             }
             break;
         case "PUT":
@@ -49,6 +50,7 @@ if(isset($_POST['signUpBtn'])){
     if (isset($_POST['g-recaptcha-response'])) {
         $captcha = $_POST['g-recaptcha-response'];
     }
+    
     if (!$captcha) {
         echo '<script language="javascript">
                             alert("Please check the the captcha form.");
@@ -57,21 +59,17 @@ if(isset($_POST['signUpBtn'])){
     }
 
     $secretKey = '6Ld3rg8TAAAAADLoleP1CehvC4L7M2Bj87F2z5Jv';
+    $googleUrl = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = [
+        'secret'   => $secretKey,
+        'response' => $captcha,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+    
+    $response = CallAPI('POST', $googleUrl, $data);
+    $jsonResponse = json_decode($response);
 
-    require_once "../third_party/recaptchalib.php";
-
-    /** check secret key */
-    $reCaptcha = new ReCaptcha($secretKey);
-
-    /** if submitted check response */
-    if ($_POST["g-recaptcha-response"]) {
-        $response = $reCaptcha->verifyResponse(
-            $_SERVER["REMOTE_ADDR"],
-            $captcha
-        );
-    }
-
-    if (!$response->success) {
+    if (!$jsonResponse->success) {
         echo '<script language="javascript">
                             alert("You are Spammer ! Get the F%%k out");
                             window.location="'.SERVER.'";
