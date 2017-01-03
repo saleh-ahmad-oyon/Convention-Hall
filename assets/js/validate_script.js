@@ -29,11 +29,8 @@ function validateEmail(field, query) {
             document.getElementById(field).innerHTML = "Error Occurred. <a href='index.php'>Reload Or Try Again</a> the page.";
         }
     };
-    /*xmlhttp.open("POST", "controller/checkDuplicateEmail.php", true);
-     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     xmlhttp.send("query=" + query);*/
 
-    xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, false);
+    xmlhttp.open("GET", "controller/checkDuplicateEmail.php?query=" + query, true);
     xmlhttp.send();
 }
 
@@ -92,6 +89,6 @@ function shiftvalidate(field, query)
             document.getElementById(field).innerHTML = "Error Occurred. <a href='booking.php'>Reload Or Try Again</a> the page.";
         }
     };
-    xmlhttp.open("GET", "controller/checkDuplicateShift.php?query=" + query + "&date=" + date1, false);
+    xmlhttp.open("GET", "controller/checkDuplicateShift.php?query=" + query + "&date=" + date1, true);
     xmlhttp.send();
 }
